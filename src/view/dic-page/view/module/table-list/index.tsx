@@ -2,6 +2,7 @@ import React, { useCallback } from 'react';
 import { Table, Divider, Space } from 'antd';
 import { Key, TableRowSelection, SorterResult } from 'antd/es/table/interface';
 import { ColumnProps, TablePaginationConfig } from 'antd/es/table';
+import IconSet from '@/components/icon';
 import { TemplateTableProps } from './interface';
 import ModalAdd from '../modal-add';
 import Del from '../del-icon';
@@ -37,7 +38,9 @@ function TableList(props: TemplateTableProps) {
             render: (text, record) => (
                 <Space>
                     <ModalAdd isEdit data={record}>
-                        <a>编辑</a>
+                        <a>
+                            <IconSet type="icon-bianji" /> 编辑
+                        </a>
                     </ModalAdd>
                     <Divider type="vertical" />
                     <Del

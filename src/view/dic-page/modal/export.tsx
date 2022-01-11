@@ -1,6 +1,7 @@
 import React from 'react';
 import XLSX from 'xlsx';
 import { message } from 'antd';
+import IconSet from '@/components/icon';
 
 // 导出
 export default function Export(props) {
@@ -22,5 +23,9 @@ export default function Export(props) {
         XLSX.writeFile(wb, filename);
         message.success('字典导出成功!', 1);
     };
-    return <a onClick={export_event}>导出</a>;
+    return (
+        <a onClick={export_event}>
+            <IconSet type="icon-daochu" /> 导出
+        </a>
+    );
 }

@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Menu } from 'antd';
-import MyIcon from '@/components/icon';
 import { NavLink } from 'react-router-dom';
+import MyIcon from '@/components/icon';
 import { MenuType, MenuItemType } from '@/components/sider/interface';
 
 import './index.less';
-// import { MenuBtnComponentItemType, UserType } from 'SrcPath/types';
 
 const { SubMenu } = Menu;
 
@@ -37,10 +36,7 @@ const MenuComponent = (props: MenuType) => {
                     <NavLink to={item.link || ''}>
                         <>
                             {item.icon && <MyIcon type={item.icon} />}
-                            <span>
-                                {item.name}
-                                {item.code === 'task-todo' && !!item.number && <span className="menu-task-number">{item.number}</span>}
-                            </span>
+                            <span>{item.name}</span>
                         </>
                     </NavLink>
                 </Menu.Item>

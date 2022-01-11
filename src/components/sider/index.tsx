@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Layout } from 'antd';
 import { useLocation } from 'react-router-dom';
-// import { getParams, makeSourceData } from '@/utils/tools';
-import MENU_MAP from './test';
+import MENU_MAP from './config';
 import Menu from './menu';
 import { MenuItemType, SiderProps } from './interface';
 import './index.less';

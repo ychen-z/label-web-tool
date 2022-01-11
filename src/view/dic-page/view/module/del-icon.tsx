@@ -1,5 +1,5 @@
 import React from 'react';
-import { Tooltip, Popconfirm, message } from 'antd';
+import { Popconfirm, message } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 import useFetch from '@/hooks/common/useFetch';
 import { delDic } from '@/axios';
@@ -19,9 +19,9 @@ function Del(props: Props) {
 
     return (
         <Popconfirm key="2" title="确定删除吗?" okText="确定" cancelText="取消" onConfirm={onDel}>
-            <Tooltip placement="top" title="删除">
-                <DeleteOutlined style={{ color: '#e6231f' }} />
-            </Tooltip>
+            <a>
+                <DeleteOutlined style={{ color: '#e6231f' }} /> 删除
+            </a>
         </Popconfirm>
     );
 }

@@ -10,6 +10,7 @@ import { TemplateSearchParams } from './interface';
 import './index.less';
 
 function Template(props) {
+    const { dictionaryName } = props;
     const DEFAULT_PARAM = {
         currentPage: 1,
         pageSize: 10
@@ -49,7 +50,7 @@ function Template(props) {
     return (
         <div>
             <UDrawer
-                trigger={<a>查看</a>}
+                trigger={<a>{dictionaryName}</a>}
                 maskClosable={false}
                 title="查看"
                 className="m-template"

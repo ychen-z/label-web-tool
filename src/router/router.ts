@@ -10,12 +10,18 @@ const load = (loader: any) =>
 export const urlObj = {
     dic: {
         name: '字典管理',
-        link: '/dic',
+        link: '/app/dic',
         component: load(() => import('@/view/dic-page')),
+        needAuth: false
+    },
+    tool: {
+        name: '字典管理',
+        link: '/app/tool',
+        component: load(() => import('@/view/tool-page')),
         needAuth: false
     }
 };
 
-const { dic } = urlObj;
+const { dic, tool } = urlObj;
 
-export const routes = [dic];
+export const routes = [dic, tool];

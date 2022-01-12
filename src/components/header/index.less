@@ -5,14 +5,18 @@
     min-width: 1200px;
     height: 60px;
     line-height: 60px;
-    background: #fff;
+    background: @primary-color;
     box-shadow: 0 4px 6px 0 rgba(@black, .06);
 
     &-logo {
         display: inline-block;
         font-size: 18px;
-        margin: 0 20px 0 20px;
-        color: #fff;
+        margin: 10px;
+        height: 40px;
+        width: 40px;
+        background-position: center;
+        background-size: cover;
+        background-image: url("../../assets/img/logo.jpg");
         vertical-align: middle;
         font-family: "Times New Roman", Times, serif;
     }
@@ -25,8 +29,8 @@
     &-title {
         display: inline-block;
         padding-left: 16px;
+        color: #fff;
         line-height: 60px;
-        color: @primary-font-color;
     }
 
     &-more {
@@ -46,7 +50,7 @@
         margin-left: 8px;
     }
 
-    &-user-right {
+    &-user {
         position: relative;
         float: right;
         margin-right: 6px;
@@ -54,45 +58,4 @@
         border-bottom: 0 !important;
     }
 
-    // .help-tip {
-    //     position: absolute;
-    //     top: 20px;
-    //     right: 130px;
-    //     z-index: 999;
-    //     width: 222px;
-    //     padding: 20px;
-    //     font-size: 12px;
-    //     line-height: 1.5;
-    //     background-color: #fff;
-    //     border: 1px solid @border-color;
-    //     border-radius: 2px;
-    //     box-shadow: 0 4px 6px 0 rgba(@black, 0.1);
-
-    //     p {
-    //         margin-bottom: 0;
-    //         color: @grey-font;
-    //     }
-
-    //     .help-close {
-    //         position: absolute;
-    //         top: 6px;
-    //         right: 6px;
-    //         cursor: pointer;
-    //     }
-    // }
-
-    // //三角上下
-    // .layout-caret-up {
-    //     .anticon-caret-down {
-    //         transition: all 0.3s cubic-bezier(0.7, 0.3, 0.1, 1);
-    //         transform: rotate(180deg);
-    //     }
-    // }
-
-    // .layout-caret-down {
-    //     .anticon-caret-down {
-    //         transition: all 0.3s cubic-bezier(0.7, 0.3, 0.1, 1);
-    //         transform: rotate(0deg);
-    //     }
-    // }
 }

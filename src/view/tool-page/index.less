@@ -1,0 +1,47 @@
+.m-tool-page {
+    display: flex;
+    
+    .left {
+        padding: 20px;
+        background: #fff;
+        border-radius: 4px;
+    }
+
+    .content {
+        position: relative;
+        width: 333px;
+        height: 596px;
+        // background-image: url("../../assets/img/flow.png");
+        background-size: cover;
+
+        .item {
+            position: absolute;
+            left: 100px;
+            width: 120px;
+            height: 60px;
+            line-height: 60px;
+            font-size: 20px;
+            text-align: center;
+            cursor: pointer;
+            border: 1px solid #ccc;
+            &:hover {
+                color: red;
+                border: 1px solid red;
+            }
+        }
+
+        .active{
+            color: red;
+            background:black;
+            border: 1px solid red;
+        }
+    }
+    
+    .right {
+        flex: 1;
+        padding: 20px;
+        margin-left: 24px;
+        background: #fff;
+        border-radius: 4px;
+    }
+}

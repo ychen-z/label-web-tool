@@ -1,39 +1,44 @@
 import React, { useState } from 'react';
+import DataPreProcess from './model/data-pre-process';
 import './index.less';
 
-const Btns = [
-    {
-        name: 'a',
-        type: 'A',
-        top: 0
-    },
-    {
-        name: 'b',
-        type: 'B',
-        top: 100
-    },
-    {
-        name: 'c',
-        type: 'C',
-        top: 200
-    },
-    {
-        name: 'd',
-        type: 'D',
-        top: 300
-    },
-    {
-        name: 'e',
-        type: 'E',
-        top: 400
-    },
-    {
-        name: 'f',
-        type: 'F',
-        top: 500
-    }
-];
 export default function ToolPage() {
+    const Btns = [
+        {
+            name: '加载数据/字典',
+            type: 'A',
+            top: 0
+        },
+        {
+            name: 'b',
+            type: 'B',
+            top: 58 * 2
+        },
+        {
+            name: 'c',
+            type: 'C',
+            top: 58 * 3 + 59
+        },
+        {
+            name: 'd',
+            type: 'D',
+            top: 58 * 5 + 60
+        },
+        {
+            name: 'e',
+            type: 'E',
+            top: 58 * 7 + 61
+        },
+        {
+            name: 'f',
+            type: 'F',
+            top: 58 * 9 + 62
+        }
+    ];
+
+    const Dom = {
+        A: <DataPreProcess />
+    };
     const [state, setState] = useState('A');
     return (
         <div className="m-tool-page">
@@ -46,7 +51,7 @@ export default function ToolPage() {
                     ))}
                 </div>
             </section>
-            <section className="right">右边 {state}</section>
+            <section className="right">右边 {Dom[state]}</section>
         </div>
     );
 }

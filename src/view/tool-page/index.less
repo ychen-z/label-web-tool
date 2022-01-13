@@ -2,28 +2,31 @@
     display: flex;
     
     .left {
-        padding: 20px;
+        padding: 30px 40px;
         background: #fff;
         border-radius: 4px;
     }
 
     .content {
         position: relative;
-        width: 333px;
-        height: 596px;
-        // background-image: url("../../assets/img/flow.png");
+        width: 348px;
+        height: 645px;
+        background-image: url("../../assets/img/flow.png");
         background-size: cover;
 
         .item {
             position: absolute;
-            left: 100px;
-            width: 120px;
-            height: 60px;
-            line-height: 60px;
-            font-size: 20px;
+            left: 112px;
+            width: 136px;
+            height: 61px;
+            line-height: 61px;
+            font-size: 16px;
+            font-weight: bolder;
             text-align: center;
             cursor: pointer;
-            border: 1px solid #ccc;
+            border: 1px solid blue;
+            border-radius: 14px;
+            background: #fff;
             &:hover {
                 color: red;
                 border: 1px solid red;
@@ -32,7 +35,6 @@
 
         .active{
             color: red;
-            background:black;
             border: 1px solid red;
         }
     }

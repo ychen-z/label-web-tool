@@ -14,6 +14,12 @@ export const urlObj = {
         component: load(() => import('@/view/dic-page')),
         needAuth: false
     },
+    label: {
+        name: '字典管理',
+        link: '/app/label',
+        component: load(() => import('@/view/label-page')),
+        needAuth: false
+    },
     tool: {
         name: '字典管理',
         link: '/app/tool',
@@ -22,6 +28,6 @@ export const urlObj = {
     }
 };
 
-const { dic, tool } = urlObj;
+const { dic, tool, label } = urlObj;
 
-export const routes = [dic, tool];
+export const routes = [dic, tool, label];

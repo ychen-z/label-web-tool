@@ -64,7 +64,7 @@ const SiderCustom = (props: SiderProps) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [location.pathname]);
     return (
-        <Sider collapsible collapsedWidth={60} collapsed={collapsed} onCollapse={handleCollapse} theme="light" width={176} className="m-sider">
+        <Sider collapsible collapsedWidth={60} collapsed={collapsed} onCollapse={handleCollapse} theme="light" width={176} className="g-sider">
             <Menu
                 menuList={MENU_MAP}
                 defaultOpenKeys={expandKeys}

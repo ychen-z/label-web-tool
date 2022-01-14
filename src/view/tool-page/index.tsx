@@ -53,8 +53,8 @@ export default function ToolPage() {
         1: <DataPreProcess />,
         2: <DataPreProcess />,
         3: <ManualNamed />,
-        4: <TextRecognition />,
-        5: <TrainingModel />,
+        4: <TrainingModel />,
+        5: <TextRecognition />,
         6: <DataExport />
     };
     const [count, setCount] = useState(0);

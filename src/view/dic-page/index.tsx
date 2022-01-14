@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Table, Space, Divider, Form, Input, Button } from 'antd';
 import { useRequest } from 'ahooks';
 import FormSearch from '@/components/form-search';
+// import Upload from '@/components/upload';
 import IconSet from '@/components/icon';
 import { getDicAll } from '@/axios';
 import Export from './modal/export';
@@ -97,12 +98,15 @@ export default function Dictionary() {
     return (
         <div className="dic-page">
             <FormSearch mode="common" form={form} onSearch={onSearch} onReset={onReset} {...layOut}>
-                <Form.Item label="字典名称" name="dictionaryName" normalize={value => value?.userId}>
+                <Form.Item label="字典名称" name="dictionaryName">
                     <Input />
                 </Form.Item>
-                <Form.Item label="字典描述" name="dictionaryDescribe" normalize={value => value?.userId}>
+                <Form.Item label="字典描述" name="dictionaryDescribe">
                     <Input />
                 </Form.Item>
+                {/* <Form.Item label="文件上传" name="x" valuePropName="fileList">
+                    <Upload maxCount="1" accept="png,jpeg,jpg,gif,pdf,eml,docx,doc" />
+                </Form.Item> */}
             </FormSearch>
             <section className="m-list">
                 <div className="u-operation">

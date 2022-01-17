@@ -83,3 +83,15 @@ project
 └───vendor // dll动态链缓存文件夹
 │   │
 ```
+接口文档
+
+```
+https://www.showdoc.com.cn/1796536733832584/8318086323903179 
+密码 admin123
+
+你的前端代码 放 /home/html 下面就好了
+前端页面 http://101.35.15.228/index.html
+后端接口 http://101.35.15.228/api/dict/
+http://101.35.15.228/api/dict/
+
+```

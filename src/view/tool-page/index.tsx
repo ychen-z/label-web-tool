@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { Button, Card } from 'antd';
 import Loading from './model/loading';
-import DataPreProcess from './model/data-pre-process';
-import ManualNamed from './model/manual-named';
-import TextRecognition from './model/text-recognise';
-import TrainingModel from './model/training-model';
-import DataExport from './model/data-export';
+import DataImport from './model/data-import'; // 数据导入
+import DataPreProcess from './model/data-pre-process'; // 数据预处理
+import ManualNamed from './model/manual-named'; // 手工标注
+import TextRecognition from './model/text-recognise'; // 识别
+import TrainingModel from './model/training-model'; // 训练
+import DataExport from './model/data-export'; // 导出
 import './index.less';
 
 const Btns = [
@@ -50,13 +51,14 @@ const Btns = [
 export default function ToolPage() {
     const Dom = {
         0: <Loading />,
-        1: <DataPreProcess />,
+        1: <DataImport />,
         2: <DataPreProcess />,
         3: <ManualNamed />,
         4: <TrainingModel />,
         5: <TextRecognition />,
         6: <DataExport />
     };
+
     const [count, setCount] = useState(0);
 
     // 开始流程

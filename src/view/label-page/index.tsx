@@ -14,17 +14,17 @@ export default function LabelPage() {
     const [form] = Form.useForm();
     const [searchParams, setSearchParams] = useState<Record<string, any>>({}); // 全部搜索项参数
 
-    const getTableData = ({ current, pageSize }) => {
+    const getTableData = ({ current, size }) => {
         const params = {
-            currentPage: current,
-            pageSize,
+            page: current,
+            size,
             ...searchParams
         };
         return getLabelList(params);
     };
     const { tableProps, refresh } = useRequest(getTableData, {
         paginated: true,
-        defaultPageSize: 10,
+        defaultsize: 10,
         formatResult: (response: any) => {
             return {
                 list: response || [],
@@ -89,7 +89,7 @@ export default function LabelPage() {
                     {...tableProps}
                     refresh={refresh}
                     columns={columns}
-                    pagination={{ ...tableProps.pagination, pageSizeOptions: ['20', '30', '50'] }}
+                    pagination={{ ...tableProps.pagination, sizeOptions: ['20', '30', '50'] }}
                 />
             </section>
         </div>

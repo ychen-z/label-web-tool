@@ -18,7 +18,7 @@ let requestList: string[] = []; // 请求url存储
 service.interceptors.request.use(
     (config: any) => {
         // header 中增加 32 位签名
-        config.url = `/mongo${config.url}`;
+        config.url = `/api${config.url}`;
         if (/get/i.test(config.method)) {
             // 检测是否存在该请求
             const requestIndex = requestList.findIndex(el => el === config.url);
@@ -56,7 +56,7 @@ service.interceptors.response.use(
         }
         // 以下判断的是：接口状态码(data.code)
         const res = response.data;
-        if (res.status == ServerCode.SUCCESS) return response.data;
+        if (res.code == ServerCode.SUCCESS) return response.data;
         return Promise.reject({ data: res, response });
     },
     err => {

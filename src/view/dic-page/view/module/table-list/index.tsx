@@ -1,7 +1,6 @@
 import React, { useCallback } from 'react';
 import { Table, Divider, Space } from 'antd';
-import { Key, TableRowSelection, SorterResult } from 'antd/es/table/interface';
-import { ColumnProps, TablePaginationConfig } from 'antd/es/table';
+import { TablePaginationConfig } from 'antd/es/table';
 import IconSet from '@/components/icon';
 import { TemplateTableProps } from './interface';
 import ModalAdd from '../modal-add';
@@ -9,7 +8,7 @@ import Del from '../del-icon';
 import './index.less';
 
 function TableList(props: TemplateTableProps) {
-    const columns: ColumnProps<TemplateItem>[] = [
+    const columns = [
         {
             title: '名称',
             dataIndex: 'name',
@@ -54,7 +53,7 @@ function TableList(props: TemplateTableProps) {
         }
     ];
 
-    const rowSelection: TableRowSelection<TemplateItem> = {
+    const rowSelection = {
         selectedRowKeys: props.selectedKeys,
         onChange: (selectedRowKeys, selectedRows) => {
             props.setSelectedKeys(selectedRowKeys as number[]);
@@ -66,17 +65,10 @@ function TableList(props: TemplateTableProps) {
     };
 
     const handleTableChange = useCallback(
-        (
-            pagination: TablePaginationConfig,
-            filters: Record<string, Key[] | null>,
-            sorter: SorterResult<TemplateItem> | SorterResult<TemplateItem>[]
-        ) => {
+        (pagination: TablePaginationConfig) => {
             const tempParams = {
-                pageSize: pagination.pageSize,
-                currentPage: pagination.current,
-                order: (sorter as SorterResult<TemplateItem>).order === 'ascend' ? 2 : 1,
-                status: filters.status && filters.status.join(','),
-                systemId: filters.system && filters.system.join(',')
+                size: pagination.size,
+                page: pagination.current
             };
             props.getList(tempParams);
         },
@@ -84,7 +76,7 @@ function TableList(props: TemplateTableProps) {
     );
 
     return (
-        <div className="m-template-table-list">
+        <div className="u-table-list">
             <Table
                 loading={props.loading}
                 rowKey="id"
@@ -93,7 +85,7 @@ function TableList(props: TemplateTableProps) {
                 columns={columns}
                 onChange={handleTableChange}
                 tableLayout="fixed"
-                pagination={{ current: props.pagination.currentPage, total: props.pagination.total, showQuickJumper: true, showSizeChanger: true }}
+                pagination={{ current: props.pagination.page, total: props.pagination.total, showQuickJumper: true, showSizeChanger: true }}
             />
         </div>
     );

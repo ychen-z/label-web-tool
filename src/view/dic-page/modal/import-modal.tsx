@@ -1,40 +1,40 @@
 import React from 'react';
-import { Form, Input, message, Button } from 'antd';
+import { Form, Input, message } from 'antd';
 import BtnTpl from '@/components/btns/btn-tpl';
 import Upload from './SelfUpload';
 import useFetch from '@/hooks/common/useFetch';
 import { updateDic } from '@/axios';
 
-// TODO: 文件的处理逻辑需要待定
 interface Props {
-    data: Record<string, any>;
+    data?: Record<string, any>;
+    type: 'ADD' | 'EDIT';
     refresh: Function;
     children?: React.ReactNode;
 }
 
-const Update = (props: Props) => {
-    const [form] = Form.useForm();
-    const { data, refresh, children, ...rest } = props;
-    const { dispatch } = useFetch(updateDic, null, false); // 更新
+const UpdateModal = (props: Props) => {
+    // const [form] = Form.useForm();
+    const { data, refresh, type, children, ...rest } = props;
+    const { dispatch: updateFunc } = useFetch(updateDic, null, false); // 更新
+    const { dispatch: addFunc } = useFetch(updateDic, null, false); // 新增
+
+    const title = type === 'EDIT' ? '编辑字典' : '新增字典';
 
     const fetch = (values: any) => {
-        return dispatch(values).then(res => {
-            message.success('操作成功');
-        });
-    };
-
-    const dispatchValidateFields = () => {
-        return form.validateFields().then(values => {
-            console.log(values); // 格式校验
-        });
+        return values.id
+            ? updateFunc(values).then(res => {
+                  message.success('操作成功');
+              })
+            : addFunc(values).then(res => {
+                  message.success('操作成功');
+              });
     };
 
     return (
         <BtnTpl
             {...rest}
             width={600}
-            title="更新字典"
-            btnText="更新"
+            title={title}
             okText="确认"
             fetch={fetch}
             hasForm
@@ -42,24 +42,29 @@ const Update = (props: Props) => {
                 refresh();
             }}
             render={(form, onFinish) => (
-                <Form form={form} initialValues={data} onFinish={onFinish} labelAlign="left" scrollToFirstError>
-                    <Form.Item hidden label="key" name="key">
-                        <Input />
+                <Form form={form} labelCol={{ span: 6 }} wrapperCol={{ span: 16 }} initialValues={data} onFinish={onFinish} scrollToFirstError>
+                    <Form.Item hidden label="id" name="id">
+                        <Input disabled />
                     </Form.Item>
 
                     <Form.Item rules={[{ required: true, message: '请填写' }]} label="字典名称" name="dictionaryName">
-                        <Input placeholder="字典名称" maxLength={200} />
+                        <Input placeholder="请输入" maxLength={200} />
                     </Form.Item>
 
                     <Form.Item rules={[{ required: true, message: '请填写' }]} label="字典描述" name="dictionaryDescribe">
-                        <Input placeholder="字典描述" maxLength={200} />
+                        <Input placeholder="请输入" maxLength={200} />
                     </Form.Item>
 
-                    <Form.Item rules={[{ required: true, message: '请上传文件' }]} label="文件" name="file">
-                        <Upload maxCount="1" accept="xls,xlsx,.7z" />
-                        <Button onClick={dispatchValidateFields} style={{ marginRight: '12px' }}>
-                            文件校验
-                        </Button>
+                    <Form.Item label="标签颜色" name="color">
+                        <Input placeholder="请输入" maxLength={200} />
+                    </Form.Item>
+
+                    <Form.Item label="标签快捷键" name="keyName">
+                        <Input placeholder="请输入" maxLength={200} />
+                    </Form.Item>
+
+                    <Form.Item label="文件" name="filePath" valuePropName="fileList">
+                        <Upload maxCount="1" accept="xls,xlsx,txt" />
                     </Form.Item>
                 </Form>
             )}
@@ -69,4 +74,4 @@ const Update = (props: Props) => {
     );
 };
 
-export default Update;
+export default UpdateModal;

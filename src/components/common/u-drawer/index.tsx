@@ -26,6 +26,7 @@ const UDrawer = (props: Props) => {
             <span className="u-modal-trigger" onClick={() => onClick()}>
                 {trigger}
             </span>
+
             <Drawer visible={visible} zIndex={999} {...rest} onClose={onClose}>
                 {children}
             </Drawer>

@@ -2,11 +2,9 @@ import React, { useState } from 'react';
 import { Table, Space, Divider, Form, Input, Button } from 'antd';
 import { useRequest } from 'ahooks';
 import FormSearch from '@/components/form-search';
-// import Upload from '@/components/upload';
 import IconSet from '@/components/icon';
 import { getDicAll } from '@/axios';
 import Export from './modal/export';
-import UpdateModal from './modal/update-modal';
 import ImportModal from './modal/import-modal';
 import View from './view/index';
 import './index.less';
@@ -20,21 +18,20 @@ export default function Dictionary() {
     const [form] = Form.useForm();
     const [searchParams, setSearchParams] = useState<Record<string, any>>({}); // 全部搜索项参数
 
-    const getTableData = ({ current, pageSize }) => {
+    const getTableData = ({ page, size }) => {
         const params = {
-            currentPage: current,
-            pageSize,
+            page,
+            size,
             ...searchParams
         };
         return getDicAll(params);
     };
     const { tableProps, refresh } = useRequest(getTableData, {
+        defaultParams: { page: 0, size: Infinity },
         paginated: true,
-        defaultPageSize: 10,
         formatResult: (response: any) => {
             return {
-                list: response?.dictionaries || [],
-                total: 100
+                list: response?.content || []
             };
         },
         refreshDeps: [searchParams]
@@ -65,6 +62,19 @@ export default function Dictionary() {
             key: 'dictionaryDescribe'
         },
         {
+            title: '快捷键',
+            dataIndex: 'keyName',
+            key: 'keyName'
+        },
+        {
+            title: '标签颜色',
+            dataIndex: 'color',
+            key: 'color',
+            render: text => {
+                return <div style={{ background: text, width: 40, height: 8, borderRadius: 10 }} />;
+            }
+        },
+        {
             title: '包含词量',
             dataIndex: 'wordsNum',
             key: 'words',
@@ -73,7 +83,7 @@ export default function Dictionary() {
         {
             title: '字典容量',
             dataIndex: 'dictsContent',
-            key: 'dicts',
+            key: 'dictsContent',
             width: 140
         },
         {
@@ -82,11 +92,11 @@ export default function Dictionary() {
             render: (elem: any, row: any, index: number) => {
                 return (
                     <Space size="10">
-                        <UpdateModal data={row}>
+                        <ImportModal data={row} type="EDIT" refresh={getTableData}>
                             <a>
-                                <IconSet type="icon-gengxin" /> 更新
+                                <IconSet type="icon-bianji" /> 编辑
                             </a>
-                        </UpdateModal>
+                        </ImportModal>
                         <Divider type="vertical" />
                         <Export data={row} />
                     </Space>
@@ -98,28 +108,17 @@ export default function Dictionary() {
     return (
         <div className="dic-page">
             <FormSearch mode="common" form={form} onSearch={onSearch} onReset={onReset} {...layOut}>
-                <Form.Item label="字典名称" name="dictionaryName">
+                <Form.Item label="关键字" name="keyName">
                     <Input />
                 </Form.Item>
-                <Form.Item label="字典描述" name="dictionaryDescribe">
-                    <Input />
-                </Form.Item>
-                {/* <Form.Item label="文件上传" name="x" valuePropName="fileList">
-                    <Upload maxCount="1" accept="png,jpeg,jpg,gif,pdf,eml,docx,doc" />
-                </Form.Item> */}
             </FormSearch>
             <section className="m-list">
                 <div className="u-operation">
-                    <ImportModal>
+                    <ImportModal type="ADD" refresh={getTableData}>
                         <Button type="primary">导入</Button>
                     </ImportModal>
                 </div>
-                <Table
-                    {...tableProps}
-                    refresh={refresh}
-                    columns={columns}
-                    pagination={{ ...tableProps.pagination, pageSizeOptions: ['20', '30', '50'] }}
-                />
+                <Table {...tableProps} refresh={refresh} columns={columns} pagination={null} />
             </section>
         </div>
     );

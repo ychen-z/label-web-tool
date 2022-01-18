@@ -36,7 +36,15 @@ const Add = (props: Props) => {
                 refresh();
             }}
             render={(form, onFinish) => (
-                <Form form={form} initialValues={data} onFinish={onFinish} labelAlign="left" scrollToFirstError>
+                <Form
+                    form={form}
+                    labelCol={{ span: 6 }}
+                    wrapperCol={{ span: 16 }}
+                    initialValues={data}
+                    onFinish={onFinish}
+                    labelAlign="left"
+                    scrollToFirstError
+                >
                     <Form.Item hidden label="key" name="key">
                         <Input />
                     </Form.Item>
@@ -46,7 +54,7 @@ const Add = (props: Props) => {
                     </Form.Item>
 
                     <Form.Item rules={[{ required: true, message: '请填写' }]} label="别名" name="abbreviations">
-                        <Input placeholder="请输入别名，不同别名间请以“ | ”分割" maxLength={200} />
+                        <Input placeholder="请输入别名，不同别名间请以“ ， ”分割" maxLength={200} />
                     </Form.Item>
 
                     <Form.Item rules={[{ required: true, message: '请填写' }]} label="标签" name="label">

@@ -6,7 +6,7 @@ export const isTest = true; // 使用nginx联调, 设为false; 使用proxy联调
 export const rootURL = isLocal ? (isMock ? '/mock' : isTest ? '/mock/test' : isDev ? '/mock/dev' : '') : '';
 
 export const ServerCode = {
-    SUCCESS: 200,
+    SUCCESS: 0,
     CONTINUE: 400,
     WRONG_PARAM: 401,
     WRONG_REQUEST: 402,

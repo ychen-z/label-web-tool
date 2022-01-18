@@ -5,9 +5,9 @@ export type EditType = 0 | 1;
 
 // 分页器参数
 export interface PaginationProps {
-    currentPage: number;
+    page: number;
     total: number;
-    pageSize?: number;
+    size?: number;
 }
 
 // 下拉列表的各项数据类型

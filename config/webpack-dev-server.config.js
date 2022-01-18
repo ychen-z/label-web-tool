@@ -13,8 +13,18 @@ module.exports = {
     },
     proxy: {
         // 测试
-        '/mock/test': {
+        '/mock/dev': {
             target: 'http://101.35.15.228:8080',
+            secure: false,
+            pathRewrite: {
+                '^/mock/test': ''
+            },
+            changeOrigin: true,
+            logLevel: 'debug' // this what you want
+        },
+
+        '/mock/test': {
+            target: 'http://101.35.15.228:80',
             secure: false,
             pathRewrite: {
                 '^/mock/test': ''

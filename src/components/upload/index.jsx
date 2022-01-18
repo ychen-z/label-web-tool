@@ -20,6 +20,7 @@ export default class SelfUpload extends Component {
         };
     }
 
+    // eslint-disable-next-line react/no-deprecated
     componentWillReceiveProps(nextProps) {
         if (!isEqual(this.formatData(nextProps.fileList), this.state.fileList)) {
             this.setState({ fileList: this.formatData(nextProps.fileList) });
@@ -34,13 +35,11 @@ export default class SelfUpload extends Component {
                   item =>
                       (item = {
                           uid: item.uid || item.id,
-                          name: item.appendixName,
                           ...item
                       })
               )
             : {
                   uid: data.uid || data.id,
-                  name: data.appendixName,
                   ...data
               };
     };
@@ -62,8 +61,8 @@ export default class SelfUpload extends Component {
             fileList = fileList.map(file => {
                 if (file.response) {
                     let data = file.response.data;
-                    file.id = data.id; // 读取文件上传的id
-                    file.url = data.url; // 读取远程路径并显示链接。
+                    file.id = data; // 读取文件上传的id
+                    file.url = data; // 读取远程路径并显示链接。
                 }
                 return file;
             });
@@ -79,7 +78,7 @@ export default class SelfUpload extends Component {
 
     render() {
         const { fileList = [] } = this.state;
-        const { children = <Content accept={this.props.accept} />, action = '/api/ats/file/upload', maxCount = Infinity, ...rest } = this.props;
+        const { children = <Content accept={this.props.accept} />, action = '/api/file/upload', maxCount = Infinity, ...rest } = this.props;
         return (
             <Upload action={action} {...rest} fileList={fileList} onChange={this.onChange}>
                 {fileList.length < maxCount && children}

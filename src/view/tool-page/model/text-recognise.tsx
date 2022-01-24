@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Button, Select } from 'antd';
+import React from 'react';
+import { Form, Button, Select } from 'antd';
 
 const { Option } = Select;
 /**
@@ -7,30 +7,39 @@ const { Option } = Select;
  * @returns 语料识别
  */
 export default function TextRecognition() {
-    const [modelState, setModelState] = useState('BiLSTM');
-    const onSelectModel = v => {
-        setModelState(v);
+    const [form] = Form.useForm();
+    const onFinish = values => {
+        console.log('采样:', values);
     };
-    const onSample = () => {
-        console.log('采样');
-    };
+
     const onReText = () => {
-        console.log('识别');
+        console.log('识别', form.getFieldsValue());
     };
 
     return (
-        <div>
-            <div onClick={onSample}>
-                <Select defaultValue={modelState} value={modelState} style={{ width: 120 }} onChange={onSelectModel}>
-                    <Option value="BiLSTM">BiLSTM</Option>
-                </Select>
-                <Button type="primary">采样</Button>
+        <div className="u-text-recognition">
+            <div>
+                <Form name="basic" initialValues={{ remember: true }} labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} onFinish={onFinish}>
+                    <div className="">
+                        <Form.Item label="模型" name="model" rules={[{ required: true, message: 'Please input your username!' }]}>
+                            <Select style={{ width: 120 }}>
+                                <Option value="BiLSTM">BiLSTM</Option>
+                            </Select>
+                        </Form.Item>
+                    </div>
+                    <Form.Item>
+                        <Button type="primary" htmlType="submit">
+                            采样
+                        </Button>
+                    </Form.Item>
+                    <Form.Item>
+                        <Button type="primary" onClick={onReText}>
+                            采样
+                        </Button>
+                    </Form.Item>
+                </Form>
             </div>
-
-            <div onClick={onReText}>
-                <Button type="primary">识别</Button>
-            </div>
-            <div>内容展示</div>
+            <div>语料识别列表</div>
         </div>
     );
 }

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Card } from 'antd';
+import { Card } from 'antd';
 import Loading from './model/loading';
 import DataImport from './model/data-import'; // 数据导入
 import DataPreProcess from './model/data-pre-process'; // 数据预处理
@@ -17,31 +17,31 @@ const Btns = [
         status: false
     },
     {
-        name: 'b',
+        name: '数据预处理',
         type: 2,
         top: 58 * 2,
         status: false
     },
     {
-        name: 'c',
+        name: '手工标注',
         type: 3,
         top: 58 * 3 + 59,
         status: false
     },
     {
-        name: 'd',
+        name: '训练模型',
         type: 4,
         top: 58 * 5 + 60,
         status: false
     },
     {
-        name: 'e',
+        name: '语料识别',
         type: 5,
         top: 58 * 7 + 61,
         status: false
     },
     {
-        name: 'f',
+        name: '数据导出',
         type: 6,
         top: 58 * 9 + 62,
         status: false
@@ -63,40 +63,23 @@ export default function ToolPage() {
 
     // 开始流程
     const _select = (value: number) => {
-        if (value == count + 1) {
-            setCount(value);
-        }
+        setCount(value);
+        // if (value == count + 1) {
+        //     setCount(value);
+        // }
 
-        if (count == 2 && value == 5) {
-            setCount(value);
-        }
+        // if (count == 2 && value == 5) {
+        //     setCount(value);
+        // }
 
-        if (count == 5 && value == 3) {
-            setCount(value);
-        }
+        // if (count == 5 && value == 3) {
+        //     setCount(value);
+        // }
     };
 
     return (
         <div className="m-tool-page">
-            <Card
-                className="left"
-                title="流程图"
-                extra={
-                    <div>
-                        {count == 0 && (
-                            <Button type="primary" onClick={() => setCount(count + 1)}>
-                                开始
-                            </Button>
-                        )}
-
-                        {count > 0 && (
-                            <Button type="primary" onClick={() => setCount(1)}>
-                                重新开始
-                            </Button>
-                        )}
-                    </div>
-                }
-            >
+            <Card className="left" title="流程图">
                 <div className="content">
                     {Btns.map(item => (
                         <span className={`item ${count == item.type ? 'active' : ''}`} style={{ top: item.top }} onClick={() => _select(item.type)}>

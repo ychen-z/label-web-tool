@@ -4,7 +4,7 @@ import { getDicByKey } from '@/axios';
 import UDrawer from '@/components/common/u-drawer';
 import useFetch from '@/hooks/common/useFetch';
 import { PaginationProps } from '@/interface';
-import TemplateTable from './module/table-list';
+import Table from './module/table-list';
 import ModalAdd from '../modal/dict-data-modal';
 import { TemplateSearchParams } from './interface';
 import './index.less';
@@ -67,7 +67,7 @@ function Template(props) {
                         </ModalAdd>
                     </div>
 
-                    <TemplateTable
+                    <Table
                         loading={isLoading}
                         list={templateList}
                         dictId={dictId}

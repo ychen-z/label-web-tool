@@ -2,18 +2,19 @@ import React from 'react';
 import { Popconfirm, message } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 import useFetch from '@/hooks/common/useFetch';
-import { delDic } from '@/axios';
 
 interface Props {
-    callback: Function;
-    key: string | number;
+    refresh?: Function;
+    id: string | number;
+    func: (req: any) => Promise<unknown>;
 }
 
 function Del(props: Props) {
-    const { dispatch: dispatchDeleteApp } = useFetch(delDic, null, false);
+    const { func, id } = props;
+    const { dispatch: dispatchDeleteApp } = useFetch(func, null, false);
     const onDel = () => {
-        dispatchDeleteApp(props.key).then((data: any) => {
-            props?.callback();
+        dispatchDeleteApp(id).then((data: any) => {
+            props?.refresh();
             message.success('删除成功');
         });
     };

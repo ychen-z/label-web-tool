@@ -18,14 +18,14 @@ const MENU_MAP: MenuItemType[] = [
         name: '语料管理',
         link: '/app/text',
         icon: 'icon-yuliao'
-    },
-
-    {
-        id: 4,
-        name: '标签管理',
-        link: '/app/label',
-        icon: 'icon-yuliao'
     }
+
+    // {
+    //     id: 4,
+    //     name: '标签管理',
+    //     link: '/app/label',
+    //     icon: 'icon-yuliao'
+    // }
 ];
 
 export default MENU_MAP;

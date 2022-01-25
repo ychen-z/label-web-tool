@@ -3,8 +3,8 @@ import { Button } from 'antd';
 import useFetch from '@/hooks/common/useFetch';
 // import FormSearch from '@/components/form-search';
 import { getDicAll } from '@/axios';
-import Dtable from './components/table';
-import ImportModal from './modal/Modal';
+import Dictable from './components/table';
+import AddModal from './modal/import-modal-add';
 import './index.less';
 
 export default function Dictionary(props) {
@@ -51,11 +51,11 @@ export default function Dictionary(props) {
             </FormSearch> */}
             <section className="m-list">
                 <div className="u-operation">
-                    <ImportModal type="ADD" refresh={getDicTableData}>
+                    <AddModal type="ADD" refresh={getDicTableData}>
                         <Button type="primary">导入</Button>
-                    </ImportModal>
+                    </AddModal>
                 </div>
-                <Dtable dataSource={data?.content} refresh={getDicTableData} selectedKeys={selectedKeys} setSelectedKeys={setSelectedKeys} />
+                <Dictable dataSource={data?.content} refresh={getDicTableData} selectedKeys={selectedKeys} setSelectedKeys={setSelectedKeys} />
             </section>
         </div>
     );

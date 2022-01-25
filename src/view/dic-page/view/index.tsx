@@ -1,17 +1,16 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import { Button } from 'antd';
 import { getDicByKey } from '@/axios';
 import UDrawer from '@/components/common/u-drawer';
 import useFetch from '@/hooks/common/useFetch';
 import { PaginationProps } from '@/interface';
 import TemplateTable from './module/table-list';
-import ModalAdd from './module/modal-add';
+import ModalAdd from '../modal/dict-data-modal';
 import { TemplateSearchParams } from './interface';
 import './index.less';
 
 function Template(props) {
-    const { dictionaryName, id } = props;
-
+    const { dictionaryName, id: dictId } = props;
     const DEFAULT_PARAM = {
         page: 1,
         size: 10
@@ -36,24 +35,24 @@ function Template(props) {
 
             fetchTemplateList(tempParams).then(res => {
                 setSelectedKeys([]); // 清空所选列
-                setTemplateList(res.list);
-                setPagination({ page: tempParams.page, total: res.total }); // 记录分页器参数
+                setTemplateList(res.content);
+                setPagination({ page: tempParams.page, total: res.totalElements }); // 记录分页器参数
             });
         },
         [fetchTemplateList, params]
     );
 
-    useEffect(() => {
-        getList({ id });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    const beforeShow = () => {
+        dictId && getList({ dictId });
+    };
 
     return (
         <div>
             <UDrawer
                 trigger={<a>{dictionaryName}</a>}
                 maskClosable={false}
-                title="查看"
+                title={'查看' + dictionaryName + '详情'}
+                beforeShow={beforeShow}
                 className="m-template"
                 width={document.body.clientWidth * 0.8}
                 mask
@@ -63,7 +62,7 @@ function Template(props) {
             >
                 <div className="u-table">
                     <div className="u-opera-row">
-                        <ModalAdd callback={getList}>
+                        <ModalAdd callback={getList} data={{ dictId }}>
                             <Button type="primary">+ 增加字典</Button>
                         </ModalAdd>
                     </div>
@@ -71,6 +70,7 @@ function Template(props) {
                     <TemplateTable
                         loading={isLoading}
                         list={templateList}
+                        dictId={dictId}
                         setSelectedKeys={setSelectedKeys}
                         selectedKeys={selectedKeys}
                         getList={getList}

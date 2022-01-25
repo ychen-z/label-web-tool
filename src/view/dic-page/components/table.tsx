@@ -2,7 +2,9 @@ import React from 'react';
 import { Table, Space, Divider } from 'antd';
 import IconSet from '@/components/icon';
 import Export from '../modal/export';
-import ImportModal from '../modal/import-modal';
+import UpdateModal from '../modal/import-modal-add';
+import Del from '../modal/del';
+import { delDic } from '@/axios';
 import View from '../view/index';
 
 export default function Dtable(props) {
@@ -59,17 +61,19 @@ export default function Dtable(props) {
         },
         {
             title: '操作',
-            width: 140,
+            width: 220,
             render: (elem: any, row: any, index: number) => {
                 return (
                     <Space size="10">
-                        <ImportModal data={row} id={row.id} type="EDIT" refresh={refresh}>
+                        <UpdateModal data={row} type="EDIT" refresh={refresh}>
                             <a>
                                 <IconSet type="icon-bianji" /> 编辑
                             </a>
-                        </ImportModal>
+                        </UpdateModal>
                         <Divider type="vertical" />
                         <Export data={row} />
+                        <Divider type="vertical" />
+                        <Del id={row.id} func={delDic} refresh={refresh} />
                     </Space>
                 );
             }

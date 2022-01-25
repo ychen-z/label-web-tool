@@ -3,7 +3,7 @@ import { Table, Divider, Space } from 'antd';
 import { TablePaginationConfig } from 'antd/es/table';
 import IconSet from '@/components/icon';
 import { TemplateTableProps } from './interface';
-import ModalAdd from '../modal-add';
+import ModalAdd from '../../../modal/dict-data-modal';
 import Del from '../del-icon';
 import './index.less';
 

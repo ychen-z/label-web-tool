@@ -8,7 +8,7 @@ export interface MenuItemType {
     link?: string;
     number?: number;
     url?: string;
-    icon?: ReactElement;
+    icon?: ReactElement | string;
     menuId?: string;
     children?: Array<MenuItemType>;
 }

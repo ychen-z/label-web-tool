@@ -1,11 +1,12 @@
 import React from 'react';
-import { Form, Input, message } from 'antd';
+import { Form, Input } from 'antd';
 import BtnTpl from '@/components/btns/btn-tpl';
 import Upload from './SelfUpload';
 import useFetch from '@/hooks/common/useFetch';
-import { updateDic } from '@/axios';
+import { postDic, updateDic } from '@/axios';
 
 interface Props {
+    id?: number | string;
     data?: Record<string, any>;
     type: 'ADD' | 'EDIT';
     refresh: Function;
@@ -14,20 +15,13 @@ interface Props {
 
 const UpdateModal = (props: Props) => {
     // const [form] = Form.useForm();
-    const { data, refresh, type, children, ...rest } = props;
+    const { data, refresh, type, id, children, ...rest } = props;
     const { dispatch: updateFunc } = useFetch(updateDic, null, false); // 更新
-    const { dispatch: addFunc } = useFetch(updateDic, null, false); // 新增
-
+    const { dispatch: addFunc } = useFetch(postDic, null, false); // 新增
     const title = type === 'EDIT' ? '编辑字典' : '新增字典';
 
     const fetch = (values: any) => {
-        return values.id
-            ? updateFunc(values).then(res => {
-                  message.success('操作成功');
-              })
-            : addFunc(values).then(res => {
-                  message.success('操作成功');
-              });
+        return values.id ? updateFunc(values) : addFunc(values);
     };
 
     return (
@@ -60,6 +54,10 @@ const UpdateModal = (props: Props) => {
                     </Form.Item>
 
                     <Form.Item label="标签快捷键" name="keyName">
+                        <Input placeholder="请输入" maxLength={200} />
+                    </Form.Item>
+
+                    <Form.Item label="keyCode" name="keyCode">
                         <Input placeholder="请输入" maxLength={200} />
                     </Form.Item>
 

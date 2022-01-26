@@ -19,7 +19,7 @@ const ADDModal = (props: Props) => {
 
     const onSubmit = (values: any) => {
         form.validateFields().then(values => {
-            values.alias = values.alias.split(',');
+            values.alias = values.alias.split('|');
             values.id
                 ? updateFunc(values).then(res => {
                       message.success('操作成功');
@@ -46,7 +46,7 @@ const ADDModal = (props: Props) => {
                 </Form.Item>
 
                 <Form.Item rules={[{ required: true, message: '请填写' }]} label="别名" name="alias">
-                    <Input placeholder="请输入别名，不同别名间请以“ ， ”分割" maxLength={200} />
+                    <Input placeholder="请输入别名，不同别名间请以“ | ”分割" maxLength={200} />
                 </Form.Item>
 
                 <Form.Item rules={[{ required: true, message: '请填写' }]} label="标签" name="label">

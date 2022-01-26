@@ -5,7 +5,7 @@ import Export from '../modal/export';
 import UpdateModal from '../modal/import-modal-add';
 import Del from '../modal/del';
 import { delDic } from '@/axios';
-import View from '../view/index';
+import View from '../modal/view/index';
 
 export default function Dtable(props) {
     const { loading, refresh, dataSource } = props;

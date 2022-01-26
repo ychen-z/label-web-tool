@@ -1,6 +1,3 @@
-import { cloneDeep } from 'lodash';
-import moment from 'moment';
-
 // 获取url中的参数
 export const getParams: () => { [index: string]: string } = () => {
     const search = location.search;
@@ -88,15 +85,6 @@ export const getPercent = (num: number | undefined, count = 1) => {
     return `${parseFloat((num * 100).toFixed(count))}%`;
 };
 
-export const sortData = (data: any) => {
-    const d = cloneDeep(data);
-    // 按照sort排序
-    d.sort((a: any, b: any) => {
-        return a.sort - b.sort;
-    });
-    return d;
-};
-
 // 柯里化
 export const curry = (fn: Function) => {
     if (typeof fn !== 'function') {
@@ -125,68 +113,5 @@ export const validateEmpty = (errInfo: string) => {
         }
     });
 };
-
-// 时间转换
-export const moments = (val: string | number | Date | undefined, type?: string): string | Date => {
-    if (!val) {
-        return '-';
-    }
-    const date = new Date(val);
-    const year = date.getFullYear();
-    const month = date.getMonth() + 1;
-    const day = date.getDate();
-    const hour = date.getHours();
-    const minute = date.getMinutes();
-    const second = date.getSeconds();
-
-    const format = type
-        ? type.replace(/Y{2,4}|M{1,2}|D{1,2}|d{1,4}|H{1,2}|m{1,2}|s{1,2}/g, match => {
-              switch (match) {
-                  case 'YY':
-                      return String(year).slice(-2);
-                  case 'YYY':
-                  case 'YYYY':
-                      return String(year);
-                  case 'M':
-                      return String(month);
-                  case 'MM':
-                      return String(month).padStart(2, '0');
-                  case 'D':
-                      return String(day);
-                  case 'DD':
-                      return String(day).padStart(2, '0');
-                  case 'H':
-                      return String(hour);
-                  case 'HH':
-                      return String(hour).padStart(2, '0');
-                  case 'm':
-                      return String(minute);
-                  case 'mm':
-                      return String(minute).padStart(2, '0');
-                  case 's':
-                      return String(second);
-                  case 'ss':
-                      return String(second).padStart(2, '0');
-                  default:
-                      return match;
-              }
-          })
-        : date;
-    return format;
-};
-
-// 计算相隔分钟数
-export const getMin = (a, b) =>
-    moment
-        .duration(
-            moment(a).valueOf() -
-                moment(b)
-                    .valueOf()
-                    .valueOf()
-        )
-        .as('minutes');
-
-// 计算相隔分钟数
-export const getMins = (a, b) => moment.duration(a.valueOf() - b.valueOf()).as('minutes');
 
 export const flatten = (arr, depth = 1) => arr.reduce((a, v) => a.concat(depth > 1 && Array.isArray(v) ? flatten(v, depth - 1) : v), []);

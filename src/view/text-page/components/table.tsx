@@ -8,11 +8,12 @@ import { delDic } from '@/axios';
 import View from '../modal/view/index';
 
 export default function TextTable(props) {
-    const { loading, refresh, dataSource } = props;
+    const { loading, refresh, dataSource, read } = props;
     const rowSelection = {
         selectedRowKeys: props.selectedKeys,
         onChange: (selectedRowKeys, selectedRows) => {
             props.setSelectedKeys(selectedRowKeys);
+            props.setSelectedRows?.(selectedRows);
         },
         getCheckboxProps: record => ({
             id: record.id + ''
@@ -26,7 +27,7 @@ export default function TextTable(props) {
             key: 'textsName',
             width: 240,
             render: (text, record) => {
-                return <View {...record} />;
+                return read ? text : <View {...record} />;
             }
         },
         {

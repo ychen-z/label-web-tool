@@ -8,7 +8,7 @@ import { delDic } from '@/axios';
 import View from '../modal/view/index';
 
 export default function DictTable(props) {
-    const { loading, refresh, dataSource } = props;
+    const { loading, refresh, dataSource, read } = props;
     const rowSelection = {
         selectedRowKeys: props.selectedKeys,
         onChange: (selectedRowKeys, selectedRows) => {
@@ -26,7 +26,7 @@ export default function DictTable(props) {
             key: 'dictionaryName',
             width: 240,
             render: (text, record) => {
-                return <View {...record} />;
+                return read ? text : <View {...record} />;
             }
         },
         {

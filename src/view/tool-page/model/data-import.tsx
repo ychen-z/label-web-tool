@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { Button, Select, Tabs, Slider, InputNumber } from 'antd';
+import { Tabs } from 'antd';
+import DicTable from '@/view/dic-page';
+import TextTable from '@/view/text-page';
 
-const { Option } = Select;
 const { TabPane } = Tabs;
 
 /**
@@ -22,10 +23,10 @@ export default function DataImport() {
             <div>
                 <Tabs defaultActiveKey={activeKey} onChange={onChangeTabs}>
                     <TabPane tab="字典" key="1">
-                        字典列表（可选，缓存到客户端）
+                        <DicTable read />
                     </TabPane>
                     <TabPane tab="语料" key="2">
-                        语料 （可选，缓存到客户端）
+                        <TextTable read />
                     </TabPane>
                 </Tabs>
             </div>

@@ -8,7 +8,7 @@ import AddModal from './modal/import-modal-add';
 import './index.less';
 
 export default function Dictionary(props) {
-    // const [form] = Form.useForm();
+    const { read } = props;
     const { data, dispatch: getDicTableData, isLoading } = useFetch(getDicAll, { page: 0, size: Infinity });
     const [selectedKeys, setSelectedKeys] = useState([]);
     // const [searchParams, setSearchParams] = useState<Record<string, any>>({}); // 全部搜索项参数
@@ -50,12 +50,16 @@ export default function Dictionary(props) {
                 </Form.Item>
             </FormSearch> */}
             <section className="m-list">
-                <div className="u-operation">
-                    <AddModal type="ADD" refresh={getDicTableData}>
-                        <Button type="primary">导入</Button>
-                    </AddModal>
-                </div>
+                {!read && (
+                    <div className="u-operation">
+                        <AddModal type="ADD" refresh={getDicTableData}>
+                            <Button type="primary">导入</Button>
+                        </AddModal>
+                    </div>
+                )}
+
                 <Dictable
+                    read={read}
                     loading={isLoading}
                     dataSource={data?.content}
                     refresh={getDicTableData}

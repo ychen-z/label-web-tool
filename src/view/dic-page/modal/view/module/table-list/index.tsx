@@ -63,7 +63,7 @@ function TableList(props: TemplateTableProps) {
     const handleTableChange = useCallback(
         (pagination: TablePaginationConfig) => {
             const tempParams = {
-                size: pagination.size,
+                size: pagination.pageSize,
                 page: pagination.current
             };
             props.getList(tempParams);

@@ -4,7 +4,7 @@ import { TablePaginationConfig } from 'antd/es/table';
 import IconSet from '@/components/icon';
 import { delTextData } from '@/axios';
 import { TemplateTableProps } from './interface';
-import ModalAdd from '../../../dict-data-modal';
+import ModalAdd from '../../../data-modal';
 import Del from '../../../del';
 import './index.less';
 

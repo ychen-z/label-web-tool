@@ -1,6 +1,6 @@
 import React from 'react';
 import { Form, Input, Modal, message } from 'antd';
-import Upload from './SelfUpload';
+import Upload from '@/components/upload/SelfUpload';
 import useFetch from '@/hooks/common/useFetch';
 import { postText, updateText } from '@/axios';
 

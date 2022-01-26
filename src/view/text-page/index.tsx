@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { Button } from 'antd';
 import useFetch from '@/hooks/common/useFetch';
 import { getTextAll } from '@/axios';
-import Dictable from './components/table';
-import AddModal from './modal/import-modal-add';
+import TextTable from './components/table';
+import AddModal from './modal/add';
 import './index.less';
 
 export default function Dictionary(props) {
@@ -17,7 +17,7 @@ export default function Dictionary(props) {
                         <Button type="primary">导入</Button>
                     </AddModal>
                 </div>
-                <Dictable dataSource={data?.content} refresh={getTextTableData} selectedKeys={selectedKeys} setSelectedKeys={setSelectedKeys} />
+                <TextTable dataSource={data?.content} refresh={getTextTableData} selectedKeys={selectedKeys} setSelectedKeys={setSelectedKeys} />
             </section>
         </div>
     );

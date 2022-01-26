@@ -7,7 +7,7 @@ import Del from '../modal/del';
 import { delDic } from '@/axios';
 import View from '../modal/view/index';
 
-export default function Dtable(props) {
+export default function DictTable(props) {
     const { loading, refresh, dataSource } = props;
     const rowSelection = {
         selectedRowKeys: props.selectedKeys,
@@ -62,34 +62,23 @@ export default function Dtable(props) {
         {
             title: '操作',
             width: 220,
-            render: (elem: any, row: any, index: number) => {
+            render: (text: string, record: any) => {
                 return (
-                    <Space size="10">
-                        <UpdateModal data={row} type="EDIT" refresh={refresh}>
+                    <Space>
+                        <UpdateModal data={record} type="EDIT" refresh={refresh}>
                             <a>
                                 <IconSet type="icon-bianji" /> 编辑
                             </a>
                         </UpdateModal>
                         <Divider type="vertical" />
-                        <Export data={row} />
+                        <Export data={record} />
                         <Divider type="vertical" />
-                        <Del id={row.id} func={delDic} refresh={refresh} />
+                        <Del id={record.id} func={delDic} refresh={refresh} />
                     </Space>
                 );
             }
         }
     ];
-    return (
-        <div>
-            <Table
-                loading={loading}
-                rowKey="id"
-                rowSelection={rowSelection}
-                dataSource={dataSource}
-                refresh={refresh}
-                columns={columns}
-                pagination={null}
-            />
-        </div>
-    );
+
+    return <Table loading={loading} rowKey="id" rowSelection={rowSelection} dataSource={dataSource} columns={columns} pagination={false} />;
 }

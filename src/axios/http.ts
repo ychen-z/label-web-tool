@@ -84,10 +84,6 @@ const errHandle: <R>(err: AxiosError<R> | ResponseError<R>) => Promise<R> = err 
         code = err.data.code;
         msg = err.data.msg;
     }
-    // 未登录
-    if (ServerCode.NO_LOGIN === code) {
-        // 执行未登录逻辑
-    }
     // RedirectMap.hasOwnProperty(code) && window.location.replace(RedirectMap[code]);
     const ERR_MESSAGE = msg || ServerCodeMap[code];
 

@@ -9,7 +9,7 @@ import './index.less';
 
 export default function Dictionary(props) {
     // const [form] = Form.useForm();
-    const { data, dispatch: getDicTableData } = useFetch(getDicAll, { page: 0, size: Infinity });
+    const { data, dispatch: getDicTableData, isLoading } = useFetch(getDicAll, { page: 0, size: Infinity });
     const [selectedKeys, setSelectedKeys] = useState([]);
     // const [searchParams, setSearchParams] = useState<Record<string, any>>({}); // 全部搜索项参数
 
@@ -55,7 +55,13 @@ export default function Dictionary(props) {
                         <Button type="primary">导入</Button>
                     </AddModal>
                 </div>
-                <Dictable dataSource={data?.content} refresh={getDicTableData} selectedKeys={selectedKeys} setSelectedKeys={setSelectedKeys} />
+                <Dictable
+                    loading={isLoading}
+                    dataSource={data?.content}
+                    refresh={getDicTableData}
+                    selectedKeys={selectedKeys}
+                    setSelectedKeys={setSelectedKeys}
+                />
             </section>
         </div>
     );

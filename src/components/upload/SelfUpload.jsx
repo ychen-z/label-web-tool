@@ -1,3 +1,4 @@
+/* eslint-disable react/no-deprecated */
 import React, { Component } from 'react';
 import { Upload, message, Button, Icon } from 'antd';
 import { isEqual } from 'lodash';

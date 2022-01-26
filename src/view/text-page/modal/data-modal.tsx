@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Modal from './dict-data';
+import Modal from './data';
 
 const Modal2 = props => {
     const [visible, setVisible] = useState(false);

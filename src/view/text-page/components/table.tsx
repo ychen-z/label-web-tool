@@ -2,12 +2,12 @@ import React from 'react';
 import { Table, Space, Divider } from 'antd';
 import IconSet from '@/components/icon';
 import Export from '../modal/export';
-import UpdateModal from '../modal/import-modal-add';
+import UpdateModal from '../modal/add';
 import Del from '../modal/del';
 import { delDic } from '@/axios';
 import View from '../modal/view/index';
 
-export default function Dtable(props) {
+export default function TextTable(props) {
     const { loading, refresh, dataSource } = props;
     const rowSelection = {
         selectedRowKeys: props.selectedKeys,
@@ -53,7 +53,7 @@ export default function Dtable(props) {
             width: 220,
             render: (elem: any, row: any, index: number) => {
                 return (
-                    <Space size="10">
+                    <Space>
                         <UpdateModal data={row} type="EDIT" refresh={refresh}>
                             <a>
                                 <IconSet type="icon-bianji" /> 编辑
@@ -68,17 +68,5 @@ export default function Dtable(props) {
             }
         }
     ];
-    return (
-        <div>
-            <Table
-                loading={loading}
-                rowKey="id"
-                rowSelection={rowSelection}
-                dataSource={dataSource}
-                refresh={refresh}
-                columns={columns}
-                pagination={null}
-            />
-        </div>
-    );
+    return <Table loading={loading} rowKey="id" rowSelection={rowSelection} dataSource={dataSource} columns={columns} pagination={false} />;
 }

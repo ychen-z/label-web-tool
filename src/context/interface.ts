@@ -1,4 +1,5 @@
 export interface GlobalContextProps {
-    dispatch: Function;
-    dispatchDownload: Function;
+    dispatchDict: Function;
+    dispatchText: Function;
+    // dispatchDownload: Function;
 }

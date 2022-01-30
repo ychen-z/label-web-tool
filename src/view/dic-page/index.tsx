@@ -1,54 +1,27 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button } from 'antd';
 import useFetch from '@/hooks/common/useFetch';
-// import FormSearch from '@/components/form-search';
 import { getDicAll } from '@/axios';
 import Dictable from './components/table';
 import AddModal from './modal/import-modal-add';
 import './index.less';
 
 export default function Dictionary(props) {
-    const { read } = props;
+    const { read, setDicLength } = props;
+    const _dicts = localStorage
+        .getItem('_dict')
+        ?.split(',')
+        .map(item => (item = Number(item)));
     const { data, dispatch: getDicTableData, isLoading } = useFetch(getDicAll, { page: 0, size: Infinity });
-    const [selectedKeys, setSelectedKeys] = useState([]);
-    // const [searchParams, setSearchParams] = useState<Record<string, any>>({}); // 全部搜索项参数
+    const [selectedKeys, setSelectedKeys] = useState(_dicts);
 
-    // const getTableData = ({ page, size }) => {
-    //     const params = {
-    //         page,
-    //         size,
-    //         ...searchParams
-    //     };
-    //     return getDicAll(params);
-    // };
-
-    // const { tableProps, refresh } = useRequest(getTableData, {
-    //     defaultParams: { page: 0, size: Infinity },
-    //     paginated: true,
-    //     formatResult: (response: any) => {
-    //         return {
-    //             list: response?.content || []
-    //         };
-    //     },
-    //     refreshDeps: [searchParams]
-    // });
-
-    // const onSearch = () => {
-    //     setSearchParams(form.getFieldsValue());
-    // };
-
-    // const onReset = () => {
-    //     form.resetFields();
-    //     setSearchParams({});
-    // };
-
+    useEffect(() => {
+        if (setDicLength) {
+            setDicLength(selectedKeys?.length);
+        }
+    }, [selectedKeys, setDicLength]);
     return (
         <div className="dic-page">
-            {/* <FormSearch mode="common" form={form} onSearch={onSearch} onReset={onReset} {...layOut}>
-                <Form.Item label="关键字" name="keyName">
-                    <Input />
-                </Form.Item>
-            </FormSearch> */}
             <section className="m-list">
                 {!read && (
                     <div className="u-operation">

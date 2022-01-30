@@ -6,17 +6,21 @@ import TextTable from './components/table';
 import AddModal from './modal/add';
 import './index.less';
 
-const dicIds = (localStorage.getItem('dicIds') || '').split(',').map(item => (item = Number(item)));
 export default function Text(props) {
-    const { read } = props;
-
+    const { read, setTextLength } = props;
+    const _texts = localStorage
+        .getItem('_text')
+        ?.split(',')
+        .map(item => (item = Number(item)));
     const { data, dispatch: getTextTableData } = useFetch(getTextAll, { page: 0, size: Infinity });
-    const [selectedKeys, setSelectedKeys] = useState<number[]>(dicIds);
+    const [selectedKeys, setSelectedKeys] = useState(_texts);
     const [, setSelectedRows] = useState([]);
 
-    // useEffect(() => {
-    //     localStorage.setItem('dicIds', selectedKeys.join(','));
-    // }, [selectedKeys]);
+    useEffect(() => {
+        if (setTextLength) {
+            setTextLength(selectedKeys?.length);
+        }
+    }, [selectedKeys, setTextLength]);
 
     return (
         <div className="text-page">

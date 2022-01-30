@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Table, Space, Divider } from 'antd';
 import IconSet from '@/components/icon';
+import { GlobalContext } from '@/context';
 import Export from '../modal/export';
 import UpdateModal from '../modal/import-modal-add';
 import Del from '../modal/del';
@@ -9,9 +10,11 @@ import View from '../modal/view/index';
 
 export default function DictTable(props) {
     const { loading, refresh, dataSource, read } = props;
+    const { dispatchDict } = useContext(GlobalContext);
     const rowSelection = {
         selectedRowKeys: props.selectedKeys,
         onChange: (selectedRowKeys, selectedRows) => {
+            dispatchDict(selectedRowKeys);
             props.setSelectedKeys(selectedRowKeys);
         },
         getCheckboxProps: record => ({
@@ -24,7 +27,8 @@ export default function DictTable(props) {
             title: '字典名称',
             dataIndex: 'dictionaryName',
             key: 'dictionaryName',
-            width: 240,
+            width: 140,
+            read: read,
             render: (text, record) => {
                 return read ? text : <View {...record} />;
             }
@@ -32,12 +36,14 @@ export default function DictTable(props) {
         {
             title: '字典描述',
             dataIndex: 'dictionaryDescribe',
-            key: 'dictionaryDescribe'
+            key: 'dictionaryDescribe',
+            read: read
         },
         {
             title: '快捷键',
             dataIndex: 'keyName',
-            key: 'keyName'
+            key: 'keyName',
+            read: read
         },
         {
             title: '标签颜色',
@@ -80,5 +86,14 @@ export default function DictTable(props) {
         }
     ];
 
-    return <Table loading={loading} rowKey="id" rowSelection={rowSelection} dataSource={dataSource} columns={columns} pagination={false} />;
+    return (
+        <Table
+            loading={loading}
+            rowKey="id"
+            rowSelection={rowSelection}
+            dataSource={dataSource}
+            columns={columns.filter(item => item.read == read)}
+            pagination={false}
+        />
+    );
 }

@@ -1,7 +1,6 @@
 import React, { useState, useReducer, useEffect } from 'react';
 import { Layout } from 'antd';
 import loginReducer from '@/reducer/loginReducer';
-import { GlobalContext } from '@/context';
 // import useAuthInfo from '@/hooks/useAuthInfo'; // 获取用户信息
 import HeaderCustom from '@/components/header';
 import ContentCustom from '@/components/content';
@@ -19,15 +18,11 @@ function App(props) {
     }, []);
     return (
         <Layout>
-            <GlobalContext.Provider value={{ dispatch }}>
-                <>
-                    <HeaderCustom />
-                    <Layout className="g-layout">
-                        <SiderCustom setCollapsed={(params: boolean) => setCollapsed(params)} />
-                        <ContentCustom collapsed={collapsed} auth={{ menus: menus, user: user }} />
-                    </Layout>
-                </>
-            </GlobalContext.Provider>
+            <HeaderCustom />
+            <Layout className="g-layout">
+                <SiderCustom setCollapsed={(params: boolean) => setCollapsed(params)} />
+                <ContentCustom collapsed={collapsed} auth={{ menus: menus, user: user }} />
+            </Layout>
         </Layout>
     );
 }

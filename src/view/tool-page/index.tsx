@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Card } from 'antd';
+import { GlobalContext } from '@/context';
 import Loading from './model/loading';
 import DataImport from './model/data-import'; // 数据导入
 import DataPreProcess from './model/data-pre-process'; // 数据预处理
@@ -77,18 +78,32 @@ export default function ToolPage() {
         // }
     };
 
+    const dispatchDict = v => {
+        localStorage.setItem('_dict', v.join(',')); //存储
+    };
+
+    const dispatchText = v => {
+        localStorage.setItem('_text', v.join(',')); //存储
+    };
+
     return (
-        <div className="m-tool-page">
-            <Card className="left" title="流程图">
-                <div className="content">
-                    {Btns.map(item => (
-                        <span className={`item ${count == item.type ? 'active' : ''}`} style={{ top: item.top }} onClick={() => _select(item.type)}>
-                            {item.name}
-                        </span>
-                    ))}
-                </div>
-            </Card>
-            <section className="right">{Dom[count]}</section>
-        </div>
+        <GlobalContext.Provider value={{ dispatchDict, dispatchText }}>
+            <div className="m-tool-page">
+                <Card className="left" title="流程图">
+                    <div className="content">
+                        {Btns.map(item => (
+                            <span
+                                className={`item ${count == item.type ? 'active' : ''}`}
+                                style={{ top: item.top }}
+                                onClick={() => _select(item.type)}
+                            >
+                                {item.name}
+                            </span>
+                        ))}
+                    </div>
+                </Card>
+                <section className="right">{Dom[count]}</section>
+            </div>
+        </GlobalContext.Provider>
     );
 }

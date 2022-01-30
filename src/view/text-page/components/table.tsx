@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Table, Space, Divider } from 'antd';
 import IconSet from '@/components/icon';
+import { GlobalContext } from '@/context';
+
 import Export from '../modal/export';
 import UpdateModal from '../modal/add';
 import Del from '../modal/del';
@@ -9,11 +11,13 @@ import View from '../modal/view/index';
 
 export default function TextTable(props) {
     const { loading, refresh, dataSource, read } = props;
+    const { dispatchText } = useContext(GlobalContext);
+
     const rowSelection = {
         selectedRowKeys: props.selectedKeys,
         onChange: (selectedRowKeys, selectedRows) => {
             props.setSelectedKeys(selectedRowKeys);
-            props.setSelectedRows?.(selectedRows);
+            dispatchText(selectedRowKeys);
         },
         getCheckboxProps: record => ({
             id: record.id + ''
@@ -26,12 +30,14 @@ export default function TextTable(props) {
             dataIndex: 'textsName',
             key: 'textsName',
             width: 240,
+            read: read,
             render: (text, record) => {
                 return read ? text : <View {...record} />;
             }
         },
         {
             title: '语料描述',
+            read: read,
             dataIndex: 'textsDescribe',
             key: 'textsDescribe'
         },
@@ -69,5 +75,14 @@ export default function TextTable(props) {
             }
         }
     ];
-    return <Table loading={loading} rowKey="id" rowSelection={rowSelection} dataSource={dataSource} columns={columns} pagination={false} />;
+    return (
+        <Table
+            loading={loading}
+            rowKey="id"
+            rowSelection={rowSelection}
+            dataSource={dataSource}
+            columns={columns.filter(item => item.read == read)}
+            pagination={false}
+        />
+    );
 }

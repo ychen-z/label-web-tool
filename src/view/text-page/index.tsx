@@ -8,12 +8,12 @@ import './index.less';
 
 export default function Text(props) {
     const { read, setTextLength } = props;
-    const _texts = localStorage
-        .getItem('_text')
+    const textIdss = localStorage
+        .getItem('textIds')
         ?.split(',')
         .map(item => (item = Number(item)));
     const { data, dispatch: getTextTableData } = useFetch(getTextAll, { page: 0, size: Infinity });
-    const [selectedKeys, setSelectedKeys] = useState(_texts);
+    const [selectedKeys, setSelectedKeys] = useState(textIdss);
     const [, setSelectedRows] = useState([]);
 
     useEffect(() => {

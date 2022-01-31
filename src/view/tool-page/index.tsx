@@ -60,7 +60,7 @@ export default function ToolPage() {
         6: <DataExport />
     };
 
-    const [count, setCount] = useState(0);
+    const [count, setCount] = useState(2);
 
     // 开始流程
     const _select = (value: number) => {
@@ -79,11 +79,11 @@ export default function ToolPage() {
     };
 
     const dispatchDict = v => {
-        localStorage.setItem('_dict', v.join(',')); //存储
+        localStorage.setItem('dictIds', v.join(',')); //存储
     };
 
     const dispatchText = v => {
-        localStorage.setItem('_text', v.join(',')); //存储
+        localStorage.setItem('textIds', v.join(',')); //存储
     };
 
     return (

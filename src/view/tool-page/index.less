@@ -1,15 +1,16 @@
 .m-tool-page {
     display: flex;
-    
+
     .left {
-        background: #fff;
+        background: #FFF;
         border-radius: 4px;
     }
+
     .content {
-        padding: 0px 80px;
         position: relative;
         width: 348px;
         height: 645px;
+        padding: 0 80px;
         background-image: url("../../assets/img/flow.png");
         background-size: cover;
 
@@ -18,31 +19,63 @@
             left: 112px;
             width: 136px;
             height: 61px;
-            line-height: 61px;
             font-size: 16px;
             font-weight: bolder;
+            line-height: 61px;
             text-align: center;
             cursor: pointer;
+            background: #FFF;
             border: 1px solid blue;
             border-radius: 14px;
-            background: #fff;
+
             &:hover {
                 color: red;
                 border: 1px solid red;
             }
         }
 
-        .active{
+        .active {
             color: red;
             border: 1px solid red;
         }
     }
-    
+
     .right {
         flex: 1;
         padding: 20px;
         margin-left: 24px;
-        background: #fff;
+        background: #FFF;
         border-radius: 4px;
+    }
+}
+
+.u-data-pre-process {
+    .u-vector {
+        display: flex;
+
+        div {
+            flex: 1;
+        }
+
+        .f-200 {
+            width: 200px;
+        }
+    }
+
+    .u-sample {
+        display: flex;
+
+        .u-sample-content {
+            display: flex;
+            flex: 1;
+
+            div {
+                flex: 1;
+            }
+        }
+
+        button {
+            margin-left: 100px;
+        }
     }
 }

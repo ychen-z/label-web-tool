@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Tabs } from 'antd';
 import DicTable from '@/view/dic-page';
 import TextTable from '@/view/text-page';

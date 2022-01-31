@@ -8,12 +8,12 @@ import './index.less';
 
 export default function Dictionary(props) {
     const { read, setDicLength } = props;
-    const _dicts = localStorage
-        .getItem('_dict')
+    const dictIdss = localStorage
+        .getItem('dictIds')
         ?.split(',')
         .map(item => (item = Number(item)));
     const { data, dispatch: getDicTableData, isLoading } = useFetch(getDicAll, { page: 0, size: Infinity });
-    const [selectedKeys, setSelectedKeys] = useState(_dicts);
+    const [selectedKeys, setSelectedKeys] = useState(dictIdss);
 
     useEffect(() => {
         if (setDicLength) {

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Form, Input, Button, Select, Slider, Tabs, message } from 'antd';
 import useFetch from '@/hooks/common/useFetch';
+import Table from '../components/table-list/index';
 import { setClusterAndVector, getPreSample } from '@/axios';
 
 const { Option } = Select;
@@ -13,8 +14,8 @@ const { TabPane } = Tabs;
 export default function DataPreProcess() {
     const [activeKey, setActiveKey] = useState('1');
     const [sliderValue, setSliderValue] = useState(1);
-    const { dispatch: dispatchSetClusterAndVector } = useFetch(setClusterAndVector, { page: 0, size: Infinity });
-    const { dispatch: dispatchGetPreSample } = useFetch(getPreSample, null);
+    const { dispatch: dispatchSetClusterAndVector } = useFetch(setClusterAndVector, { page: 0, size: Infinity }, false);
+    const { dispatch: dispatchGetPreSample } = useFetch(getPreSample, null, false);
 
     const onChangeTabs = v => {
         setActiveKey(v);
@@ -100,11 +101,8 @@ export default function DataPreProcess() {
                     <TabPane tab="数据可视化" key="1">
                         数据可视化
                     </TabPane>
-                    <TabPane tab="数据结果" key="2">
-                        数据结果
-                    </TabPane>
-                    <TabPane tab="字典匹配" key="3">
-                        字典匹配
+                    <TabPane tab="匹配情况" key="2">
+                        <Table />
                     </TabPane>
                 </Tabs>
             </div>

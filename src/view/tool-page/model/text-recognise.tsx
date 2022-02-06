@@ -21,7 +21,7 @@ export default function TextRecognition() {
             <div>
                 <Form name="basic" initialValues={{ remember: true }} labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} onFinish={onFinish}>
                     <div className="">
-                        <Form.Item label="模型" name="model" rules={[{ required: true, message: 'Please input your username!' }]}>
+                        <Form.Item label="模型" name="model" rules={[{ required: true, message: '请输入' }]}>
                             <Select style={{ width: 120 }}>
                                 <Option value="BiLSTM">BiLSTM</Option>
                             </Select>

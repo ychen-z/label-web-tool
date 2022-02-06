@@ -59,7 +59,7 @@ export default function DataPreProcess() {
                 onFinish={onTranning}
             >
                 <div>
-                    <Form.Item label="向量化方法" name="model" rules={[{ required: true, message: 'Please input your username!' }]}>
+                    <Form.Item label="向量化方法" name="model" rules={[{ required: true, message: '请输入' }]}>
                         <Select style={{ width: 120 }}>
                             <Option value="dec2Vec">dec2Vec</Option>
                         </Select>

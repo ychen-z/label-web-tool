@@ -61,9 +61,11 @@ const ADDModal = (props: Props) => {
                     <Input placeholder="请输入" maxLength={200} />
                 </Form.Item>
 
-                <Form.Item label="文件" name="filePath" valuePropName="fileList">
-                    <Upload maxCount="1" accept="xls,xlsx,txt" />
-                </Form.Item>
+                {type !== 'EDIT' && (
+                    <Form.Item label="文件" name="filePath" valuePropName="fileList">
+                        <Upload maxCount="1" accept="xls,xlsx,txt" />
+                    </Form.Item>
+                )}
             </Form>
         </Modal>
     );

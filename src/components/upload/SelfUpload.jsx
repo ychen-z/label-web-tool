@@ -1,7 +1,7 @@
 /* eslint-disable react/no-deprecated */
 import React, { Component } from 'react';
 import { Upload, message, Button, Icon } from 'antd';
-import { isEqual } from 'lodash';
+// import { isEqual } from 'lodash';
 
 // 默认文件上传样式
 const Content = ({ accept = '' }) => (
@@ -22,7 +22,7 @@ export default class SelfUpload extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (!isEqual(this.formatData(nextProps.fileList), this.state.fileList)) {
+        if (!_.isEqual(this.formatData(nextProps.fileList), this.state.fileList)) {
             this.setState({ fileList: this.formatData(nextProps.fileList) });
         }
     }

@@ -1,6 +1,5 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import { Form, Input, Button, Select, message } from 'antd';
-import * as echarts from 'echarts';
 import ReactEcharts from 'echarts-for-react';
 import useFetch from '@/hooks/common/useFetch';
 import { postTrainModel, getCurrentRate, getHistoryRates } from '@/axios';
@@ -11,8 +10,6 @@ const { Option } = Select;
  * @returns 模型训练
  */
 export default function TrainingModel() {
-    const currentRateRef = useRef(null);
-    const historyRateRef = useRef(null);
     const { dispatch: dispatchPostTrainModel, isLoading } = useFetch(postTrainModel, { page: 0, size: Infinity }, false);
     const { data: currentRateData } = useFetch(getCurrentRate, null);
     const { data: historyRateData } = useFetch(getHistoryRates, null);

@@ -7,3 +7,4 @@ export const getSampleData = (data: any) => get({ url: '/textData/sampleData', d
 export const postTrainModel = (data: any) => post({ url: '/textCluster/trainModel', data });
 export const getCurrentRate = (data: any) => get({ url: '/textCluster/rate', data });
 export const getHistoryRates = (data: any) => get({ url: '/textCluster/rates', data });
+export const postModelMark = (data: any) => post({ url: '/textCluster/modelMark', data });

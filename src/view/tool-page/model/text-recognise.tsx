@@ -1,5 +1,8 @@
 import React from 'react';
-import { Form, Button, Select } from 'antd';
+import { Form, Button, Select, message } from 'antd';
+import useFetch from '@/hooks/common/useFetch';
+import Table from '../components/table-list/index';
+import { postModelMark } from '@/axios';
 
 const { Option } = Select;
 /**
@@ -7,13 +10,16 @@ const { Option } = Select;
  * @returns 语料识别
  */
 export default function TextRecognition() {
-    const [form] = Form.useForm();
+    // const [form] = Form.useForm();
+    const { dispatch, isLoading } = useFetch(postModelMark, null, false);
+
     const onFinish = values => {
         console.log('采样:', values);
-    };
-
-    const onReText = () => {
-        console.log('识别', form.getFieldsValue());
+        dispatch({ ...values, dictIds: localStorage.getItem('dictIds')?.split(','), textIds: localStorage.getItem('textIds')?.split(',') }).then(
+            res => {
+                message.success('操作成功');
+            }
+        );
     };
 
     return (
@@ -28,18 +34,15 @@ export default function TextRecognition() {
                         </Form.Item>
                     </div>
                     <Form.Item>
-                        <Button type="primary" htmlType="submit">
-                            采样
-                        </Button>
-                    </Form.Item>
-                    <Form.Item>
-                        <Button type="primary" onClick={onReText}>
-                            采样
+                        <Button loading={isLoading} type="primary" htmlType="submit">
+                            识别
                         </Button>
                     </Form.Item>
                 </Form>
             </div>
-            <div>语料识别列表</div>
+            <div>
+                <Table />
+            </div>
         </div>
     );
 }

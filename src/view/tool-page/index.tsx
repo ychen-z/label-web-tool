@@ -60,7 +60,7 @@ export default function ToolPage() {
         6: <DataExport />
     };
 
-    const [count, setCount] = useState(2);
+    const [count, setCount] = useState(5);
 
     // 开始流程
     const _select = (value: number) => {

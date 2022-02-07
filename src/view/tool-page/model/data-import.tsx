@@ -9,10 +9,13 @@ const { TabPane } = Tabs;
  *
  * @returns 数据导入
  */
+
 export default function DataImport() {
+    var dictIds = localStorage.getItem('dictIds')?.split(',');
+    var textIds = localStorage.getItem('textIds')?.split(',');
     const [activeKey, setActiveKey] = useState('1');
-    const [dicLength, setDicLength] = useState(0);
-    const [textLength, setTextLength] = useState(0);
+    const [dicLength, setDicLength] = useState(dictIds?.length || 0);
+    const [textLength, setTextLength] = useState(textIds?.length || 0);
 
     const onChangeTabs = v => {
         setActiveKey(v);

@@ -21,26 +21,3 @@ declare type Key = string | number;
 declare interface Window {
     sendReturnUrl: number;
 }
-
-type DATrackerType = {
-    login: Function;
-    track: Function;
-    init: Function;
-    people: {
-        set: Function;
-    };
-};
-
-declare interface Window {
-    DATracker: DATrackerType;
-}
-declare const DATracker: DATrackerType;
-
-type WaterMark = {
-    mark: Function;
-};
-
-declare interface Window {
-    WaterMark: WaterMark;
-}
-declare const WaterMark: WaterMark;

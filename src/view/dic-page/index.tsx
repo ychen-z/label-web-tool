@@ -17,7 +17,7 @@ export default function Dictionary(props) {
 
     useEffect(() => {
         if (setDicLength) {
-            setDicLength(selectedKeys?.length);
+            setDicLength(selectedKeys?.length || 0);
         }
     }, [selectedKeys, setDicLength]);
     return (
@@ -26,7 +26,7 @@ export default function Dictionary(props) {
                 {!read && (
                     <div className="u-operation">
                         <AddModal type="ADD" refresh={getDicTableData}>
-                            <Button type="primary">导入</Button>
+                            <Button type="primary">+ 新增</Button>
                         </AddModal>
                     </div>
                 )}

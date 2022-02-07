@@ -1,7 +1,3 @@
-/**
- * 在某些组件开发时，我们需要组件的状态即可以自己管理，也可以被外部控制，useControllableValue 就是帮你管理这种状态的 Hook
- * 具体demo可参考：https://ahooks.js.org/zh-CN/hooks/state/use-controllable-value
- */
 import { useMemo, useState, useCallback } from 'react';
 import useUpdateEffect from './useUpdateEffect';
 

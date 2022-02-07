@@ -90,7 +90,7 @@ export default function TrainingModel() {
 
     return (
         <div className="m-training-model">
-            <section>
+            <section className="u-form">
                 <Form name="basic" initialValues={{ remember: true }} labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} onFinish={onFinish}>
                     <div className="">
                         <Form.Item label="模型" name="model" rules={[{ required: true, message: '请输入' }]}>

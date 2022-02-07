@@ -23,8 +23,8 @@ export default function TextRecognition() {
     };
 
     return (
-        <div className="u-text-recognition">
-            <div>
+        <div className="m-text-recognition">
+            <section className="u-form">
                 <Form name="basic" initialValues={{ remember: true }} labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} onFinish={onFinish}>
                     <div className="">
                         <Form.Item label="模型" name="model" rules={[{ required: true, message: '请输入' }]}>
@@ -39,10 +39,10 @@ export default function TextRecognition() {
                         </Button>
                     </Form.Item>
                 </Form>
-            </div>
-            <div>
+            </section>
+            <section className="u-content">
                 <Table />
-            </div>
+            </section>
         </div>
     );
 }

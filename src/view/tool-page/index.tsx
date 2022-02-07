@@ -7,7 +7,6 @@ import DataPreProcess from './model/data-pre-process'; // 数据预处理
 import ManualNamed from './model/manual-named'; // 手工标注
 import TextRecognition from './model/text-recognise'; // 识别
 import TrainingModel from './model/training-model'; // 训练
-// import DataExport from './model/data-export'; // 导出
 import DataExport from './components/data-export'; // 导出
 import './index.less';
 
@@ -41,7 +40,7 @@ const Btns = [
         name: <DataExport />,
         type: 6,
         top: 58 * 9 + 62,
-        status: true
+        status: true // 当前模块不渲染
     }
 ];
 

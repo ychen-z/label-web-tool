@@ -1,11 +1,3 @@
-/**
- * 数据请求hooks
- * @author 施阳 2019-9-20
- * @return {data, isLoading, dispatch}
- * data： 请求结果
- * isLoading：true-请求中 false-请求结束
- * dispatch：手动触发请求
- */
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { ResponseConfig } from '@/axios/interface';
 

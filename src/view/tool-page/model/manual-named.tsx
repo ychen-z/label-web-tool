@@ -9,7 +9,6 @@ export default function ManualNamed() {
     return (
         <div className="m-manual-name">
             <div>手工标注</div>
-
             <HandleTag />
         </div>
     );

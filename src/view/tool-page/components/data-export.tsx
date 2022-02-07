@@ -1,7 +1,7 @@
 import React from 'react';
 import IconSet from '@/components/icon';
 
-// 导出
+// 数据导出
 export default function Export() {
     return (
         <a href="/api/textCluster/export" target="_blank">

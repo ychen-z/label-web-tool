@@ -49,7 +49,7 @@ export default function DataPreProcess() {
     };
 
     return (
-        <div className="u-data-pre-process">
+        <div className="m-data-pre-process">
             <Form
                 name="basic"
                 className="u-vector"
@@ -85,7 +85,7 @@ export default function DataPreProcess() {
                 </div>
             </Form>
 
-            <div className="u-sample">
+            <section className="u-sample">
                 <div className="u-sample-content">
                     <span>采样率：</span>
                     <Slider min={1} max={100} value={sliderValue} onChange={v => setSliderValue(v)} />
@@ -94,9 +94,9 @@ export default function DataPreProcess() {
                 <Button type="primary" onClick={onSample}>
                     采样
                 </Button>
-            </div>
+            </section>
 
-            <div className="u-result">
+            <section className="u-result">
                 <Tabs defaultActiveKey={activeKey} onChange={onChangeTabs}>
                     <TabPane tab="数据可视化" key="1">
                         数据可视化
@@ -105,7 +105,7 @@ export default function DataPreProcess() {
                         <Table />
                     </TabPane>
                 </Tabs>
-            </div>
+            </section>
         </div>
     );
 }

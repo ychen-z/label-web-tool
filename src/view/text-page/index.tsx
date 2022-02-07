@@ -18,7 +18,7 @@ export default function Text(props) {
 
     useEffect(() => {
         if (setTextLength) {
-            setTextLength(selectedKeys?.length);
+            setTextLength(selectedKeys?.length || 0);
         }
     }, [selectedKeys, setTextLength]);
 
@@ -28,7 +28,7 @@ export default function Text(props) {
                 {!read && (
                     <div className="u-operation">
                         <AddModal type="ADD" refresh={getTextTableData}>
-                            <Button type="primary">导入</Button>
+                            <Button type="primary">+ 新增</Button>
                         </AddModal>
                     </div>
                 )}

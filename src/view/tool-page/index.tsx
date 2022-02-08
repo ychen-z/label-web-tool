@@ -55,7 +55,7 @@ export default function ToolPage() {
         6: null
     };
 
-    const [count, setCount] = useState(5);
+    const [count, setCount] = useState(3);
 
     // 开始流程
     const _select = (value: number, status: boolean) => {

@@ -1,14 +1,36 @@
 .u-handle {
-    ::selection {
-        color: red;
-        background: yellow;
+    .header {
+        margin-bottom: 12px;
+
+        span.num {
+            font-size: 22px;
+            font-weight: 700;
+        }
     }
-    
+
     &-area {
-        font-size: 24px;
-        letter-spacing: 4px;
+        ::selection {
+            color: red;
+            background: yellow;
+        }
+
+        &-content {
+            padding: 20px;
+            font-size: 24px;
+            text-align: center;
+            letter-spacing: 4px;
+            background: #FFF;
+        }
+    }
+
+    &-result {
         padding: 20px;
-        background: #ccc
-        
+        font-size: 14px;
+        background: #F1F1F1;
+    }
+
+    &-view {
+        margin-top: 12px;
+        font-size: 14px;
     }
 }

@@ -7,8 +7,8 @@ import HandleTag from '../components/handle-tag';
  */
 export default function ManualNamed() {
     return (
-        <div className="m-manual-name">
+        <section className="m-manual-name">
             <HandleTag />
-        </div>
+        </section>
     );
 }

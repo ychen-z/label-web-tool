@@ -16,6 +16,10 @@ export const getTextLabelResult = (data: any) => get({ url: '/textLabel/textData
 export const postTextLabel = (data: any) => post({ url: '/textLabel/', data });
 export const delTextLabel = (data: any) => del({ url: '/textLabel/' + data });
 
+// 视图
+export const getScatter = (data: any) => get({ url: '/textCluster/scatter', data });
+export const getWordCloudByClusterId = (clusterId: any) => del({ url: '/textCluster/wordCloud/' + clusterId });
+
 // 标签管理
 export const getLabelList = (data: any) => get({ url: '/label/all', data });
 export const updateLabel = (data: any) => put({ url: '/label', data });

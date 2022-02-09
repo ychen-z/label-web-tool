@@ -55,11 +55,12 @@ export default function ToolPage() {
         6: null
     };
 
-    const [count, setCount] = useState(3);
+    const [count, setCount] = useState(localStorage.getItem('toolState') || 1);
 
     // 开始流程
     const _select = (value: number, status: boolean) => {
         if (!status) {
+            localStorage.setItem('toolState', value);
             setCount(value);
         }
 

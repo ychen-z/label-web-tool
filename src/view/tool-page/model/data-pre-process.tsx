@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { Form, Input, Button, Select, Slider, Tabs, message } from 'antd';
+import ReactEcharts from 'echarts-for-react';
 import useFetch from '@/hooks/common/useFetch';
 import Table from '../components/table-list/index';
-import { setClusterAndVector, getPreSample } from '@/axios';
+import { setClusterAndVector, getPreSample, getScatter } from '@/axios';
 
 const { Option } = Select;
 const { TabPane } = Tabs;
@@ -14,15 +15,41 @@ const { TabPane } = Tabs;
 export default function DataPreProcess() {
     const [activeKey, setActiveKey] = useState('1');
     const [sliderValue, setSliderValue] = useState(1);
-    const { dispatch: dispatchSetClusterAndVector } = useFetch(setClusterAndVector, { page: 0, size: Infinity }, false);
+    const { dispatch: dispatchSetClusterAndVector, isLoading: loading } = useFetch(setClusterAndVector, { page: 0, size: Infinity }, false);
     const { dispatch: dispatchGetPreSample } = useFetch(getPreSample, null, false);
+    const { data: scatterData, dispatch: dispatchGetScatter } = useFetch(getScatter, null);
 
+    const getScatterData = data => {
+        if (!data) return {};
+        return {
+            title: { text: '散点图' },
+            xAxis: {},
+            yAxis: {
+                type: 'value'
+            },
+            grid: {
+                show: true
+            },
+            legend: {
+                show: true
+            },
+            tooltip: {
+                show: true
+            },
+            series: [
+                {
+                    data: data.map(item => (item = item.vector)),
+                    type: 'scatter'
+                }
+            ]
+        };
+    };
     const onChangeTabs = v => {
         setActiveKey(v);
     };
 
     /**
-     * 训练
+     * 聚类并向量化
      */
     const onTranning = () => {
         dispatchSetClusterAndVector({
@@ -31,7 +58,8 @@ export default function DataPreProcess() {
             clusterCount: 3,
             vectorScale: 200
         }).then(res => {
-            console.log(res);
+            message.success('操作成功');
+            dispatchGetScatter(); // 获取散点图
         });
     };
 
@@ -78,7 +106,7 @@ export default function DataPreProcess() {
                 </div>
                 <div className="f-200">
                     <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-                        <Button type="primary" htmlType="submit">
+                        <Button type="primary" htmlType="submit" loading={loading}>
                             聚类
                         </Button>
                     </Form.Item>
@@ -98,8 +126,13 @@ export default function DataPreProcess() {
 
             <section className="u-result">
                 <Tabs defaultActiveKey={activeKey} onChange={onChangeTabs}>
-                    <TabPane tab="数据可视化" key="1">
-                        数据可视化
+                    <TabPane tab="数据可视化" key="1" className="u-result-view">
+                        <div>
+                            <ReactEcharts option={getScatterData(scatterData)} />
+                        </div>
+                        <div>
+                            <ReactEcharts option={getScatterData(scatterData)} />
+                        </div>
                     </TabPane>
                     <TabPane tab="匹配情况" key="2">
                         <Table />

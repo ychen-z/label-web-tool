@@ -17,6 +17,7 @@ export default function TextRecognition() {
         console.log('采样:', values);
         dispatch({ ...values, dictIds: localStorage.getItem('dictIds')?.split(','), textIds: localStorage.getItem('textIds')?.split(',') }).then(
             res => {
+                localStorage.setItem('labelState', 'model');
                 message.success('操作成功');
             }
         );

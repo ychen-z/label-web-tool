@@ -11,12 +11,13 @@ export const postModelMark = (data: any) => post({ url: '/textCluster/modelMark'
 
 // 打标
 export const getTextLabelCount = (data: any) => get({ url: '/textLabel/count', data });
-export const getTextLabelOne = (data: any) => get({ url: '/textLabel/takeOne?type=model', data });
+export const getTextLabelOne = (data: any) => get({ url: '/textLabel/takeOne', data });
 export const getTextLabelResult = (data: any) => get({ url: '/textLabel/textData/' + data.id, data });
 export const postTextLabel = (data: any) => post({ url: '/textLabel/', data });
+export const delTextLabel = (data: any) => del({ url: '/textLabel/' + data });
 
 // 标签管理
-export const getLabelList = (data: any) => get({ url: '/label/all', data }); // 获取字典列表
-export const updateLabel = (data: any) => put({ url: '/label', data }); // 更新字典
+export const getLabelList = (data: any) => get({ url: '/label/all', data });
+export const updateLabel = (data: any) => put({ url: '/label', data });
 export const postLabel = (data: any) => post({ url: '/label/add', data }); // 增加label
-export const delLabel = (data: any) => del({ url: '/label/delete', data }); // 删除label
+export const delLabel = (labelId: any) => del({ url: '/label/' + labelId });

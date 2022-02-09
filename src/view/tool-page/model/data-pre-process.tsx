@@ -42,7 +42,7 @@ export default function DataPreProcess() {
         console.log('采样');
         if (sliderValue) {
             dispatchGetPreSample(sliderValue / 100).then(res => {
-                console.log(res);
+                localStorage.setItem('labelState', 'pre');
                 message.success('采样成功');
             });
         }

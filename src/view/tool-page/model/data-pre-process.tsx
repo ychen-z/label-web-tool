@@ -3,6 +3,8 @@ import { Form, Input, Button, Select, Slider, Tabs, message } from 'antd';
 import ReactEcharts from 'echarts-for-react';
 import useFetch from '@/hooks/common/useFetch';
 import Table from '../components/table-list/index';
+import WordsCloudEcharts from '../components/word-cloud-echarts';
+import WordsCloudEchart from '../components/word-cloud-echart';
 import { setClusterAndVector, getPreSample, getScatter } from '@/axios';
 
 const { Option } = Select;
@@ -131,7 +133,7 @@ export default function DataPreProcess() {
                             <ReactEcharts option={getScatterData(scatterData)} />
                         </div>
                         <div>
-                            <ReactEcharts option={getScatterData(scatterData)} />
+                            <WordsCloudEchart clusterId={1} />
                         </div>
                     </TabPane>
                     <TabPane tab="匹配情况" key="2">

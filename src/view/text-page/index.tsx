@@ -12,7 +12,7 @@ export default function Text(props) {
         .getItem('textIds')
         ?.split(',')
         .map(item => (item = Number(item)));
-    const { data, dispatch: getTextTableData } = useFetch(getTextAll, { page: 0, size: Infinity });
+    const { data, dispatch: getTextTableData, isLoading: loading } = useFetch(getTextAll, { page: 0, size: Infinity });
     const [selectedKeys, setSelectedKeys] = useState(textIdss);
     const [, setSelectedRows] = useState([]);
 
@@ -34,6 +34,7 @@ export default function Text(props) {
                 )}
                 <TextTable
                     read={read}
+                    loading={loading}
                     dataSource={data?.content}
                     refresh={getTextTableData}
                     selectedKeys={selectedKeys}

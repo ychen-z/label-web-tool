@@ -6,7 +6,7 @@ import { GlobalContext } from '@/context';
 import Export from '../modal/export';
 import UpdateModal from '../modal/add';
 import Del from '../modal/del';
-import { delDic } from '@/axios';
+import { delText } from '@/axios';
 import View from '../modal/view/index';
 
 export default function TextTable(props) {
@@ -71,7 +71,7 @@ export default function TextTable(props) {
                         <Divider type="vertical" />
                         <Export data={row} />
                         <Divider type="vertical" />
-                        <Del id={row.id} func={delDic} refresh={refresh} />
+                        <Del id={row.id} func={delText} refresh={refresh} />
                     </Space>
                 );
             }

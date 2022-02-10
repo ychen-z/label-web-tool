@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Tabs } from 'antd';
+import { Tabs, Alert } from 'antd';
 import DicTable from '@/view/dic-page';
 import TextTable from '@/view/text-page';
 
@@ -22,11 +22,11 @@ export default function DataImport() {
     };
 
     return (
-        <div>
-            <div>
-                字典选中：{dicLength} 个; 语料选中：{textLength} 个
-            </div>
-            <div>
+        <div className="m-data-import">
+            <section>
+                <Alert message={`字典选中：${dicLength} 个; 语料选中：${textLength} 个`} type="success" />
+            </section>
+            <section>
                 <Tabs defaultActiveKey={activeKey} onChange={onChangeTabs}>
                     <TabPane tab="字典" key="1">
                         <DicTable read setDicLength={setDicLength} />
@@ -35,7 +35,7 @@ export default function DataImport() {
                         <TextTable read setTextLength={setTextLength} />
                     </TabPane>
                 </Tabs>
-            </div>
+            </section>
         </div>
     );
 }

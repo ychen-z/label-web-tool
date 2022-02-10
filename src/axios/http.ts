@@ -75,17 +75,17 @@ const errHandle: <R>(err: AxiosError<R> | ResponseError<R>) => Promise<R> = err 
     // 判断上下文是“接口状态码”还是“HTTP状态码”
     let errResult = {};
     let code = -1;
-    let msg = '';
+    let message = '';
     if (isAxiosError(err) && err.response) {
         code = err.response.status;
-        msg = ServerCodeMap[code];
+        message = ServerCodeMap[code];
     }
     if (isResponseError(err)) {
         code = err.data.code;
-        msg = err.data.msg;
+        message = err.data.message;
     }
     // RedirectMap.hasOwnProperty(code) && window.location.replace(RedirectMap[code]);
-    const ERR_MESSAGE = msg || ServerCodeMap[code];
+    const ERR_MESSAGE = message || ServerCodeMap[code];
 
     switch (code) {
         case ServerCode.CONTINUE: // code 400 批量操作部分成功
@@ -95,14 +95,14 @@ const errHandle: <R>(err: AxiosError<R> | ResponseError<R>) => Promise<R> = err 
             break;
         case ServerCode.WRONG_REQUEST: //TODO  // code 402 message弹窗(mbo写的是412，但是后端没有412的处理)
             notification.warning({
-                message: msg
+                message: message
             });
             break;
         default:
             notification.error({
                 message: ERR_MESSAGE
             });
-            console.error(msg);
+            console.error(message);
     }
     if (isResponseError(err)) {
         errResult = err.data;

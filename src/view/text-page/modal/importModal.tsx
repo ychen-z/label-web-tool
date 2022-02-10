@@ -47,7 +47,7 @@ const ADDModal = (props: Props) => {
                 </Form.Item>
 
                 <Form.Item rules={[{ required: true, message: '请填写' }]} label="语料描述" name="textsDescribe">
-                    <Input placeholder="请输入" maxLength={200} />
+                    <Input.TextArea placeholder="请输入" maxLength={2000} />
                 </Form.Item>
 
                 <Form.Item label="文件" name="filePath" valuePropName="fileList">

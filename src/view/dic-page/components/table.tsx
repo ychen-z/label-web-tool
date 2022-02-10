@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { Table, Space, Divider } from 'antd';
 import IconSet from '@/components/icon';
+import Ellipsis from '@/components/common/u-ellipsis';
 import { GlobalContext } from '@/context';
 import Export from '../modal/export';
 import UpdateModal from '../modal/import-modal-add';
@@ -37,7 +38,9 @@ export default function DictTable(props) {
             title: '字典描述',
             dataIndex: 'dictionaryDescribe',
             key: 'dictionaryDescribe',
-            read: read
+            read: read,
+            width: 300,
+            render: text => <Ellipsis style={{ width: 300 }}>{text || '--'}</Ellipsis>
         },
         {
             title: '快捷键',
@@ -49,6 +52,7 @@ export default function DictTable(props) {
             title: '标签颜色',
             dataIndex: 'color',
             key: 'color',
+            read: read,
             render: text => {
                 return <div style={{ background: text, width: 40, height: 8, borderRadius: 10 }} />;
             }

@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
 import { Table, Space, Divider } from 'antd';
 import IconSet from '@/components/icon';
+import Ellipsis from '@/components/common/u-ellipsis';
 import { GlobalContext } from '@/context';
-
 import Export from '../modal/export';
 import UpdateModal from '../modal/add';
 import Del from '../modal/del';
@@ -39,7 +39,9 @@ export default function TextTable(props) {
             title: '语料描述',
             read: read,
             dataIndex: 'textsDescribe',
-            key: 'textsDescribe'
+            key: 'textsDescribe',
+            width: 400,
+            render: text => <Ellipsis style={{ width: 400 }}>{text || '--'}</Ellipsis>
         },
         {
             title: '包含词量',

@@ -20,6 +20,7 @@ const ADDModal = (props: Props) => {
 
     const fetch = (values: any) => {
         form.validateFields().then(values => {
+            values.filePath = values.filePath?.length ? values.filePath[0].response.data : undefined;
             values.id
                 ? updateFunc(values).then(res => {
                       message.success('操作成功');
@@ -50,11 +51,11 @@ const ADDModal = (props: Props) => {
                 </Form.Item>
 
                 <Form.Item label="标签颜色" name="color">
-                    <Input placeholder="请输入" maxLength={200} />
+                    <Input placeholder="例如： blue" maxLength={200} />
                 </Form.Item>
 
                 <Form.Item label="标签快捷键" name="keyName">
-                    <Input placeholder="请输入" maxLength={200} />
+                    <Input placeholder="例如： ctrl + a" maxLength={200} />
                 </Form.Item>
 
                 <Form.Item label="keyCode" name="keyCode">

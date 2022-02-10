@@ -20,6 +20,7 @@ const ADDModal = (props: Props) => {
 
     const fetch = (values: any) => {
         form.validateFields().then(values => {
+            values.filePath = values.filePath?.length ? values.filePath[0].response.data : undefined;
             values.id
                 ? updateFunc(values).then(res => {
                       message.success('操作成功');

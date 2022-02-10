@@ -43,7 +43,7 @@ function TableList(props: TemplateTableProps) {
                         </a>
                     </ModalAdd>
                     <Divider type="vertical" />
-                    <Del id={row.id} func={delDictData} />
+                    <Del id={record.id} func={delDictData} refresh={props.getList} />
                 </Space>
             )
         }

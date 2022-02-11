@@ -6,8 +6,9 @@ import useFetch from '@/hooks/common/useFetch';
 import './index.less';
 
 function TableList(props) {
+    const { type, shouldUpdate } = props;
     const DEFAULT_PARAM = {
-        type: 'model',
+        type: type || 'model', // model—模型抽样 pre—预处理抽样
         page: 1,
         size: 10
     };
@@ -43,7 +44,6 @@ function TableList(props) {
         (search: {}) => {
             const tempParams = Object.assign({}, params, { page: 1 }, search);
             setParams(tempParams); // 记录上一次搜索记录
-
             fetchTemplateList(tempParams).then(res => {
                 setList(res.content);
                 setPagination({ page: tempParams.page, total: res.totalElements }); // 记录分页器参数
@@ -64,6 +64,14 @@ function TableList(props) {
         getList({});
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    useEffect(() => {
+        if (shouldUpdate) {
+            // 识别成功后，查询列表
+            getList({});
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [shouldUpdate]);
 
     return (
         <div className="u-table-list">

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Form, Button, Select, message } from 'antd';
 import useFetch from '@/hooks/common/useFetch';
 import Table from '../components/table-list/index';
@@ -11,6 +11,7 @@ const { Option } = Select;
  */
 export default function TextRecognition() {
     // const [form] = Form.useForm();
+    const [update, setUpdate] = useState(0);
     const { dispatch, isLoading } = useFetch(postModelMark, null, false);
 
     const onFinish = values => {
@@ -18,6 +19,7 @@ export default function TextRecognition() {
         dispatch({ ...values, dictIds: localStorage.getItem('dictIds')?.split(','), textIds: localStorage.getItem('textIds')?.split(',') }).then(
             res => {
                 localStorage.setItem('labelState', 'model');
+                setUpdate(update + 1);
                 message.success('操作成功');
             }
         );
@@ -48,7 +50,7 @@ export default function TextRecognition() {
                 </Form>
             </section>
             <section className="u-content">
-                <Table />
+                <Table type="pre" shouldUpdate={update} />
             </section>
         </div>
     );

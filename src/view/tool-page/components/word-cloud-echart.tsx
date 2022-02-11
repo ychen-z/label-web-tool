@@ -36,8 +36,7 @@ const initial = { data: [], error: undefined, loading: true };
 export default function WordsCloudEcharts(props) {
     const { clusterId } = props;
     const [wordData, setWordData] = useState(initial);
-    // const [classId, setClassId] = useState('0');
-    const { data: wordsCloudData, dispatch, isLoading } = useFetch(getWordCloudByClusterId, null);
+    const { data: wordsCloudData, dispatch, isLoading } = useFetch(getWordCloudByClusterId, null, false);
 
     const getWordCloud = data => {
         const cloudOptions = {

@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useCallback, useRef } from 'react';
-import { Button, Card, message, Tag } from 'antd';
+import { Button, Card, message, Tag, Alert } from 'antd';
 import useFetch from '@/hooks/common/useFetch';
+import DicTable from '@/view/dic-page';
 import { getTextLabelCount, getTextLabelOne, getTextLabelResult, postTextLabel, delTextLabel } from '@/axios';
 import './index.less';
 
@@ -80,7 +81,7 @@ export default function HandleTag() {
                             });
                         };
                         return (
-                            <Tag key={items.id} closable onClose={() => close(items.id)}>
+                            <Tag key={items.id} color={items.color} closable onClose={() => close(items.id)}>
                                 {items.label}
                             </Tag>
                         );
@@ -122,15 +123,15 @@ export default function HandleTag() {
     return (
         <div className="u-handle">
             <section className="header">
-                <div>
-                    待打标：<span className="num">{textLabelCount?.needCount || 0}</span> 个；已打标：
-                    <span className="num">{textLabelCount?.alreadyCount || 0}</span>个
-                </div>
+                <Alert message={`待打标：${textLabelCount?.needCount || 0}个；已打标：${textLabelCount?.alreadyCount || 0}个`} type="success" />
             </section>
-
+            <div className="tag">
+                字典标签：
+                <DicTable read type="tag" />
+            </div>
             <section className="u-handle-area">
                 <Card
-                    title="打标工作区"
+                    title={<strong>打标工作区</strong>}
                     extra={
                         textLabelCount?.needCount && (
                             <Button loading={loadingOne} onClick={getOne} type="primary">
@@ -150,7 +151,7 @@ export default function HandleTag() {
             )}
 
             <section className="u-handle-view">
-                <Card title="获取打标结果">
+                <Card title={<strong>打标结果</strong>}>
                     <div className="u-handle-view-content">{formatData(textLabelResult?.content)}</div>
                 </Card>
             </section>

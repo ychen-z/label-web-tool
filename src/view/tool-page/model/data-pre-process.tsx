@@ -82,30 +82,29 @@ export default function DataPreProcess() {
         <div className="m-data-pre-process">
             <Form
                 name="basic"
-                className="u-vector"
+                className="u-form"
                 initialValues={{ remember: true }}
                 labelCol={{ span: 8 }}
-                wrapperCol={{ span: 16 }}
+                wrapperCol={{ span: 8 }}
                 onFinish={onTranning}
             >
-                <div>
-                    <Form.Item label="向量化方法" name="model" rules={[{ required: true, message: '请输入' }]}>
-                        <Select style={{ width: 120 }}>
-                            <Option value="dec2Vec">dec2Vec</Option>
-                        </Select>
-                    </Form.Item>
-                    <Form.Item label="向量维度" name="vectorScale" rules={[{ required: true, message: '请输入' }]}>
-                        <Input />
-                    </Form.Item>
-                    <Form.Item label="聚类方法" name="method">
-                        <Select style={{ width: 120 }}>
-                            <Option value="Kmeans">Kmeans</Option>
-                        </Select>
-                    </Form.Item>
-                    <Form.Item label="聚类类数" name="clusterCount" rules={[{ required: true, message: '请输入' }]}>
-                        <Input />
-                    </Form.Item>
-                </div>
+                <Form.Item label="向量化方法" name="model" rules={[{ required: true, message: '请输入' }]}>
+                    <Select>
+                        <Option value="dec2Vec">dec2Vec</Option>
+                    </Select>
+                </Form.Item>
+                <Form.Item label="向量维度" name="vectorScale" rules={[{ required: true, message: '请输入' }]}>
+                    <Input />
+                </Form.Item>
+                <Form.Item label="聚类方法" name="method">
+                    <Select>
+                        <Option value="Kmeans">Kmeans</Option>
+                    </Select>
+                </Form.Item>
+                <Form.Item label="聚类类数" name="clusterCount" rules={[{ required: true, message: '请输入' }]}>
+                    <Input />
+                </Form.Item>
+
                 <div className="f-200">
                     <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
                         <Button type="primary" htmlType="submit" loading={loading}>

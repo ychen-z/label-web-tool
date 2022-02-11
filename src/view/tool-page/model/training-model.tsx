@@ -91,27 +91,25 @@ export default function TrainingModel() {
     return (
         <div className="m-training-model">
             <section className="u-form">
-                <Form name="basic" initialValues={{ remember: true }} labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} onFinish={onFinish}>
-                    <div className="">
-                        <Form.Item label="模型" name="model" rules={[{ required: true, message: '请输入' }]}>
-                            <Select style={{ width: 120 }}>
-                                <Option value="BiLSTM">BiLSTM</Option>
-                            </Select>
-                        </Form.Item>
-                        <Form.Item label="训练数量" name="clusterCount">
-                            <Input />
-                        </Form.Item>
+                <Form name="basic" initialValues={{ remember: true }} labelCol={{ span: 8 }} wrapperCol={{ span: 8 }} onFinish={onFinish}>
+                    <Form.Item label="模型" name="model" rules={[{ required: true, message: '请输入' }]}>
+                        <Select>
+                            <Option value="BiLSTM">BiLSTM</Option>
+                        </Select>
+                    </Form.Item>
+                    <Form.Item label="训练数量" name="clusterCount">
+                        <Input />
+                    </Form.Item>
 
-                        <Form.Item label="输入维度" name="vectorScale">
-                            <Input />
-                        </Form.Item>
+                    <Form.Item label="输入维度" name="vectorScale">
+                        <Input />
+                    </Form.Item>
 
-                        <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-                            <Button type="primary" htmlType="submit" loading={isLoading}>
-                                训练
-                            </Button>
-                        </Form.Item>
-                    </div>
+                    <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+                        <Button type="primary" htmlType="submit" loading={isLoading}>
+                            训练
+                        </Button>
+                    </Form.Item>
                 </Form>
             </section>
 

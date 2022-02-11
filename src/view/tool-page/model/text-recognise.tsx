@@ -25,15 +25,21 @@ export default function TextRecognition() {
 
     return (
         <div className="m-text-recognition">
-            <section className="u-form">
-                <Form name="basic" initialValues={{ remember: true }} labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} onFinish={onFinish}>
-                    <div className="">
-                        <Form.Item label="模型" name="model" rules={[{ required: true, message: '请输入' }]}>
-                            <Select style={{ width: 120 }}>
-                                <Option value="BiLSTM">BiLSTM</Option>
-                            </Select>
-                        </Form.Item>
-                    </div>
+            <section>
+                <Form
+                    name="basic"
+                    className="u-form"
+                    layout="inline"
+                    initialValues={{ remember: true }}
+                    labelCol={{ span: 8 }}
+                    wrapperCol={{ span: 16 }}
+                    onFinish={onFinish}
+                >
+                    <Form.Item label="模型" name="model" rules={[{ required: true, message: '请输入' }]}>
+                        <Select style={{ width: 120 }}>
+                            <Option value="BiLSTM">BiLSTM</Option>
+                        </Select>
+                    </Form.Item>
                     <Form.Item>
                         <Button loading={isLoading} type="primary" htmlType="submit">
                             识别

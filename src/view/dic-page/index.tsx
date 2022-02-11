@@ -7,7 +7,7 @@ import AddModal from './modal/import-modal-add';
 import './index.less';
 
 export default function Dictionary(props) {
-    const { read, setDicLength } = props;
+    const { read, setDicLength, type } = props;
     const dictIdss = localStorage
         .getItem('dictIds')
         ?.split(',')
@@ -32,6 +32,7 @@ export default function Dictionary(props) {
                 )}
 
                 <Dictable
+                    model={type} // 预览模式
                     read={read}
                     loading={isLoading}
                     dataSource={data?.content}

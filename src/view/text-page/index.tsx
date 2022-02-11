@@ -32,8 +32,9 @@ export default function Text(props) {
                         </AddModal>
                     </div>
                 )}
+
                 <TextTable
-                    read={read}
+                    reaTextTabled={read}
                     loading={loading}
                     dataSource={data?.content}
                     refresh={getTextTableData}

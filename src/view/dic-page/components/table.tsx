@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Table, Space, Divider } from 'antd';
+import { Table, Space, Divider, Tag } from 'antd';
 import IconSet from '@/components/icon';
 import Ellipsis from '@/components/common/u-ellipsis';
 import { GlobalContext } from '@/context';
@@ -10,7 +10,7 @@ import { delDic } from '@/axios';
 import View from '../modal/view/index';
 
 export default function DictTable(props) {
-    const { loading, refresh, dataSource, read } = props;
+    const { loading, refresh, dataSource = [], read, model } = props;
     const { dispatchDict } = useContext(GlobalContext);
     const rowSelection = {
         selectedRowKeys: props.selectedKeys,
@@ -89,6 +89,20 @@ export default function DictTable(props) {
             }
         }
     ];
+
+    if (model == 'tag') {
+        return (
+            <>
+                {dataSource.map(item => {
+                    return (
+                        <Tag color={item.color}>
+                            {item.dictionaryName}（{item.keyName}）
+                        </Tag>
+                    );
+                })}
+            </>
+        );
+    }
 
     return (
         <Table

@@ -51,7 +51,7 @@ const ADDModal = (props: Props) => {
                 </Form.Item>
 
                 <Form.Item label="文件" name="filePath" valuePropName="fileList">
-                    <Upload maxCount="1" accept="xls,xlsx,txt" />
+                    <Upload maxCount="1" accept="xls,xlsx,txt,pdf" />
                 </Form.Item>
             </Form>
         </Modal>

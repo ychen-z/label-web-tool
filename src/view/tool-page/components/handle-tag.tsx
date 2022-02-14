@@ -14,7 +14,7 @@ export default function HandleTag() {
     const [userKey, setUserKey] = useState<string>('');
     const keycodeRef = useRef<string>();
     const { data: textLabelCount, dispatch: dispatchGetTextLabelCount } = useFetch(getTextLabelCount, null);
-    const { data: textLabeOne, dispatch: dispatchGetTextLabelOne, isLoading: loadingOne } = useFetch(getTextLabelOne, null, false);
+    const { data: textLabeOne, dispatch: dispatchGetTextLabelOne, isLoading: loadingOne } = useFetch(getTextLabelOne, null);
     const { data: textLabelResult, dispatch: dispatchGetTextLabelResult } = useFetch(getTextLabelResult, null, false);
     const { dispatch: dispatchPostTextLabel } = useFetch(postTextLabel, null, false);
     const { dispatch: dispatchDelLabel } = useFetch(delTextLabel, null, false);

@@ -31,7 +31,7 @@ export default function DictTable(props) {
             width: 140,
             read: read,
             render: (text, record) => {
-                return read ? text : <View {...record} />;
+                return read ? text : <View {...record} refresh={refresh} />;
             }
         },
         {
@@ -58,13 +58,13 @@ export default function DictTable(props) {
             }
         },
         {
-            title: '包含词量',
+            title: '包含词量 (个)',
             dataIndex: 'wordsNum',
             key: 'words',
             width: 140
         },
         {
-            title: '字典容量',
+            title: '字典容量 (字)',
             dataIndex: 'dictsContent',
             key: 'dictsContent',
             width: 140

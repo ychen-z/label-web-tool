@@ -19,15 +19,12 @@ function TableList(props: TemplateTableProps) {
 
         {
             title: '别名',
-            dataIndex: 'abbreviations',
-            key: 'abbreviations',
-            ellipsis: true
-        },
-        {
-            title: '标签',
-            dataIndex: 'label',
-            key: 'label',
-            ellipsis: true
+            dataIndex: 'alias',
+            key: 'alias',
+            ellipsis: true,
+            render: text => {
+                return <div>{text ? text.join('，') : '--'}</div>;
+            }
         },
         {
             title: '操作',
@@ -37,7 +34,7 @@ function TableList(props: TemplateTableProps) {
             ellipsis: true,
             render: (text, record) => (
                 <Space>
-                    <ModalAdd isEdit data={record}>
+                    <ModalAdd type="EDIT" data={record}>
                         <a>
                             <IconSet type="icon-bianji" /> 编辑
                         </a>

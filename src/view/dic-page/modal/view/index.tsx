@@ -10,7 +10,7 @@ import { TemplateSearchParams } from './interface';
 import './index.less';
 
 function Template(props) {
-    const { dictionaryName, id: dictId } = props;
+    const { dictionaryName, id: dictId, refresh } = props;
     const DEFAULT_PARAM = {
         page: 1,
         size: 10
@@ -49,6 +49,7 @@ function Template(props) {
     return (
         <div>
             <UDrawer
+                callback={refresh}
                 trigger={<a>{dictionaryName}</a>}
                 maskClosable={false}
                 title={'查看' + dictionaryName + '详情'}

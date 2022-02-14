@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Form, Input, Modal, message } from 'antd';
 import useFetch from '@/hooks/common/useFetch';
 import { putDictData, postDictData } from '@/axios';
@@ -33,6 +33,12 @@ const ADDModal = (props: Props) => {
                   });
         });
     };
+
+    useEffect(() => {
+        if (data) {
+            form.setFieldsValue({ alias: data.alias.join('，') });
+        }
+    }, [data, form]);
 
     return (
         <Modal form={form} title={title} visible onOk={onSubmit} onCancel={onCancel}>

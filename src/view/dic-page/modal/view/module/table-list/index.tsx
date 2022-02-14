@@ -33,7 +33,7 @@ function TableList(props) {
             ellipsis: true,
             render: (text, record) => (
                 <Space>
-                    <ModalAdd type="EDIT" data={record}>
+                    <ModalAdd type="EDIT" data={record} refresh={props.getList}>
                         <a>
                             <IconSet type="icon-bianji" /> 编辑
                         </a>

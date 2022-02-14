@@ -41,6 +41,10 @@ const ADDModal = (props: Props) => {
                     <Input />
                 </Form.Item>
 
+                <Form.Item hidden label="id" name="id">
+                    <Input />
+                </Form.Item>
+
                 <Form.Item rules={[{ required: true, message: '请填写' }]} label="全称" name="name">
                     <Input placeholder="全称" maxLength={200} />
                 </Form.Item>

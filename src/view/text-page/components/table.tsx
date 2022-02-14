@@ -32,7 +32,7 @@ export default function TextTable(props) {
             width: 240,
             read: read,
             render: (text, record) => {
-                return read ? text : <View {...record} />;
+                return read ? text : <View {...record} refresh={refresh} />;
             }
         },
         {
@@ -44,14 +44,14 @@ export default function TextTable(props) {
             render: text => <Ellipsis style={{ width: 400 }}>{text || '--'}</Ellipsis>
         },
         {
-            title: '包含词量',
+            title: '包含词量 (个)',
             dataIndex: 'wordsNum',
             key: 'words',
             width: 140,
             render: (text, record) => text || '--'
         },
         {
-            title: '语料容量',
+            title: '语料容量 (字)',
             dataIndex: 'textsContent',
             key: 'textsContent',
             width: 140,

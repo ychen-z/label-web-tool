@@ -9,8 +9,8 @@ import ModalAdd from '../data-modal';
 import { TemplateSearchParams } from './interface';
 import './index.less';
 
-function Template(props) {
-    const { textsName, id: textId } = props;
+function Index(props) {
+    const { textsName, id: textId, refresh } = props;
     const DEFAULT_PARAM = {
         page: 1,
         size: 10
@@ -49,6 +49,7 @@ function Template(props) {
     return (
         <div>
             <UDrawer
+                callback={refresh}
                 trigger={<a>{textsName}</a>}
                 maskClosable={false}
                 title={'查看' + textsName + '详情'}
@@ -82,4 +83,4 @@ function Template(props) {
     );
 }
 
-export default Template;
+export default Index;

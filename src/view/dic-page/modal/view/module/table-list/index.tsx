@@ -3,12 +3,11 @@ import { Table, Divider, Space } from 'antd';
 import { TablePaginationConfig } from 'antd/es/table';
 import IconSet from '@/components/icon';
 import { delDictData } from '@/axios';
-import { TemplateTableProps } from './interface';
 import ModalAdd from '../../../data-modal';
 import Del from '../../../del';
 import './index.less';
 
-function TableList(props: TemplateTableProps) {
+function TableList(props) {
     const columns = [
         {
             title: '名称',

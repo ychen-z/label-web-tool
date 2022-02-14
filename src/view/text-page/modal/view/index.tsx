@@ -5,7 +5,7 @@ import UDrawer from '@/components/common/u-drawer';
 import useFetch from '@/hooks/common/useFetch';
 import { PaginationProps } from '@/interface';
 import Table from './module/table-list';
-import ModalAdd from '../data-modal';
+import ModalAdd from '../text-data';
 import { TemplateSearchParams } from './interface';
 import './index.less';
 

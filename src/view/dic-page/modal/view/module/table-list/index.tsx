@@ -3,7 +3,7 @@ import { Table, Divider, Space } from 'antd';
 import { TablePaginationConfig } from 'antd/es/table';
 import IconSet from '@/components/icon';
 import { delDictData } from '@/axios';
-import ModalAdd from '../../../data-modal';
+import ModalAdd from '../../../dict-data';
 import Del from '../../../del';
 import './index.less';
 

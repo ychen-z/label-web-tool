@@ -4,7 +4,7 @@ import IconSet from '@/components/icon';
 import Ellipsis from '@/components/common/u-ellipsis';
 import { GlobalContext } from '@/context';
 import Export from '../modal/export';
-import UpdateModal from '../modal/import-modal-add';
+import Update from '../modal/add';
 import Del from '../modal/del';
 import { delDic } from '@/axios';
 import View from '../modal/view/index';
@@ -75,11 +75,11 @@ export default function DictTable(props) {
             render: (text: string, record: any) => {
                 return (
                     <Space>
-                        <UpdateModal data={record} type="EDIT" refresh={refresh}>
+                        <Update data={record} type="EDIT" refresh={refresh}>
                             <a>
                                 <IconSet type="icon-bianji" /> 编辑
                             </a>
-                        </UpdateModal>
+                        </Update>
                         <Divider type="vertical" />
                         <Export data={record} />
                         <Divider type="vertical" />

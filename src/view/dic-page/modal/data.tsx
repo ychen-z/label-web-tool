@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Form, Input, Modal, message } from 'antd';
 import useFetch from '@/hooks/common/useFetch';
 import { putDictData, postDictData } from '@/axios';
@@ -19,7 +19,7 @@ const ADDModal = (props: Props) => {
 
     const onSubmit = (values: any) => {
         form.validateFields().then(values => {
-            values.alias = values.alias.split('|');
+            values.alias = values.alias.split('，');
             values.id
                 ? updateFunc(values).then(res => {
                       message.success('操作成功');
@@ -34,10 +34,20 @@ const ADDModal = (props: Props) => {
         });
     };
 
+    useEffect(() => {
+        if (data) {
+            form.setFieldsValue({ alias: data.alias.join('，') });
+        }
+    }, [data, form]);
+
     return (
         <Modal form={form} title={title} visible onOk={onSubmit} onCancel={onCancel}>
             <Form form={form} labelCol={{ span: 6 }} wrapperCol={{ span: 16 }} initialValues={data} scrollToFirstError>
                 <Form.Item hidden label="dictId" name="dictId">
+                    <Input />
+                </Form.Item>
+
+                <Form.Item hidden label="id" name="id">
                     <Input />
                 </Form.Item>
 
@@ -46,11 +56,7 @@ const ADDModal = (props: Props) => {
                 </Form.Item>
 
                 <Form.Item rules={[{ required: true, message: '请填写' }]} label="别名" name="alias">
-                    <Input placeholder="请输入别名，不同别名间请以“ | ”分割" maxLength={200} />
-                </Form.Item>
-
-                <Form.Item rules={[{ required: true, message: '请填写' }]} label="标签" name="label">
-                    <Input placeholder="请输入标签名" maxLength={200} />
+                    <Input.TextArea placeholder="请输入别名，不同别名间请以“ ，”分割" maxLength={200} />
                 </Form.Item>
             </Form>
         </Modal>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Modal from './importModal';
+import Modal from './import';
 
 const Modal2 = props => {
     const [visible, setVisible] = useState(false);

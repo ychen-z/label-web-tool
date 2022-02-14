@@ -9,7 +9,7 @@ interface Props extends DrawerProps {
 }
 
 const UDrawer = (props: Props) => {
-    const { trigger, children, beforeShow, ...rest } = props;
+    const { trigger, callback, children, beforeShow, ...rest } = props;
     const [visible, setVisible] = useControllableValue(props, { valuePropName: 'visible' });
     const onClick = async () => {
         if (typeof beforeShow === 'function') {
@@ -19,6 +19,7 @@ const UDrawer = (props: Props) => {
         setVisible(true);
     };
     const onClose = () => {
+        callback && callback();
         setVisible(false);
     };
     return (

@@ -1,5 +1,6 @@
 import React, { useEffect, useCallback, useState } from 'react';
 import { Form, Input, Modal, message } from 'antd';
+import { ChromePicker } from 'react-color';
 import Upload from '@/components/upload/SelfUpload';
 import useFetch from '@/hooks/common/useFetch';
 import { postDic, updateDic } from '@/axios';
@@ -11,10 +12,24 @@ interface Props {
     refresh: Function;
 }
 
+const popover = {
+    position: 'absolute',
+    zIndex: '2'
+};
+const cover = {
+    position: 'fixed',
+    top: '0px',
+    right: '0px',
+    bottom: '0px',
+    left: '0px'
+};
+
 const ADDModal = (props: Props) => {
     const [form] = Form.useForm();
     const { data, onCancel, refresh, type } = props;
     const [focus, setFocus] = useState(false);
+    const [showChromePicker, setShowChromePicker] = useState(false);
+    const [color, setColor] = useState('#fff');
     const { dispatch: updateFunc } = useFetch(updateDic, null, false); // 更新
     const { dispatch: addFunc } = useFetch(postDic, null, false); // 新增
     const title = type === 'EDIT' ? '编辑字典' : '新增字典';
@@ -36,14 +51,23 @@ const ADDModal = (props: Props) => {
         });
     };
 
-    const changeKeyName = e => {
-        console.log(e.target.value);
+    const triggleChromePicker = () => {
+        setShowChromePicker(true);
+    };
+
+    const handleClose = () => {
+        setShowChromePicker(false);
+    };
+
+    const handleChromePicker = color => {
+        setColor(color.hex);
+        form.setFieldsValue({ color: color.hex });
     };
 
     const handleUserKeyPress = useCallback(
         event => {
             const { key, keyCode, ctrlKey, altKey, shiftKey } = event;
-            if ((focus && keyCode === 32) || (keyCode >= 65 && keyCode <= 90)) {
+            if (focus && (keyCode === 32 || (keyCode >= 65 && keyCode <= 90))) {
                 let active = ctrlKey ? 'ctrl + ' : '';
                 active = (altKey ? 'alt + ' : '') + active;
                 active = (shiftKey ? 'shift + ' : '') + active;
@@ -67,10 +91,20 @@ const ADDModal = (props: Props) => {
         };
     }, [handleUserKeyPress]);
 
+    useEffect(() => {
+        if (data) {
+            setColor(data.color);
+        }
+    }, [data]);
+
     return (
         <Modal title={title} visible onOk={fetch} onCancel={onCancel}>
             <Form form={form} labelCol={{ span: 6 }} wrapperCol={{ span: 16 }} initialValues={data} scrollToFirstError>
                 <Form.Item hidden label="id" name="id">
+                    <Input disabled />
+                </Form.Item>
+
+                <Form.Item hidden label="color" name="color">
                     <Input disabled />
                 </Form.Item>
 
@@ -82,22 +116,22 @@ const ADDModal = (props: Props) => {
                     <Input.TextArea placeholder="请输入" maxLength={2000} />
                 </Form.Item>
 
-                <Form.Item label="标签颜色" name="color">
-                    <Input placeholder="例如： blue" maxLength={200} />
+                <Form.Item label="标签颜色">
+                    <div style={{ border: '1px solid #e8e8e8', height: '32px', width: '100%', background: color }} onClick={triggleChromePicker} />
+                    {showChromePicker && (
+                        <div style={popover}>
+                            <div style={cover} onClick={handleClose} />
+                            <ChromePicker color={color} onChange={handleChromePicker} />
+                        </div>
+                    )}
                 </Form.Item>
 
                 <Form.Item label="标签快捷键" name="keyName" rules={[{ required: true, message: '请填写' }]}>
-                    <Input
-                        placeholder="例如： ctrl + a"
-                        maxLength={200}
-                        onChange={changeKeyName}
-                        onFocus={() => setFocus(true)}
-                        onBlur={() => setFocus(false)}
-                    />
+                    <Input placeholder="例如： ctrl + a" maxLength={200} onFocus={() => setFocus(true)} onBlur={() => setFocus(false)} />
                 </Form.Item>
 
-                <Form.Item label="keyCode" name="keyCode" rules={[{ required: true, message: '请填写' }]}>
-                    <Input placeholder="请输入" maxLength={6} disabled minLength={6} />
+                <Form.Item label="keyCode" name="keyCode" hidden>
+                    <Input placeholder="请输入" />
                 </Form.Item>
 
                 {type !== 'EDIT' && (

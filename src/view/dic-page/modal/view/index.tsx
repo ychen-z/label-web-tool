@@ -5,12 +5,12 @@ import UDrawer from '@/components/common/u-drawer';
 import useFetch from '@/hooks/common/useFetch';
 import { PaginationProps } from '@/interface';
 import Table from './module/table-list';
-import ModalAdd from '../data-modal';
+import ModalAdd from '../dict-data';
 import { TemplateSearchParams } from './interface';
 import './index.less';
 
 function Template(props) {
-    const { dictionaryName, id: dictId } = props;
+    const { dictionaryName, id: dictId, refresh } = props;
     const DEFAULT_PARAM = {
         page: 1,
         size: 10
@@ -47,8 +47,9 @@ function Template(props) {
     };
 
     return (
-        <div>
+        <>
             <UDrawer
+                callback={refresh}
                 trigger={<a>{dictionaryName}</a>}
                 maskClosable={false}
                 title={'查看' + dictionaryName + '详情'}
@@ -78,7 +79,7 @@ function Template(props) {
                     />
                 </div>
             </UDrawer>
-        </div>
+        </>
     );
 }
 

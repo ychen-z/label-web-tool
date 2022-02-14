@@ -3,7 +3,7 @@ import { Button } from 'antd';
 import useFetch from '@/hooks/common/useFetch';
 import { getDicAll } from '@/axios';
 import Dictable from './components/table';
-import AddModal from './modal/import-modal-add';
+import AddModal from './modal/add';
 import './index.less';
 
 export default function Dictionary(props) {

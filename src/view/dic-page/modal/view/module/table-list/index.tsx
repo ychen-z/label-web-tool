@@ -3,12 +3,11 @@ import { Table, Divider, Space } from 'antd';
 import { TablePaginationConfig } from 'antd/es/table';
 import IconSet from '@/components/icon';
 import { delDictData } from '@/axios';
-import { TemplateTableProps } from './interface';
-import ModalAdd from '../../../data-modal';
+import ModalAdd from '../../../dict-data';
 import Del from '../../../del';
 import './index.less';
 
-function TableList(props: TemplateTableProps) {
+function TableList(props) {
     const columns = [
         {
             title: '名称',
@@ -19,15 +18,12 @@ function TableList(props: TemplateTableProps) {
 
         {
             title: '别名',
-            dataIndex: 'abbreviations',
-            key: 'abbreviations',
-            ellipsis: true
-        },
-        {
-            title: '标签',
-            dataIndex: 'label',
-            key: 'label',
-            ellipsis: true
+            dataIndex: 'alias',
+            key: 'alias',
+            ellipsis: true,
+            render: text => {
+                return <div>{text ? text.join('，') : '--'}</div>;
+            }
         },
         {
             title: '操作',
@@ -37,7 +33,7 @@ function TableList(props: TemplateTableProps) {
             ellipsis: true,
             render: (text, record) => (
                 <Space>
-                    <ModalAdd isEdit data={record}>
+                    <ModalAdd type="EDIT" data={record} refresh={props.getList}>
                         <a>
                             <IconSet type="icon-bianji" /> 编辑
                         </a>

@@ -2,12 +2,6 @@ import { MenuItemType } from './interface';
 
 const MENU_MAP: MenuItemType[] = [
     {
-        id: 3,
-        name: '实体抽取',
-        link: '/app/tool',
-        icon: 'icon-shiti'
-    },
-    {
         id: 1,
         name: '字典管理',
         link: '/app/dic',
@@ -18,6 +12,12 @@ const MENU_MAP: MenuItemType[] = [
         name: '语料管理',
         link: '/app/text',
         icon: 'icon-yuliao'
+    },
+    {
+        id: 3,
+        name: '实体抽取',
+        link: '/app/tool',
+        icon: 'icon-shiti'
     }
 
     // {

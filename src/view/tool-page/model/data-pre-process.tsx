@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { Form, Input, Button, Select, Slider, Tabs, message } from 'antd';
-import ReactEcharts from 'echarts-for-react';
+import { ScatterContext } from '@/context';
 import useFetch from '@/hooks/common/useFetch';
 import Table from '../components/table-list/index';
 import WordsCloudEchart from '../components/word-cloud-echart';
+import ScatterEchart from '../components/scatter-echart';
 import { setClusterAndVector, getPreSample, getScatter } from '@/axios';
 
 const { Option } = Select;
@@ -16,35 +17,11 @@ const { TabPane } = Tabs;
 export default function DataPreProcess() {
     const [activeKey, setActiveKey] = useState('1');
     const [sliderValue, setSliderValue] = useState(1);
+    const [clusterId, setClusterId] = useState(0);
     const { dispatch: dispatchSetClusterAndVector, isLoading: loading } = useFetch(setClusterAndVector, { page: 0, size: Infinity }, false);
     const { dispatch: dispatchGetPreSample } = useFetch(getPreSample, null, false);
     const { data: scatterData, dispatch: dispatchGetScatter } = useFetch(getScatter, null);
 
-    const getScatterData = data => {
-        if (!data) return {};
-        return {
-            title: { text: '散点图' },
-            xAxis: {},
-            yAxis: {
-                type: 'value'
-            },
-            grid: {
-                show: true
-            },
-            legend: {
-                show: true
-            },
-            tooltip: {
-                show: true
-            },
-            series: [
-                {
-                    data: data.map(item => (item = item.vector)),
-                    type: 'scatter'
-                }
-            ]
-        };
-    };
     const onChangeTabs = v => {
         setActiveKey(v);
     };
@@ -75,6 +52,10 @@ export default function DataPreProcess() {
                 message.success('采样成功');
             });
         }
+    };
+
+    const updateCluster = id => {
+        setClusterId(id);
     };
 
     return (
@@ -128,10 +109,10 @@ export default function DataPreProcess() {
                 <Tabs defaultActiveKey={activeKey} onChange={onChangeTabs}>
                     <TabPane tab="数据可视化" key="1" className="u-result-view">
                         <div>
-                            <ReactEcharts option={getScatterData(scatterData)} />
-                        </div>
-                        <div>
-                            <WordsCloudEchart clusterId={1} />
+                            <ScatterContext.Provider value={{ updateCluster }}>
+                                <ScatterEchart data={scatterData} />
+                                <WordsCloudEchart clusterId={clusterId} />
+                            </ScatterContext.Provider>
                         </div>
                     </TabPane>
                     <TabPane tab="匹配情况" key="2">

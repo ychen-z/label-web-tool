@@ -1,5 +1,8 @@
 export interface GlobalContextProps {
     dispatchDict: Function;
     dispatchText: Function;
-    // dispatchDownload: Function;
+}
+
+export interface ScatterContextProps {
+    updateCluster: Function;
 }

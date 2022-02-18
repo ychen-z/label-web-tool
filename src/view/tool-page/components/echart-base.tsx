@@ -1,18 +1,35 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as echarts from 'echarts';
 import cx from 'classnames';
+import ecStat from 'echarts-stat';
+
+const resizeObserver = new window.ResizeObserver(entries => {
+    entries.map(({ target }) => {
+        const instance = echarts.getInstanceByDom(target);
+        if (instance) {
+            instance.resize();
+        }
+    });
+});
 
 function ECharts(props) {
-    const { options, style, className, loading, message } = props;
+    const { options, style, className, loading, message, callback } = props;
     const [chart, setChart] = useState(null);
-    const chartRef = useRef();
+    const chartRef = useRef<any>();
 
     useEffect(() => {
-        const chart = echarts.init(chartRef.current, 'westeros'); // echarts theme
-        chart.setOption({ ...options, resizeObserver }, true); // second param is for 'noMerge'
-        setChart(chart);
-        if (resizeObserver) resizeObserver.observe(chartRef.current);
-    }, [options]);
+        if (options) {
+            const chart = echarts.init(chartRef.current, 'westeros'); // echarts theme
+            echarts.registerTransform(ecStat.transform.clustering); //散点图
+            chart.setOption({ ...options, resizeObserver }, true); // second param is for 'noMerge'
+            setChart(chart);
+            chart.on('click', function(params) {
+                console.log(params);
+                callback && callback(params);
+            });
+            if (resizeObserver) resizeObserver.observe(chartRef.current);
+        }
+    }, [callback, options]);
 
     useEffect(() => {
         if (!chart) {
@@ -44,14 +61,5 @@ function ECharts(props) {
         </div>
     );
 }
-
-const resizeObserver = new window.ResizeObserver(entries => {
-    entries.map(({ target }) => {
-        const instance = echarts.getInstanceByDom(target);
-        if (instance) {
-            instance.resize();
-        }
-    });
-});
 
 export default React.memo(ECharts);

@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
-import { Card } from 'antd';
+import React, { useState, useEffect } from 'react';
+import { Card, message } from 'antd';
 import { GlobalContext } from '@/context';
+import useFetch from '@/hooks/common/useFetch';
+import { getToolState } from '@/axios';
 import Loading from './model/loading';
 import DataImport from './model/data-import'; // 数据导入
 import DataPreProcess from './model/data-pre-process'; // 数据预处理
@@ -13,68 +15,68 @@ import './index.less';
 const Btns = [
     {
         name: '加载数据/字典',
-        type: 1,
+        type: 0,
         top: 0
     },
     {
         name: '数据预处理',
-        type: 2,
+        type: 1,
         top: 58 * 2
     },
     {
         name: '手工标注',
-        type: 3,
+        type: 2,
         top: 58 * 3 + 59
     },
     {
         name: '训练模型',
-        type: 4,
+        type: 3,
         top: 58 * 5 + 60
     },
     {
         name: '语料识别',
-        type: 5,
+        type: 4,
         top: 58 * 7 + 61
     },
     {
         name: <DataExport />,
-        type: 6,
+        type: 5,
         top: 58 * 9 + 62,
         status: true // 当前模块不渲染
     }
 ];
 
+const formatStatus = status => Math.floor((status || 0) / 10);
+
 export default function ToolPage() {
     const Dom = {
-        0: <Loading />,
-        1: <DataImport />,
-        2: <DataPreProcess />,
-        3: <ManualNamed />,
-        4: <TrainingModel />,
-        5: <TextRecognition />,
-        6: null
+        '-1': <Loading />,
+        0: <DataImport />,
+        1: <DataPreProcess />,
+        2: <ManualNamed />,
+        3: <TrainingModel />,
+        4: <TextRecognition />,
+        5: null
     };
 
-    const [count, setCount] = useState(localStorage.getItem('toolState') || 1);
+    const { data, dispatch } = useFetch(getToolState, null);
+    const [count, setCount] = useState(-1);
 
     // 开始流程
     const _select = (value: number, status: boolean) => {
-        if (!status) {
-            localStorage.setItem('toolState', value);
+        if (status) return;
+        if (value == count + 1) {
             setCount(value);
         }
 
-        // if (value == count + 1) {
-        //     setCount(value);
-        // }
+        if (count == 1 && value == 4) {
+            setCount(value);
+        }
 
-        // if (count == 2 && value == 5) {
-        //     setCount(value);
-        // }
-
-        // if (count == 5 && value == 3) {
-        //     setCount(value);
-        // }
+        if (count == 4 && value == 2) {
+            setCount(value);
+        }
+        return;
     };
 
     const dispatchDict = v => {
@@ -84,6 +86,13 @@ export default function ToolPage() {
     const dispatchText = v => {
         localStorage.setItem('textIds', v.join(',')); //存储
     };
+
+    useEffect(() => {
+        if (data) {
+            setCount(formatStatus(data.status));
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [data]);
 
     return (
         <GlobalContext.Provider value={{ dispatchDict, dispatchText }}>

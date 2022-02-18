@@ -1,8 +1,17 @@
 import React, { useEffect, useState, useCallback, useRef } from 'react';
-import { Button, Card, message, Tag, Alert } from 'antd';
+import { Button, Card, message, Tag, Alert, Progress } from 'antd';
 import useFetch from '@/hooks/common/useFetch';
 import DicTable from '@/view/dic-page';
-import { getTextLabelCount, getTextLabelOne, getTextLabelResult, postTextLabel, delTextLabel } from '@/axios';
+import {
+    getTextLabelCount,
+    getTextLabelOne,
+    getTextLabelPreOne,
+    getTextLabelNextOne,
+    getTextLabelResult,
+    postTextLabel,
+    delTextLabel,
+    getHistoryRates
+} from '@/axios';
 import './index.less';
 
 /**
@@ -12,21 +21,43 @@ import './index.less';
 export default function HandleTag() {
     const [userText, setUserText] = useState<string>('');
     const [userKey, setUserKey] = useState<string>('');
+    const [textLabeOne, setTextLableOne] = useState();
     const keycodeRef = useRef<string>();
-    const { data: textLabelCount, dispatch: dispatchGetTextLabelCount } = useFetch(getTextLabelCount, null);
-    const { data: textLabeOne, dispatch: dispatchGetTextLabelOne, isLoading: loadingOne } = useFetch(getTextLabelOne, null);
+    const { data: historyRateData = [] } = useFetch(getHistoryRates, null); // 轮次
+    const { data: textLabelCount, dispatch: dispatchGetTextLabelCount } = useFetch(getTextLabelCount, null, false);
+    const { dispatch: dispatchGetTextLabelOne } = useFetch(getTextLabelOne, null, false);
+    const { dispatch: dispatchPreone } = useFetch(getTextLabelPreOne, null, false);
+    const { dispatch: dispatchNextone } = useFetch(getTextLabelNextOne, null, false);
     const { data: textLabelResult, dispatch: dispatchGetTextLabelResult } = useFetch(getTextLabelResult, null, false);
     const { dispatch: dispatchPostTextLabel } = useFetch(postTextLabel, null, false);
     const { dispatch: dispatchDelLabel } = useFetch(delTextLabel, null, false);
 
     // 取一条新数据进行打标
-    const getOne = () => {
+    const getOne = type => {
         setUserText('');
         setUserKey('');
-        dispatchGetTextLabelOne({
-            type: localStorage.getItem('labelState') || 'pre' // pre 预处理， model 识别后
-        }); // 取一条新数据
+        !type &&
+            dispatchGetTextLabelOne({
+                type: localStorage.getItem('labelState') || 'pre' // pre 预处理， model 识别后
+            }).then(res => {
+                setTextLableOne(res);
+            });
+        type === 'NEXT' &&
+            dispatchNextone({
+                id: textLabeOne.id
+            }).then(res => {
+                setTextLableOne(res);
+            });
+
+        type === 'PRE' &&
+            dispatchPreone({
+                id: textLabeOne.id
+            }).then(res => {
+                setTextLableOne(res);
+            });
+
         dispatchGetTextLabelCount(); // 重新获取数量
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     };
 
     const handleUserKeyPress = useCallback(event => {
@@ -61,7 +92,6 @@ export default function HandleTag() {
     }, []);
 
     const formatData = (data = []) => {
-        console.log(data);
         if (!data.length) return <>暂无数据</>;
         const groupByCategory = data.reduce((group, product) => {
             const { dictName } = product;
@@ -91,14 +121,35 @@ export default function HandleTag() {
         });
     };
 
+    // 渲染消息栏
+    const renderMessage = data => {
+        let percent = 0;
+        if (data?.sumCount) {
+            percent = ((data?.alreadyCount / data?.sumCount) * 100).toFixed(1);
+        }
+
+        return (
+            <>
+                当前是第{historyRateData.length + 1}轮: (待打标：{data?.needCount || 0}个；已打标：{data?.alreadyCount || 0}个；总量：
+                {data?.sumCount || 0}个 ;)
+                <div style={{ display: 'flex', marginTop: 8 }}>
+                    <span style={{ width: 140 }}>本轮整体完成进度：</span>
+                    <Progress style={{ flex: 1 }} percent={percent} size="small" />
+                </div>
+            </>
+        );
+    };
+
     useEffect(() => {
+        getOne(); // 取一条新数据
         window.addEventListener('keyup', handleUserKeyPress);
         window.addEventListener('mouseup', getSelectString);
         return () => {
             window.removeEventListener('keyup', handleUserKeyPress);
             window.removeEventListener('mouseup', getSelectString);
         };
-    }, [getSelectString, handleUserKeyPress]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     useEffect(() => {
         if (textLabeOne) {
@@ -112,9 +163,13 @@ export default function HandleTag() {
             console.log('调用打标接口');
             dispatchPostTextLabel({ label: userText, keyCode: keycodeRef.current, textDataId: textLabeOne.id }).then(res => {
                 message.success('打标成功！');
+                const temp = {
+                    ...textLabeOne,
+                    textMark: textLabeOne.textMark.replaceAll(res.label, `<font color=${res.color}>${res.label}</font>`)
+                };
+                setTextLableOne(temp);
                 setUserText('');
                 setUserKey('');
-                dispatchGetTextLabelResult({ id: textLabeOne.id });
             });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -123,7 +178,7 @@ export default function HandleTag() {
     return (
         <div className="u-handle">
             <section className="header">
-                <Alert message={`待打标：${textLabelCount?.needCount || 0}个；已打标：${textLabelCount?.alreadyCount || 0}个`} type="success" />
+                <Alert message={renderMessage(textLabelCount)} type="success" />
             </section>
             <div className="tag">
                 字典标签：
@@ -133,23 +188,24 @@ export default function HandleTag() {
                 <Card
                     title={<strong>打标工作区</strong>}
                     extra={
-                        textLabelCount?.needCount && (
-                            <Button loading={loadingOne} onClick={getOne} type="primary">
-                                下一条
-                            </Button>
-                        )
+                        <>
+                            {!!textLabelCount?.needCount && (
+                                <Button onClick={() => getOne('PRE')} type="primary">
+                                    上一条
+                                </Button>
+                            )}
+
+                            {!!textLabelCount?.needCount && (
+                                <Button onClick={() => getOne('NEXT')} type="primary">
+                                    下一条
+                                </Button>
+                            )}
+                        </>
                     }
                 >
-                    <div className="u-handle-area-content">{textLabeOne?.text || <span style={{ color: '#999' }}>取一条新数据吧 ~</span>}</div>
+                    <div className="u-handle-area-content" dangerouslySetInnerHTML={{ __html: textLabeOne?.textMark }} />
                 </Card>
             </section>
-
-            {userText && (
-                <section className="u-handle-result">
-                    选取的内容：<span>{userText || '--'}</span> ，快捷键：<span>{userKey || '--'}</span>
-                </section>
-            )}
-
             <section className="u-handle-view">
                 <Card title={<strong>打标结果</strong>}>
                     <div className="u-handle-view-content">{formatData(textLabelResult?.content)}</div>

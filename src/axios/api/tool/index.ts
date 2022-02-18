@@ -1,5 +1,8 @@
 import { get, put, post, del } from '../../http';
 
+// 获取状态
+export const getToolState = (data: any) => get({ url: '/textCluster/status', data }); // 聚类并向量化
+
 // 工具管理
 export const setClusterAndVector = (data: any) => post({ url: '/textCluster/clusterAndVector', data }); // 聚类并向量化
 export const getPreSample = (data: any) => get({ url: '/textCluster/preSample?rate=' + data }); // 聚类并向量化
@@ -12,6 +15,8 @@ export const postModelMark = (data: any) => post({ url: '/textCluster/modelMark'
 // 打标
 export const getTextLabelCount = (data: any) => get({ url: '/textLabel/count', data });
 export const getTextLabelOne = (data: any) => get({ url: '/textLabel/takeOne', data });
+export const getTextLabelNextOne = (data: any) => get({ url: '/textLabel/takeNextOne', data });
+export const getTextLabelPreOne = (data: any) => get({ url: '/textLabel/takePreOne', data });
 export const getTextLabelResult = (data: any) => get({ url: '/textLabel/textData/' + data.id, data });
 export const postTextLabel = (data: any) => post({ url: '/textLabel/', data });
 export const delTextLabel = (data: any) => del({ url: '/textLabel/' + data });
@@ -24,4 +29,4 @@ export const getWordCloudByClusterId = (clusterId: any) => get({ url: '/textClus
 export const getLabelList = (data: any) => get({ url: '/label/all', data });
 export const updateLabel = (data: any) => put({ url: '/label', data });
 export const postLabel = (data: any) => post({ url: '/label/add', data }); // 增加label
-export const delLabel = (labelId: any) => del({ url: '/label/' + labelId });
+// export const delLabel = (labelId: any) => del({ url: '/label/' + labelId });

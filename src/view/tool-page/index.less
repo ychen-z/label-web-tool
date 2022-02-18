@@ -55,24 +55,36 @@
 
 // 数据预处理
 .m-data-pre-process {
-    .u-vector {
-        display: flex;
+    .u-form {
+        position: relative;
+        display: inline-flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        width: 80%;
 
-        div {
-            flex: 1;
+        .ant-row {
+            min-width: 50%;
         }
 
-        .f-200 {
-            width: 200px;
+        .f-0 {
+            position: absolute;
+            top: 0;
+            right: -100px;
         }
     }
 
     .u-sample {
         display: flex;
+        width: 80%;
 
         .u-sample-content {
             display: flex;
             flex: 1;
+
+            span {
+                line-height: 32px;
+            }
 
             div {
                 flex: 1;
@@ -85,10 +97,13 @@
     }
 
     .u-result {
+        margin-top: 12px;
+
         &-view {
             display: flex;
             width: 100%;
             overflow: hidden;
+
             > div {
                 flex: 1;
             }
@@ -96,19 +111,50 @@
     }
 }
 
-
 // 训练模型
 .m-training-model {
+    .u-form {
+        .ant-form {
+            display: inline-flex;
+        }
+    }
+
     .u-view {
         display: flex;
 
         .u-view-left,
         .u-view-right {
             flex: 1;
-            padding-bottom: 8px;
+            padding: 12px;
             margin: 2px;
             text-align: center;
             background-color: #F5F5F5;
+        }
+    }
+}
+
+.m-text-recognition {
+    .header {
+        display: flex;
+    }
+
+    .u-sample {
+        display: inline-flex;
+        width: 300px;
+        margin-right: 12px;
+
+        &-content {
+            display: inline-flex;
+            width: 200px;
+            margin-right: 12px;
+
+            span {
+                line-height: 32px;
+            }
+
+            div {
+                flex: 1;
+            }
         }
     }
 }

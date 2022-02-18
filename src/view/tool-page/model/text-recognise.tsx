@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Form, Button, Select, message } from 'antd';
+import { Form, Button, Select, message, Slider } from 'antd';
 import useFetch from '@/hooks/common/useFetch';
 import Table from '../components/table-list/index';
-import { postModelMark } from '@/axios';
+import { postModelMark, getModelSample } from '@/axios';
 
 const { Option } = Select;
 /**
@@ -11,28 +11,52 @@ const { Option } = Select;
  */
 export default function TextRecognition() {
     // const [form] = Form.useForm();
+    const [sliderValue, setSliderValue] = useState(1);
     const [update, setUpdate] = useState(0);
     const { dispatch, isLoading } = useFetch(postModelMark, null, false);
+    const { dispatch: dispatchGetModelSample } = useFetch(getModelSample, null, false);
 
     const onFinish = values => {
         console.log('采样:', values);
         dispatch({ ...values, dictIds: localStorage.getItem('dictIds')?.split(','), textIds: localStorage.getItem('textIds')?.split(',') }).then(
             res => {
-                localStorage.setItem('labelState', 'model');
                 setUpdate(update + 1);
                 message.success('操作成功');
             }
         );
     };
 
+    /**
+     * 采样
+     */
+    const onSample = () => {
+        console.log('采样');
+        if (sliderValue) {
+            dispatchGetModelSample(sliderValue / 100).then(res => {
+                localStorage.setItem('labelState', 'model');
+                message.success('采样成功');
+            });
+        }
+    };
+
     return (
         <div className="m-text-recognition">
-            <section>
+            <section className="header">
+                <div className="u-sample">
+                    <div className="u-sample-content">
+                        <span>采样率：</span>
+                        <Slider min={1} max={100} value={sliderValue} onChange={v => setSliderValue(v)} />
+                        <span>{sliderValue} %</span>
+                    </div>
+                    <Button type="primary" onClick={onSample}>
+                        采样
+                    </Button>
+                </div>
                 <Form
                     name="basic"
                     className="u-form"
                     layout="inline"
-                    initialValues={{ remember: true }}
+                    initialValues={{ model: 'BiLSTM' }}
                     labelCol={{ span: 8 }}
                     wrapperCol={{ span: 16 }}
                     onFinish={onFinish}

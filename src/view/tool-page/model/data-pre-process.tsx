@@ -3,7 +3,6 @@ import { Form, Input, Button, Select, Slider, Tabs, message } from 'antd';
 import ReactEcharts from 'echarts-for-react';
 import useFetch from '@/hooks/common/useFetch';
 import Table from '../components/table-list/index';
-import WordsCloudEcharts from '../components/word-cloud-echarts';
 import WordsCloudEchart from '../components/word-cloud-echart';
 import { setClusterAndVector, getPreSample, getScatter } from '@/axios';
 
@@ -83,9 +82,9 @@ export default function DataPreProcess() {
             <Form
                 name="basic"
                 className="u-form"
-                initialValues={{ remember: true }}
+                initialValues={{ model: 'dec2Vec', method: 'Kmeans' }}
                 labelCol={{ span: 8 }}
-                wrapperCol={{ span: 8 }}
+                wrapperCol={{ span: 16 }}
                 onFinish={onTranning}
             >
                 <Form.Item label="向量化方法" name="model" rules={[{ required: true, message: '请输入' }]}>
@@ -105,7 +104,7 @@ export default function DataPreProcess() {
                     <Input />
                 </Form.Item>
 
-                <div className="f-200">
+                <div className="f-0">
                     <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
                         <Button type="primary" htmlType="submit" loading={loading}>
                             聚类

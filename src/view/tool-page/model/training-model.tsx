@@ -33,16 +33,17 @@ export default function TrainingModel() {
     const getCurrentRateOption = data => {
         if (!data) return {};
         return {
-            title: { text: '当前训练准备率' },
+            title: { text: '当前训练准确率 %' },
             xAxis: {
                 type: 'category'
-                // data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
             },
             yAxis: {
                 type: 'value'
             },
+            color: '#7cb305',
             grid: {
-                show: true
+                show: true,
+                gridIndex: 1
             },
             legend: {
                 show: true
@@ -62,10 +63,13 @@ export default function TrainingModel() {
     const getHistoryRateOption = data => {
         if (!data) return {};
         return {
-            title: { text: '历史训练准备率' },
+            title: { text: '历史训练准确率 %' },
             xAxis: {
-                type: 'category'
-                // data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+                type: 'category',
+                axisLabel: {
+                    show: true,
+                    interval: 1
+                }
             },
             yAxis: {
                 type: 'value'
@@ -73,6 +77,7 @@ export default function TrainingModel() {
             grid: {
                 show: true
             },
+            color: '#9254de',
             legend: {
                 show: true
             },
@@ -91,8 +96,8 @@ export default function TrainingModel() {
     return (
         <div className="m-training-model">
             <section className="u-form">
-                <Form name="basic" initialValues={{ remember: true }} labelCol={{ span: 8 }} wrapperCol={{ span: 8 }} onFinish={onFinish}>
-                    <Form.Item label="模型" name="model" rules={[{ required: true, message: '请输入' }]}>
+                <Form name="basic" initialValues={{ model: 'BiLSTM' }} labelCol={{ span: 8 }} wrapperCol={{ span: 15 }} onFinish={onFinish}>
+                    <Form.Item label="模型" name="model" style={{ width: 300 }} rules={[{ required: true, message: '请输入' }]}>
                         <Select>
                             <Option value="BiLSTM">BiLSTM</Option>
                         </Select>
@@ -105,7 +110,7 @@ export default function TrainingModel() {
                         <Input />
                     </Form.Item>
 
-                    <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+                    <Form.Item>
                         <Button type="primary" htmlType="submit" loading={isLoading}>
                             训练
                         </Button>

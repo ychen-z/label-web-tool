@@ -130,7 +130,7 @@ export default function HandleTag() {
 
         return (
             <>
-                当前是第{historyRateData.length + 1}轮: (待打标：{data?.needCount || 0}个；已打标：{data?.alreadyCount || 0}个；总量：
+                当前是第{(historyRateData?.length || 0) + 1}轮: (待打标：{data?.needCount || 0}个；已打标：{data?.alreadyCount || 0}个；总量：
                 {data?.sumCount || 0}个 ;)
                 <div style={{ display: 'flex', marginTop: 8 }}>
                     <span style={{ width: 140 }}>本轮整体完成进度：</span>
@@ -180,10 +180,7 @@ export default function HandleTag() {
             <section className="header">
                 <Alert message={renderMessage(textLabelCount)} type="success" />
             </section>
-            <div className="tag">
-                字典标签：
-                <DicTable read type="tag" />
-            </div>
+            <DicTable read type="tag" />
             <section className="u-handle-area">
                 <Card
                     title={<strong>打标工作区</strong>}

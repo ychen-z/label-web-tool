@@ -46,7 +46,12 @@ const Btns = [
     }
 ];
 
-const formatStatus = status => Math.floor((status || 0) / 10);
+const formatStatus = status => {
+    return {
+        status: Math.floor((status || 0) / 10),
+        next: (status || 0) % 10 == 0 // 可以进行下一项
+    };
+};
 
 export default function ToolPage() {
     const Dom = {
@@ -59,29 +64,37 @@ export default function ToolPage() {
         5: null
     };
 
-    const { data, dispatch } = useFetch(getToolState, null);
+    const { dispatch } = useFetch(getToolState, null, false);
     const [count, setCount] = useState(-1);
 
+    // 指引去哪个状态
+    const goto = (data, value) => {
+        var _status = formatStatus(data);
+        if (!value) {
+            setCount(formatStatus(data).status);
+            return false;
+        } // 默认值
+
+        if (_status.status == value || _status.next) {
+            if (value == count + 1) {
+                setCount(value);
+            }
+
+            if (count == 1 && value == 4) {
+                setCount(value);
+            }
+
+            if (count == 4 && value == 2) {
+                setCount(value);
+            }
+        } else {
+            message.warning('请按正确流程进行');
+        }
+    };
     // 开始流程
     const _select = (value: number, status: boolean) => {
         if (status) return;
-        dispatch().then(res => {
-            if (formatStatus(res.status) == value) {
-                if (value == count + 1) {
-                    setCount(value);
-                }
-
-                if (count == 1 && value == 4) {
-                    setCount(value);
-                }
-
-                if (count == 4 && value == 2) {
-                    setCount(value);
-                }
-            } else {
-                message.warning('请按正确流程进行');
-            }
-        });
+        dispatch().then(data => goto(data.status, value));
     };
 
     const dispatchDict = v => {
@@ -93,11 +106,11 @@ export default function ToolPage() {
     };
 
     useEffect(() => {
-        if (data) {
-            setCount(formatStatus(data.status));
+        if (dispatch) {
+            dispatch().then(data => goto(data.status));
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [data]);
+    }, [dispatch]);
 
     return (
         <GlobalContext.Provider value={{ dispatchDict, dispatchText }}>

@@ -65,18 +65,23 @@ export default function ToolPage() {
     // 开始流程
     const _select = (value: number, status: boolean) => {
         if (status) return;
-        if (value == count + 1) {
-            setCount(value);
-        }
+        dispatch().then(res => {
+            if (formatStatus(res.status) == value) {
+                if (value == count + 1) {
+                    setCount(value);
+                }
 
-        if (count == 1 && value == 4) {
-            setCount(value);
-        }
+                if (count == 1 && value == 4) {
+                    setCount(value);
+                }
 
-        if (count == 4 && value == 2) {
-            setCount(value);
-        }
-        return;
+                if (count == 4 && value == 2) {
+                    setCount(value);
+                }
+            } else {
+                message.warning('请按正确流程进行');
+            }
+        });
     };
 
     const dispatchDict = v => {

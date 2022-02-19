@@ -36,7 +36,7 @@ const ADDModal = (props: Props) => {
 
     useEffect(() => {
         if (data) {
-            form.setFieldsValue({ alias: data.alias.join('，') });
+            form.setFieldsValue({ alias: (data.alias || []).join('，') });
         }
     }, [data, form]);
 

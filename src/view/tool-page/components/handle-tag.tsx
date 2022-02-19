@@ -4,7 +4,6 @@ import useFetch from '@/hooks/common/useFetch';
 import DicTable from '@/view/dic-page';
 import {
     getTextLabelCount,
-    getTextLabelOne,
     getTextLabelPreOne,
     getTextLabelNextOne,
     getTextLabelResult,
@@ -25,9 +24,8 @@ export default function HandleTag() {
     const keycodeRef = useRef<string>();
     const { data: historyRateData = [] } = useFetch(getHistoryRates, null); // 轮次
     const { data: textLabelCount, dispatch: dispatchGetTextLabelCount } = useFetch(getTextLabelCount, null, false);
-    const { dispatch: dispatchGetTextLabelOne } = useFetch(getTextLabelOne, null, false);
-    const { dispatch: dispatchPreone } = useFetch(getTextLabelPreOne, null, false);
-    const { dispatch: dispatchNextone } = useFetch(getTextLabelNextOne, null, false);
+    const { dispatch: dispatchPreone, isLoading: preLoading } = useFetch(getTextLabelPreOne, null, false);
+    const { dispatch: dispatchNextone, isLoading: nextLoading } = useFetch(getTextLabelNextOne, null, false);
     const { data: textLabelResult, dispatch: dispatchGetTextLabelResult } = useFetch(getTextLabelResult, null, false);
     const { dispatch: dispatchPostTextLabel } = useFetch(postTextLabel, null, false);
     const { dispatch: dispatchDelLabel } = useFetch(delTextLabel, null, false);
@@ -36,28 +34,30 @@ export default function HandleTag() {
     const getOne = type => {
         setUserText('');
         setUserKey('');
-        !type &&
-            dispatchGetTextLabelOne({
-                type: localStorage.getItem('labelState') || 'pre' // pre 预处理， model 识别后
-            }).then(res => {
-                setTextLableOne(res);
-            });
         type === 'NEXT' &&
             dispatchNextone({
-                id: textLabeOne.id
+                id: textLabeOne?.id
             }).then(res => {
                 setTextLableOne(res);
             });
 
         type === 'PRE' &&
             dispatchPreone({
-                id: textLabeOne.id
+                id: textLabeOne?.id
             }).then(res => {
                 setTextLableOne(res);
             });
 
         dispatchGetTextLabelCount(); // 重新获取数量
         // eslint-disable-next-line react-hooks/exhaustive-deps
+    };
+
+    // 校对接口
+    const check = () => {
+        dispatchPostTextLabel({ textDataId: textLabeOne.id }).then(res => {
+            message.success('校对通过');
+            getOne('NEXT');
+        });
     };
 
     const handleUserKeyPress = useCallback(event => {
@@ -133,7 +133,7 @@ export default function HandleTag() {
                 当前是第{(historyRateData?.length || 0) + 1}轮: (待打标：{data?.needCount || 0}个；已打标：{data?.alreadyCount || 0}个；总量：
                 {data?.sumCount || 0}个 ;)
                 <div style={{ display: 'flex', marginTop: 8 }}>
-                    <span style={{ width: 140 }}>本轮整体完成进度：</span>
+                    <span style={{ width: 106 }}>整体完成进度：</span>
                     <Progress style={{ flex: 1 }} percent={percent} size="small" />
                 </div>
             </>
@@ -141,7 +141,7 @@ export default function HandleTag() {
     };
 
     useEffect(() => {
-        getOne(); // 取一条新数据
+        getOne('NEXT'); // 取一条新数据
         window.addEventListener('keyup', handleUserKeyPress);
         window.addEventListener('mouseup', getSelectString);
         return () => {
@@ -187,14 +187,20 @@ export default function HandleTag() {
                     extra={
                         <>
                             {!!textLabelCount?.needCount && (
-                                <Button onClick={() => getOne('PRE')} type="primary">
+                                <Button loading={preLoading} onClick={() => getOne('PRE')} type="primary">
                                     上一条
                                 </Button>
                             )}
 
                             {!!textLabelCount?.needCount && (
-                                <Button onClick={() => getOne('NEXT')} type="primary">
+                                <Button loading={nextLoading} onClick={() => getOne('NEXT')} type="primary">
                                     下一条
+                                </Button>
+                            )}
+
+                            {!!textLabelCount?.needCount && (
+                                <Button title="该条数据不需要打标" onClick={check} type="primary">
+                                    校对
                                 </Button>
                             )}
                         </>

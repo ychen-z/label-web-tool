@@ -81,14 +81,19 @@ export default function ToolPage() {
             }
 
             if (count == 1 && value == 4) {
+                // 特殊流程
                 setCount(value);
             }
 
             if (count == 4 && value == 2) {
+                // 特殊流程
                 setCount(value);
             }
         } else {
-            message.warning('请按正确流程进行');
+            const obj = {
+                3: '手工标注未完成'
+            };
+            message.warning(obj[value] || '请按正确流程进行');
         }
     };
     // 开始流程
@@ -107,7 +112,11 @@ export default function ToolPage() {
 
     useEffect(() => {
         if (dispatch) {
-            dispatch().then(data => goto(data.status));
+            dispatch().then(data => {
+                goto(data.status);
+                dispatchDict(data.dictIds);
+                dispatchText(data.textIds);
+            });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [dispatch]);

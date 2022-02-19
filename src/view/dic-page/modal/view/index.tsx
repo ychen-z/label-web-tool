@@ -63,7 +63,7 @@ function Template(props) {
             >
                 <div className="u-table">
                     <div className="u-opera-row">
-                        <ModalAdd callback={getList} data={{ dictId }}>
+                        <ModalAdd refresh={getList} data={{ dictId }}>
                             <Button type="primary">+ 增加字典</Button>
                         </ModalAdd>
                     </div>

@@ -55,7 +55,7 @@ const ADDModal = (props: Props) => {
                     <Input placeholder="全称" maxLength={200} />
                 </Form.Item>
 
-                <Form.Item rules={[{ required: true, message: '请填写' }]} label="别名" name="alias">
+                <Form.Item label="别名" name="alias">
                     <Input.TextArea placeholder="请输入别名，不同别名间请以“ ，”分割" maxLength={200} />
                 </Form.Item>
             </Form>

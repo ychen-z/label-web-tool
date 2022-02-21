@@ -46,25 +46,19 @@ const Btns = [
     }
 ];
 
-const formatStatus = status => {
+const formatStatus = (status, step) => {
+    const _status = Math.floor((status || 0) / 10);
+
+    // 可以进行下一项
+    const next = (step == _status || step == _status + 1 || (_status == 1 && step == 4) || (_status == 4 && step == 2)) && (status || 0) % 10 == 0;
     return {
-        status: Math.floor((status || 0) / 10),
-        next: (status || 0) % 10 == 0 // 可以进行下一项
+        status: _status,
+        next
     };
 };
 
 export default function ToolPage() {
-    const Dom = {
-        '-1': <Loading />,
-        0: <DataImport />,
-        1: <DataPreProcess />,
-        2: <ManualNamed />,
-        3: <TrainingModel />,
-        4: <TextRecognition />,
-        5: null
-    };
-
-    const renderdom = ({ step, active }) => {
+    const renderdom = ({ step }) => {
         const Dom = {
             '-1': <Loading />,
             0: <DataImport />,
@@ -82,19 +76,19 @@ export default function ToolPage() {
     const [count, setCount] = useState({ step: -1, active: false });
 
     // 指引去哪个状态
-    const goto = (data, value) => {
-        const { status, next } = formatStatus(data);
-        if (!value && value != 0) {
+    const goto = (data, step) => {
+        const { status, next } = formatStatus(data, step);
+        if (!step && step != 0) {
             // 默认跳转
             setCount({ step: status, active: true });
             return false;
         } // 默认值
-        setCount({ step: value, active: next || status == value });
+        setCount({ step, active: next });
     };
     // 开始流程
-    const _select = (value: number, status: boolean) => {
+    const _select = (step: number, status: boolean) => {
         if (status) return;
-        dispatch().then((res: any) => goto(res.status, value));
+        dispatch().then((res: any) => goto(res.status, step));
     };
 
     const dispatchDict = v => {
@@ -141,7 +135,7 @@ export default function ToolPage() {
                 </Card>
                 <section className="right">
                     {renderdom(count)}
-                    <div className={` ${count.active ? 'active' : 'stop'}`} />
+                    <div className={`${count.active ? 'active' : 'stop'}`} />
                 </section>
             </div>
         </GlobalContext.Provider>

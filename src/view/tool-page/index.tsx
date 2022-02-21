@@ -64,42 +64,37 @@ export default function ToolPage() {
         5: null
     };
 
+    const renderdom = ({ step, active }) => {
+        const Dom = {
+            '-1': <Loading />,
+            0: <DataImport />,
+            1: <DataPreProcess />,
+            2: <ManualNamed />,
+            3: <TrainingModel />,
+            4: <TextRecognition />,
+            5: null
+        };
+
+        return Dom[step];
+    };
+
     const { dispatch } = useFetch(getToolState, null, false);
-    const [count, setCount] = useState(-1);
+    const [count, setCount] = useState({ step: -1, active: false });
 
     // 指引去哪个状态
     const goto = (data, value) => {
-        var _status = formatStatus(data);
-        if (!value) {
-            setCount(formatStatus(data).status);
+        const { status, next } = formatStatus(data);
+        if (!value && value != 0) {
+            // 默认跳转
+            setCount({ step: status, active: true });
             return false;
         } // 默认值
-
-        if (_status.status == value || _status.next) {
-            if (value == count + 1) {
-                setCount(value);
-            }
-
-            if (count == 1 && value == 4) {
-                // 特殊流程
-                setCount(value);
-            }
-
-            if (count == 4 && value == 2) {
-                // 特殊流程
-                setCount(value);
-            }
-        } else {
-            const obj = {
-                3: '手工标注未完成'
-            };
-            message.warning(obj[value] || '请按正确流程进行');
-        }
+        setCount({ step: value, active: next });
     };
     // 开始流程
     const _select = (value: number, status: boolean) => {
         if (status) return;
-        dispatch().then(data => goto(data.status, value));
+        dispatch().then((res: any) => goto(res.status, value));
     };
 
     const dispatchDict = v => {
@@ -112,24 +107,31 @@ export default function ToolPage() {
 
     useEffect(() => {
         if (dispatch) {
-            dispatch().then(data => {
-                goto(data.status);
-                dispatchDict(data.dictIds);
-                dispatchText(data.textIds);
+            dispatch().then((res: any) => {
+                goto(res.status);
+                dispatchDict(res.dictIds);
+                dispatchText(res.textIds);
             });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [dispatch]);
 
     return (
-        <GlobalContext.Provider value={{ dispatchDict, dispatchText }}>
+        <GlobalContext.Provider
+            value={{
+                dispatchDict,
+                dispatchText
+            }}
+        >
             <div className="m-tool-page">
                 <Card className="left" title="流程图">
                     <div className="content">
                         {Btns.map(item => (
                             <span
-                                className={`item ${count == item.type ? 'active' : ''}`}
-                                style={{ top: item.top }}
+                                className={`item ${count.step == item.type ? 'active' : ''}`}
+                                style={{
+                                    top: item.top
+                                }}
                                 onClick={() => _select(item.type, item.status)}
                             >
                                 {item.name}
@@ -137,7 +139,10 @@ export default function ToolPage() {
                         ))}
                     </div>
                 </Card>
-                <section className="right">{Dom[count]}</section>
+                <section className="right">
+                    {renderdom(count)}
+                    <div className={` ${count.active ? 'active' : 'stop'}`} />
+                </section>
             </div>
         </GlobalContext.Provider>
     );

@@ -89,7 +89,7 @@ export default function ToolPage() {
             setCount({ step: status, active: true });
             return false;
         } // 默认值
-        setCount({ step: value, active: next });
+        setCount({ step: value, active: next || status == value });
     };
     // 开始流程
     const _select = (value: number, status: boolean) => {

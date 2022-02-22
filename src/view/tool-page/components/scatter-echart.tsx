@@ -82,7 +82,6 @@ export default function ScatterEcharts(props) {
 
     // 点击的是哪一个
     const onClick = params => {
-        debugger;
         updateCluster(data[params.dataIndex].clusterId);
     };
 
@@ -95,9 +94,8 @@ export default function ScatterEcharts(props) {
             item = item.vector;
             return item;
         });
-
         return {
-            number: number,
+            number: number + 1,
             dataSrc: data
         };
     };

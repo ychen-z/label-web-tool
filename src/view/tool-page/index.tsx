@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Card, message } from 'antd';
+import { Card, Tag } from 'antd';
 import { GlobalContext } from '@/context';
 import useFetch from '@/hooks/common/useFetch';
 import { getToolState } from '@/axios';
@@ -16,7 +16,8 @@ const Btns = [
     {
         name: '加载数据/字典',
         type: 0,
-        top: 0
+        top: 0,
+        stopArea: 0
     },
     {
         name: '数据预处理',
@@ -46,6 +47,14 @@ const Btns = [
     }
 ];
 
+const stop = {
+    0: 0,
+    1: 200,
+    2: '100%',
+    3: '100%',
+    4: '100%'
+};
+
 const formatStatus = (status, step) => {
     const _status = Math.floor((status || 0) / 10);
 
@@ -74,6 +83,7 @@ export default function ToolPage() {
 
     const { dispatch } = useFetch(getToolState, null, false);
     const [count, setCount] = useState({ step: -1, active: false });
+    const [statusInfo, setStatuInfo] = useState('未开始');
 
     // 指引去哪个状态
     const goto = (data, step) => {
@@ -88,7 +98,10 @@ export default function ToolPage() {
     // 开始流程
     const _select = (step: number, status: boolean) => {
         if (status) return;
-        dispatch().then((res: any) => goto(res.status, step));
+        dispatch().then((res: any) => {
+            setStatuInfo(res.msg);
+            goto(res.status, step);
+        });
     };
 
     const dispatchDict = v => {
@@ -103,6 +116,7 @@ export default function ToolPage() {
         if (dispatch) {
             dispatch().then((res: any) => {
                 goto(res.status);
+                setStatuInfo(res.msg);
                 dispatchDict(res.dictIds);
                 dispatchText(res.textIds);
             });
@@ -118,7 +132,14 @@ export default function ToolPage() {
             }}
         >
             <div className="m-tool-page">
-                <Card className="left" title="流程图">
+                <Card
+                    className="left"
+                    title={
+                        <>
+                            流程状态: <Tag color="#108ee9">{statusInfo}</Tag>
+                        </>
+                    }
+                >
                     <div className="content">
                         {Btns.map(item => (
                             <span
@@ -135,7 +156,7 @@ export default function ToolPage() {
                 </Card>
                 <section className="right">
                     {renderdom(count)}
-                    <div className={`${count.active ? 'active' : 'stop'}`} />
+                    <div className={`${count.active ? 'active' : 'stop'}`} style={{ height: stop[count.step] }} />
                 </section>
             </div>
         </GlobalContext.Provider>

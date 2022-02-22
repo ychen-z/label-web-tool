@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Form, Input, Button, Select, Slider, Tabs, message } from 'antd';
+import { Form, Input, Button, Select, Slider, Tabs, message, notification } from 'antd';
 import { ScatterContext } from '@/context';
 import useFetch from '@/hooks/common/useFetch';
 import Table from '../components/table-list/index';
@@ -29,14 +29,16 @@ export default function DataPreProcess() {
     /**
      * 聚类并向量化
      */
-    const onTranning = () => {
+    const onTranning = values => {
         dispatchSetClusterAndVector({
+            ...values,
             dictIds: localStorage.getItem('dictIds')?.split(','),
-            textIds: localStorage.getItem('textIds')?.split(','),
-            clusterCount: 3,
-            vectorScale: 200
+            textIds: localStorage.getItem('textIds')?.split(',')
         }).then(res => {
-            message.success('操作成功');
+            notification.success({
+                message: '操作成功',
+                description: '去执行采样吧'
+            });
             dispatchGetScatter(); // 获取散点图
         });
     };
@@ -45,7 +47,6 @@ export default function DataPreProcess() {
      * 采样
      */
     const onSample = () => {
-        console.log('采样');
         if (sliderValue) {
             dispatchGetPreSample(sliderValue / 100).then(res => {
                 localStorage.setItem('labelState', 'pre');

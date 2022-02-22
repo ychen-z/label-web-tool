@@ -55,7 +55,7 @@ function ECharts(props) {
     };
 
     return (
-        <div className="echarts-parent position-relative">
+        <div className="echarts-parent" style={{ background: '#f5f5f5', marginBottom: '8px' }}>
             <div ref={chartRef} style={newStyle} className={cx('echarts-react', className)} />
             {message ? <div className="no-data">{message}</div> : null}
         </div>

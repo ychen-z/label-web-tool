@@ -34,7 +34,7 @@ export default function Text(props) {
                 )}
 
                 <TextTable
-                    reaTextTabled={read}
+                    read={read}
                     loading={loading}
                     dataSource={data?.content}
                     refresh={getTextTableData}

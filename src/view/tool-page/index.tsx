@@ -57,9 +57,8 @@ const stop = {
 
 const formatStatus = (status, step) => {
     const _status = Math.floor((status || 0) / 10);
-
     // 可以进行下一项
-    const next = (step == _status || step == _status + 1 || (_status == 1 && step == 4) || (_status == 4 && step == 2)) && (status || 0) % 10 == 0;
+    const next = step == _status || ((step == _status + 1 || (_status == 1 && step == 4) || (_status == 4 && step == 2)) && (status || 0) % 10 == 0);
     return {
         status: _status,
         next

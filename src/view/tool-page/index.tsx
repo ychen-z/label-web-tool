@@ -76,7 +76,6 @@ export default function ToolPage() {
             4: <TextRecognition />,
             5: null
         };
-
         return Dom[step];
     };
 

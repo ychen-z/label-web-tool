@@ -11,8 +11,8 @@ const { Option } = Select;
  */
 export default function TrainingModel() {
     const { dispatch: dispatchPostTrainModel, isLoading } = useFetch(postTrainModel, { page: 0, size: Infinity }, false);
-    const { data: currentRateData } = useFetch(getCurrentRate, null);
-    const { data: historyRateData } = useFetch(getHistoryRates, null);
+    const { data: currentRateData, dispatch: dispatchGetCurrentRate } = useFetch(getCurrentRate, null);
+    const { data: historyRateData, dispatch: dispatchGetHistoryRates } = useFetch(getHistoryRates, null);
 
     const onFinish = values => {
         console.log('训练');
@@ -27,6 +27,8 @@ export default function TrainingModel() {
 
         dispatchPostTrainModel({ ...values, textIds, dictIds }).then(res => {
             message.success('训练成功');
+            dispatchGetCurrentRate();
+            dispatchGetHistoryRates();
         });
     };
 

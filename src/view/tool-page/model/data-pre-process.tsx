@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Form, Input, Button, Select, Slider, Tabs, message, notification } from 'antd';
-import { ScatterContext } from '@/context';
+import { ScatterContext, GlobalContext } from '@/context';
 import useFetch from '@/hooks/common/useFetch';
 import Table from '../components/table-list/index';
 import WordsCloudEchart from '../components/word-cloud-echart';
@@ -15,6 +15,7 @@ const { TabPane } = Tabs;
  * @returns 数据预处理
  */
 export default function DataPreProcess() {
+    const { refreshState } = useContext(GlobalContext);
     const [activeKey, setActiveKey] = useState('1');
     const [sliderValue, setSliderValue] = useState(1);
     const [clusterId, setClusterId] = useState(0);
@@ -39,6 +40,7 @@ export default function DataPreProcess() {
                 message: '操作成功',
                 description: '去执行采样吧'
             });
+            refreshState();
             dispatchGetScatter(); // 获取散点图
         });
     };
@@ -50,6 +52,7 @@ export default function DataPreProcess() {
         if (sliderValue) {
             dispatchGetPreSample(sliderValue / 100).then(res => {
                 localStorage.setItem('labelState', 'pre');
+                refreshState();
                 message.success('采样成功');
             });
         }

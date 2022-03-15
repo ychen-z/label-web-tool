@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Form, Button, Select, message, Slider } from 'antd';
 import useFetch from '@/hooks/common/useFetch';
+import { GlobalContext } from '@/context';
 import Table from '../components/table-list/index';
 import { postModelMark, getModelSample } from '@/axios';
 
@@ -10,16 +11,16 @@ const { Option } = Select;
  * @returns 语料识别
  */
 export default function TextRecognition() {
-    // const [form] = Form.useForm();
+    const { refreshState } = useContext(GlobalContext);
     const [sliderValue, setSliderValue] = useState(1);
     const [update, setUpdate] = useState(0);
     const { dispatch, isLoading } = useFetch(postModelMark, null, false);
     const { dispatch: dispatchGetModelSample } = useFetch(getModelSample, null, false);
 
     const onFinish = values => {
-        console.log('采样:', values);
         dispatch({ ...values, dictIds: localStorage.getItem('dictIds')?.split(','), textIds: localStorage.getItem('textIds')?.split(',') }).then(
             res => {
+                refreshState();
                 setUpdate(update + 1);
                 message.success('操作成功');
             }
@@ -34,6 +35,7 @@ export default function TextRecognition() {
         if (sliderValue) {
             dispatchGetModelSample(sliderValue / 100).then(res => {
                 localStorage.setItem('labelState', 'model');
+                refreshState();
                 message.success('采样成功');
             });
         }

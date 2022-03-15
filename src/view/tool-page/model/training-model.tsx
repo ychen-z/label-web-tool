@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Form, Input, Button, Select, message } from 'antd';
 import ReactEcharts from 'echarts-for-react';
+import { GlobalContext } from '@/context';
 import useFetch from '@/hooks/common/useFetch';
 import { postTrainModel, getCurrentRate, getHistoryRates } from '@/axios';
 
@@ -10,6 +11,7 @@ const { Option } = Select;
  * @returns 模型训练
  */
 export default function TrainingModel() {
+    const { refreshState } = useContext(GlobalContext);
     const { dispatch: dispatchPostTrainModel, isLoading } = useFetch(postTrainModel, { page: 0, size: Infinity }, false);
     const { data: currentRateData, dispatch: dispatchGetCurrentRate } = useFetch(getCurrentRate, null);
     const { data: historyRateData, dispatch: dispatchGetHistoryRates } = useFetch(getHistoryRates, null);
@@ -27,6 +29,7 @@ export default function TrainingModel() {
 
         dispatchPostTrainModel({ ...values, textIds, dictIds }).then(res => {
             message.success('训练成功');
+            refreshState();
             dispatchGetCurrentRate();
             dispatchGetHistoryRates();
         });

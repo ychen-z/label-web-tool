@@ -1,5 +1,6 @@
-import React, { useEffect, useState, useCallback, useRef } from 'react';
+import React, { useEffect, useState, useCallback, useRef, useContext } from 'react';
 import { Button, Card, message, Tag, Alert, Progress } from 'antd';
+import { GlobalContext } from '@/context';
 import useFetch from '@/hooks/common/useFetch';
 import DicTable from '@/view/dic-page';
 import {
@@ -18,6 +19,7 @@ import './index.less';
  * @returns 打标页面
  */
 export default function HandleTag() {
+    const { refreshState } = useContext(GlobalContext);
     const [userText, setUserText] = useState<string>('');
     const [userKey, setUserKey] = useState<string>('');
     const [textLabeOne, setTextLableOne] = useState();
@@ -34,6 +36,7 @@ export default function HandleTag() {
     const getOne = type => {
         setUserText('');
         setUserKey('');
+        refreshState();
         type === 'NEXT' &&
             dispatchNextone({
                 id: textLabeOne?.id

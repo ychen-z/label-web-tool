@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Tag } from 'antd';
+import { Card, Tag, Button, Popconfirm, message } from 'antd';
 import { GlobalContext } from '@/context';
 import useFetch from '@/hooks/common/useFetch';
-import { getToolState } from '@/axios';
+import { getToolState, resetCurrent, resetAll } from '@/axios';
 import Loading from './model/loading';
 import DataImport from './model/data-import'; // 数据导入
 import DataPreProcess from './model/data-pre-process'; // 数据预处理
@@ -80,9 +80,10 @@ export default function ToolPage() {
     };
 
     const { dispatch } = useFetch(getToolState, null, false);
+    const { dispatch: dispatchResetCurrent } = useFetch(resetCurrent, null, false);
+    const { dispatch: dispatchResetAll } = useFetch(resetAll, null, false);
     const [count, setCount] = useState({ step: -1, active: false });
     const [statusInfo, setStatuInfo] = useState('未开始');
-
     // 指引去哪个状态
     const goto = (data, step) => {
         const { status, next } = formatStatus(data, step);
@@ -102,12 +103,33 @@ export default function ToolPage() {
         });
     };
 
+    const refreshState = () => {
+        dispatch().then((res: any) => {
+            goto(res.status);
+            setStatuInfo(res.msg);
+        });
+    };
+
     const dispatchDict = v => {
         localStorage.setItem('dictIds', v.join(',')); //存储
     };
 
     const dispatchText = v => {
         localStorage.setItem('textIds', v.join(',')); //存储
+    };
+
+    const _resetCurrent = v => {
+        dispatchResetCurrent().then(res => {
+            message.success('操作成功');
+            refreshState();
+        });
+    };
+
+    const _resetAll = v => {
+        dispatchResetAll().then(res => {
+            message.success('操作成功');
+            refreshState();
+        });
     };
 
     useEffect(() => {
@@ -126,7 +148,8 @@ export default function ToolPage() {
         <GlobalContext.Provider
             value={{
                 dispatchDict,
-                dispatchText
+                dispatchText,
+                refreshState
             }}
         >
             <div className="m-tool-page">
@@ -135,6 +158,16 @@ export default function ToolPage() {
                     title={
                         <>
                             流程状态: <Tag color="#108ee9">{statusInfo}</Tag>
+                        </>
+                    }
+                    extra={
+                        <>
+                            <Popconfirm title="重置本轮" onConfirm={_resetCurrent} okText="确定" cancelText="取消">
+                                <Button type="primary">重置本轮</Button>
+                            </Popconfirm>
+                            <Popconfirm title="重置所有?" onConfirm={_resetAll} okText="确定" cancelText="取消">
+                                <Button>重置所有</Button>
+                            </Popconfirm>
                         </>
                     }
                 >

@@ -31,3 +31,6 @@ export const getLabelList = (data: any) => get({ url: '/label/all', data });
 export const updateLabel = (data: any) => put({ url: '/label', data });
 export const postLabel = (data: any) => post({ url: '/label/add', data }); // 增加label
 // export const delLabel = (labelId: any) => del({ url: '/label/' + labelId });
+
+export const resetCurrent = () => post({ url: '/textCluster/resetTask' });
+export const resetAll = () => post({ url: '/textCluster/resetProject' });

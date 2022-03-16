@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Form, Input, Button, Select, Slider, Tabs, message, notification } from 'antd';
 import { ScatterContext, GlobalContext } from '@/context';
 import useFetch from '@/hooks/common/useFetch';
@@ -18,7 +18,7 @@ export default function DataPreProcess() {
     const { refreshState } = useContext(GlobalContext);
     const [activeKey, setActiveKey] = useState('1');
     const [sliderValue, setSliderValue] = useState(1);
-    const [clusterId, setClusterId] = useState(0);
+    const [clusterId, setClusterId] = useState(-1);
     const { dispatch: dispatchSetClusterAndVector, isLoading: loading } = useFetch(setClusterAndVector, { page: 0, size: Infinity }, false);
     const { dispatch: dispatchGetPreSample } = useFetch(getPreSample, null, false);
     const { data: scatterData, dispatch: dispatchGetScatter } = useFetch(getScatter, null);
@@ -61,6 +61,12 @@ export default function DataPreProcess() {
     const updateCluster = id => {
         setClusterId(id);
     };
+
+    useEffect(() => {
+        if (scatterData?.length) {
+            setClusterId(scatterData[0].clusterId);
+        }
+    }, [scatterData]);
 
     return (
         <div className="m-data-pre-process">
@@ -114,8 +120,8 @@ export default function DataPreProcess() {
                     <TabPane tab="数据可视化" key="1" className="u-result-view">
                         <div>
                             <ScatterContext.Provider value={{ updateCluster }}>
-                                <ScatterEchart data={scatterData} />
-                                <WordsCloudEchart clusterId={clusterId} />
+                                {clusterId > -1 && <ScatterEchart data={scatterData} />}
+                                {clusterId > -1 && <WordsCloudEchart clusterId={clusterId} />}
                             </ScatterContext.Provider>
                         </div>
                     </TabPane>

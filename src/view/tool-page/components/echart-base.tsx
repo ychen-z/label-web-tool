@@ -29,7 +29,8 @@ function ECharts(props) {
             });
             if (resizeObserver) resizeObserver.observe(chartRef.current);
         }
-    }, [callback, options]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [options]);
 
     useEffect(() => {
         if (!chart) {
@@ -54,6 +55,7 @@ function ECharts(props) {
         ...style
     };
 
+    if (!options) return null;
     return (
         <div className="echarts-parent" style={{ background: '#f5f5f5', marginBottom: '8px' }}>
             <div ref={chartRef} style={newStyle} className={cx('echarts-react', className)} />

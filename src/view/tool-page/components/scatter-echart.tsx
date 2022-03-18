@@ -39,8 +39,12 @@ export default function ScatterEcharts(props) {
             grid: {
                 left: 120
             },
-            xAxis: {},
-            yAxis: {},
+            xAxis: {
+                show: false
+            },
+            yAxis: {
+                show: false
+            },
             series: {
                 type: 'scatter',
                 encode: { tooltip: [0, 1] },

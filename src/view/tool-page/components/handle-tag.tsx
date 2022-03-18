@@ -10,6 +10,7 @@ import {
     getTextLabelResult,
     postTextLabel,
     delTextLabel,
+    getTextLable,
     getHistoryRates
 } from '@/axios';
 import './index.less';
@@ -27,6 +28,7 @@ export default function HandleTag() {
     const { data: historyRateData = [] } = useFetch(getHistoryRates, null); // 轮次
     const { data: textLabelCount, dispatch: dispatchGetTextLabelCount } = useFetch(getTextLabelCount, null, false);
     const { dispatch: dispatchPreone, isLoading: preLoading } = useFetch(getTextLabelPreOne, null, false);
+    const { dispatch: dispatchGetTextLable } = useFetch(getTextLable, null, false);
     const { dispatch: dispatchNextone, isLoading: nextLoading } = useFetch(getTextLabelNextOne, null, false);
     const { data: textLabelResult, dispatch: dispatchGetTextLabelResult } = useFetch(getTextLabelResult, null, false);
     const { dispatch: dispatchPostTextLabel } = useFetch(postTextLabel, null, false);
@@ -111,6 +113,10 @@ export default function HandleTag() {
                         const close = id => {
                             dispatchDelLabel(id).then(res => {
                                 message.success('删除成功');
+                                // 获取最新打标数据
+                                dispatchGetTextLable(textLabeOne.id).then(res => {
+                                    setTextLableOne(res);
+                                });
                             });
                         };
                         return (
@@ -166,11 +172,14 @@ export default function HandleTag() {
             console.log('调用打标接口');
             dispatchPostTextLabel({ label: userText, keyCode: keycodeRef.current, textDataId: textLabeOne.id }).then(res => {
                 message.success('打标成功！');
-                const temp = {
-                    ...textLabeOne,
-                    textMark: textLabeOne.textMark.replaceAll(res.label, `<font color=${res.color}>${res.label}</font>`)
-                };
-                setTextLableOne(temp);
+                // const temp = {
+                //     ...textLabeOne,
+                //     textMark: textLabeOne.textMark.replaceAll(res.label, `<font color=${res.color}>${res.label}</font>`)
+                // };
+                dispatchGetTextLable(textLabeOne.id).then(res => {
+                    setTextLableOne(res);
+                });
+                // setTextLableOne(temp);
                 setUserText('');
                 setUserKey('');
             });
@@ -183,40 +192,48 @@ export default function HandleTag() {
             <section className="header">
                 <Alert message={renderMessage(textLabelCount)} type="success" />
             </section>
-            <DicTable read type="tag" />
-            <section className="u-handle-area">
-                <Card
-                    title={<strong>打标工作区</strong>}
-                    extra={
-                        <>
-                            {!!textLabelCount?.needCount && (
-                                <Button loading={preLoading} onClick={() => getOne('PRE')} type="primary">
-                                    上一条
-                                </Button>
-                            )}
+            {textLabelCount?.needCount == 0 ? (
+                <div className="u-finish">
+                    <span>打标完成</span>
+                </div>
+            ) : (
+                <>
+                    <DicTable read type="tag" />
+                    <section className="u-handle-area">
+                        <Card
+                            title={<strong>打标工作区</strong>}
+                            extra={
+                                <>
+                                    {!!textLabelCount?.needCount && (
+                                        <Button loading={preLoading} onClick={() => getOne('PRE')} type="primary">
+                                            上一条
+                                        </Button>
+                                    )}
 
-                            {!!textLabelCount?.needCount && (
-                                <Button loading={nextLoading} onClick={() => getOne('NEXT')} type="primary">
-                                    下一条
-                                </Button>
-                            )}
+                                    {!!textLabelCount?.needCount && (
+                                        <Button loading={nextLoading} onClick={() => getOne('NEXT')} type="primary">
+                                            下一条
+                                        </Button>
+                                    )}
 
-                            {!!textLabelCount?.needCount && (
-                                <Button title="该条数据不需要打标" onClick={check} type="primary">
-                                    校对
-                                </Button>
-                            )}
-                        </>
-                    }
-                >
-                    <div className="u-handle-area-content" dangerouslySetInnerHTML={{ __html: textLabeOne?.textMark }} />
-                </Card>
-            </section>
-            <section className="u-handle-view">
-                <Card title={<strong>打标结果</strong>}>
-                    <div className="u-handle-view-content">{formatData(textLabelResult?.content)}</div>
-                </Card>
-            </section>
+                                    {!!textLabelCount?.needCount && (
+                                        <Button title="该条数据不需要打标" onClick={check} type="primary">
+                                            校对
+                                        </Button>
+                                    )}
+                                </>
+                            }
+                        >
+                            <div className="u-handle-area-content" dangerouslySetInnerHTML={{ __html: textLabeOne?.textMark }} />
+                        </Card>
+                    </section>
+                    <section className="u-handle-view">
+                        <Card title={<strong>打标结果</strong>}>
+                            <div className="u-handle-view-content">{formatData(textLabelResult?.content)}</div>
+                        </Card>
+                    </section>
+                </>
+            )}
         </div>
     );
 }

@@ -43,7 +43,8 @@ export default function TrainingModel() {
                 type: 'category'
             },
             yAxis: {
-                type: 'value'
+                type: 'value',
+                min: 80
             },
             color: '#7cb305',
             grid: {
@@ -77,7 +78,8 @@ export default function TrainingModel() {
                 }
             },
             yAxis: {
-                type: 'value'
+                type: 'value',
+                min: 80
             },
             grid: {
                 show: true

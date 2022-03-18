@@ -16,6 +16,7 @@ export const postModelMark = (data: any) => post({ url: '/textCluster/modelMark'
 // 打标
 export const getTextLabelCount = (data: any) => get({ url: '/textLabel/count', data });
 export const getTextLabelOne = (data: any) => get({ url: '/textLabel/takeOne', data });
+export const getTextLable = (data: any) => get({ url: '/textData/' + data });
 export const getTextLabelNextOne = (data: any) => get({ url: '/textLabel/takeNextOne', data });
 export const getTextLabelPreOne = (data: any) => get({ url: '/textLabel/takePreOne', data });
 export const getTextLabelResult = (data: any) => get({ url: '/textLabel/textData/' + data.id, data });

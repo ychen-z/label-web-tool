@@ -12,7 +12,8 @@ import TrainingModel from './model/training-model'; // 训练
 import DataExport from './components/data-export'; // 导出
 import './index.less';
 
-const Btns = [
+// 流程操作
+const OP_BTNS = [
     {
         name: '加载数据/字典',
         type: 0,
@@ -67,7 +68,7 @@ const formatStatus = (status, step) => {
 
 export default function ToolPage() {
     const renderdom = ({ step }) => {
-        const Dom = {
+        const element = {
             '-1': <Loading />,
             0: <DataImport />,
             1: <DataPreProcess />,
@@ -76,7 +77,7 @@ export default function ToolPage() {
             4: <TextRecognition />,
             5: null
         };
-        return Dom[step];
+        return element[step];
     };
 
     const { dispatch } = useFetch(getToolState, null, false);
@@ -84,8 +85,9 @@ export default function ToolPage() {
     const { dispatch: dispatchResetAll } = useFetch(resetAll, null, false);
     const [count, setCount] = useState({ step: -1, active: false });
     const [statusInfo, setStatuInfo] = useState('未开始');
-    // 指引去哪个状态
-    const goto = (data, step) => {
+
+    // 状态跳转
+    const goto = (data: any, step?: number) => {
         const { status, next } = formatStatus(data, step);
         if (!step && step != 0) {
             // 默认跳转
@@ -94,6 +96,7 @@ export default function ToolPage() {
         } // 默认值
         setCount({ step, active: next });
     };
+
     // 开始流程
     const _select = (step: number, status: boolean) => {
         if (status) return;
@@ -103,21 +106,25 @@ export default function ToolPage() {
         });
     };
 
-    const refreshState = () => {
+    // 更新流程状态
+    const refreshState = (callback?: Function) => {
         dispatch().then((res: any) => {
             goto(res.status);
             setStatuInfo(res.msg);
+            callback && callback(res);
         });
     };
 
+    // 存储字典
     const dispatchDict = v => {
-        localStorage.setItem('dictIds', v.join(',')); //存储
+        localStorage.setItem('dictIds', v.join(','));
     };
 
     const dispatchText = v => {
-        localStorage.setItem('textIds', v.join(',')); //存储
+        localStorage.setItem('textIds', v.join(','));
     };
 
+    // 重置当前
     const _resetCurrent = v => {
         dispatchResetCurrent().then(res => {
             message.success('操作成功');
@@ -125,6 +132,7 @@ export default function ToolPage() {
         });
     };
 
+    // 重置所有
     const _resetAll = v => {
         dispatchResetAll().then(res => {
             message.success('操作成功');
@@ -172,7 +180,7 @@ export default function ToolPage() {
                     }
                 >
                     <div className="content">
-                        {Btns.map(item => (
+                        {OP_BTNS.map(item => (
                             <span
                                 className={`item ${count.step == item.type ? 'active' : ''}`}
                                 style={{

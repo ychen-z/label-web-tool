@@ -59,7 +59,7 @@ export default function TrainingModel() {
             },
             series: [
                 {
-                    data,
+                    data: data.map(item => (item = item.toFixed(2))),
                     type: 'line'
                 }
             ]
@@ -93,7 +93,7 @@ export default function TrainingModel() {
             },
             series: [
                 {
-                    data: data.map(item => (item = item.rate)),
+                    data: data.map(item => (item = item.rate.toFixed(2))),
                     type: 'line'
                 }
             ]

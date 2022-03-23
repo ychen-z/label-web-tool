@@ -169,24 +169,17 @@ export default function HandleTag() {
 
     useEffect(() => {
         if (userText && userKey) {
-            console.log('调用打标接口');
             dispatchPostTextLabel({ label: userText, keyCode: keycodeRef.current, textDataId: textLabeOne.id }).then(res => {
                 message.success('打标成功！');
-                // const temp = {
-                //     ...textLabeOne,
-                //     textMark: textLabeOne.textMark.replaceAll(res.label, `<font color=${res.color}>${res.label}</font>`)
-                // };
                 dispatchGetTextLable(textLabeOne.id).then(res => {
                     setTextLableOne(res);
                 });
-                // setTextLableOne(temp);
                 setUserText('');
                 setUserKey('');
             });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userKey, userText]);
-
     return (
         <div className="u-handle">
             <section className="header">
@@ -203,25 +196,21 @@ export default function HandleTag() {
                         <Card
                             title={<strong>打标工作区</strong>}
                             extra={
-                                <>
-                                    {!!textLabelCount?.needCount && (
+                                !!textLabelCount?.needCount && (
+                                    <>
                                         <Button loading={preLoading} onClick={() => getOne('PRE')} type="primary">
                                             上一条
                                         </Button>
-                                    )}
 
-                                    {!!textLabelCount?.needCount && (
                                         <Button loading={nextLoading} onClick={() => getOne('NEXT')} type="primary">
                                             下一条
                                         </Button>
-                                    )}
 
-                                    {!!textLabelCount?.needCount && (
                                         <Button title="该条数据不需要打标" onClick={check} type="primary">
                                             校对
                                         </Button>
-                                    )}
-                                </>
+                                    </>
+                                )
                             }
                         >
                             <div className="u-handle-area-content" dangerouslySetInnerHTML={{ __html: textLabeOne?.textMark }} />

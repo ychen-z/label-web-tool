@@ -104,7 +104,6 @@ export default function HandleTag() {
             group[dictName].push(product);
             return group;
         }, {});
-
         return Object.keys(groupByCategory).map(item => {
             return (
                 <div className="list">

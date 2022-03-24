@@ -19,6 +19,7 @@ export default function DataPreProcess() {
     const [activeKey, setActiveKey] = useState('1');
     const [sliderValue, setSliderValue] = useState(1);
     const [clusterId, setClusterId] = useState(-1);
+    const [sampleState, setSampleState] = useState(false);
     const { dispatch: dispatchSetClusterAndVector, isLoading: loading } = useFetch(setClusterAndVector, { page: 0, size: Infinity }, false);
     const { dispatch: dispatchGetPreSample } = useFetch(getPreSample, null, false);
     const { data: scatterData, dispatch: dispatchGetScatter } = useFetch(getScatter, null);
@@ -52,7 +53,7 @@ export default function DataPreProcess() {
         if (sliderValue) {
             dispatchGetPreSample(sliderValue / 100).then(res => {
                 localStorage.setItem('labelState', 'pre');
-                refreshState();
+                setSampleState(true);
                 message.success('采样成功');
             });
         }
@@ -113,6 +114,12 @@ export default function DataPreProcess() {
                 <Button type="primary" onClick={onSample}>
                     采样
                 </Button>
+
+                {sampleState && (
+                    <Button type="primary" onClick={() => refreshState()}>
+                        执行打标
+                    </Button>
+                )}
             </section>
 
             <section className="u-result">

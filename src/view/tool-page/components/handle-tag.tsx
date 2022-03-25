@@ -44,6 +44,7 @@ export default function HandleTag() {
                 id: textLabeOne?.id
             }).then(res => {
                 setTextLableOne(res);
+                dispatchGetTextLabelCount(); // 重新获取数量
             });
 
         type === 'PRE' &&
@@ -51,9 +52,8 @@ export default function HandleTag() {
                 id: textLabeOne?.id
             }).then(res => {
                 setTextLableOne(res);
+                dispatchGetTextLabelCount(); // 重新获取数量
             });
-
-        dispatchGetTextLabelCount(); // 重新获取数量
         // eslint-disable-next-line react-hooks/exhaustive-deps
     };
 

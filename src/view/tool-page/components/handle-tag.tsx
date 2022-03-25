@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useCallback, useRef, useContext } from 'react';
 import { Button, Card, message, Tag, Alert, Progress } from 'antd';
 import { GlobalContext } from '@/context';
+import IconSet from '@/components/icon';
 import useFetch from '@/hooks/common/useFetch';
 import DicTable from '@/view/dic-page';
 import {
@@ -184,9 +185,11 @@ export default function HandleTag() {
             <section className="header">
                 <Alert message={renderMessage(textLabelCount)} type="success" />
             </section>
+
             {textLabelCount?.needCount == 0 ? (
                 <div className="u-finish">
-                    <span>打标完成</span>
+                    <IconSet type="icon-success" style={{ fontSize: 28 }} />
+                    <span className="text">打标完成</span>
                 </div>
             ) : (
                 <>

@@ -11,7 +11,7 @@ interface Props {
 }
 
 const IconSvg = createFromIconfontCN({
-    scriptUrl: ['//at.alicdn.com/t/font_2718552_cqxp2b9f42d.js']
+    scriptUrl: ['//at.alicdn.com/t/font_3133245_0f67slbrl6r9.js']
 });
 
 const IconFont = (props: Props) => {

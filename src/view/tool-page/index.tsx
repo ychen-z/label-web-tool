@@ -165,7 +165,7 @@ export default function ToolPage() {
                     className="left"
                     title={
                         <>
-                            流程状态: <Tag color="#108ee9">{statusInfo}</Tag>
+                            流程状态: <Tag color="#f5222d">{statusInfo}</Tag>
                         </>
                     }
                     extra={

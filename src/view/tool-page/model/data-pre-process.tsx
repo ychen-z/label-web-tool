@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { Form, Input, Button, Select, Slider, Tabs, message, notification } from 'antd';
+import { Form, Input, Button, Select, Slider, Tabs, message, notification, Spin } from 'antd';
 import { ScatterContext, GlobalContext } from '@/context';
+import { useInterval } from 'ahooks';
 import useFetch from '@/hooks/common/useFetch';
 import Table from '../components/table-list/index';
 import WordsCloudEchart from '../components/word-cloud-echart';
@@ -17,9 +18,11 @@ const { TabPane } = Tabs;
 export default function DataPreProcess() {
     const { refreshState } = useContext(GlobalContext);
     const [activeKey, setActiveKey] = useState('1');
+    const [interval, setInterval] = useState(null);
     const [sliderValue, setSliderValue] = useState(1);
     const [clusterId, setClusterId] = useState(-1);
     const [sampleState, setSampleState] = useState(false);
+    const [tranningLoading, setTranningLoading] = useState(false);
     const { dispatch: dispatchSetClusterAndVector, isLoading: loading } = useFetch(setClusterAndVector, { page: 0, size: Infinity }, false);
     const { dispatch: dispatchGetPreSample } = useFetch(getPreSample, null, false);
     const { data: scatterData, dispatch: dispatchGetScatter } = useFetch(getScatter, null);
@@ -27,6 +30,18 @@ export default function DataPreProcess() {
     const onChangeTabs = v => {
         setActiveKey(v);
     };
+
+
+    useInterval(() => {
+        refreshState((res)=>{
+            if(res && res.status == 11 ){
+                message.success('聚类成功！');
+                setTranningLoading(false)
+                dispatchGetScatter(); // 获取散点图
+                setInterval(null)
+            }
+        });
+    }, interval);
 
     /**
      * 聚类并向量化
@@ -39,10 +54,10 @@ export default function DataPreProcess() {
         }).then(res => {
             notification.success({
                 message: '操作成功',
-                description: '去执行采样吧'
+                description: '开始聚类，成功后可执行采样'
             });
-            refreshState();
-            dispatchGetScatter(); // 获取散点图
+            setTranningLoading(true)
+            setInterval(5000);
         });
     };
 
@@ -104,39 +119,41 @@ export default function DataPreProcess() {
                     </Form.Item>
                 </div>
             </Form>
-
-            <section className="u-sample">
-                <div className="u-sample-content">
-                    <span>采样率：</span>
-                    <Slider min={1} max={100} value={sliderValue} onChange={v => setSliderValue(v)} />
-                    <span>{sliderValue} %</span>
-                </div>
-                <Button type="primary" onClick={onSample}>
-                    采样
-                </Button>
-
-                {sampleState && (
-                    <Button type="primary" onClick={() => refreshState()}>
-                        执行打标
+            
+            <Spin tip="聚类中..." spinning={tranningLoading}>
+                <section className="u-sample">
+                    <div className="u-sample-content">
+                        <span>采样率：</span>
+                        <Slider min={1} max={100} value={sliderValue} onChange={v => setSliderValue(v)} />
+                        <span>{sliderValue} %</span>
+                    </div>
+                    <Button type="primary" onClick={onSample}>
+                        采样
                     </Button>
-                )}
-            </section>
 
-            <section className="u-result">
-                <Tabs defaultActiveKey={activeKey} onChange={onChangeTabs}>
-                    <TabPane tab="数据可视化" key="1" className="u-result-view">
-                        <div>
-                            <ScatterContext.Provider value={{ updateCluster }}>
-                                {clusterId > -1 && <ScatterEchart data={scatterData} />}
-                                {clusterId > -1 && <WordsCloudEchart clusterId={clusterId} />}
-                            </ScatterContext.Provider>
-                        </div>
-                    </TabPane>
-                    <TabPane tab="匹配情况" key="2">
-                        <Table />
-                    </TabPane>
-                </Tabs>
-            </section>
+                    {sampleState && (
+                        <Button type="primary" onClick={() => refreshState()}>
+                            执行打标
+                        </Button>
+                    )}
+                </section>
+                <section className="u-result">
+                    <Tabs defaultActiveKey={activeKey} onChange={onChangeTabs}>
+                        <TabPane tab="数据可视化" key="1" className="u-result-view">
+                            <div>
+                                <ScatterContext.Provider value={{ updateCluster }}>
+                                    {clusterId > -1 && <ScatterEchart data={scatterData} />}
+                                    {clusterId > -1 && <WordsCloudEchart clusterId={clusterId} />}
+                                </ScatterContext.Provider>
+                            </div>
+                        </TabPane>
+                        <TabPane tab="匹配情况" key="2">
+                            <Table />
+                        </TabPane>
+                    </Tabs>
+                </section>
+            </Spin>
+            
         </div>
     );
 }

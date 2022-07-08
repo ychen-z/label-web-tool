@@ -30,7 +30,7 @@ const webpackConfig = merge(baseWebpackConfig, {
                         ]
                     },
                     {
-                        test: /\.less$/,
+                        test: /\.(less|css)$/,
                         use: [
                             require.resolve('style-loader'),
                             require.resolve('css-loader'),

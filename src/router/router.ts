@@ -32,9 +32,16 @@ export const urlObj = {
         link: '/app/tool',
         component: load(() => import('@/view/tool-page')),
         needAuth: false
-    }
+    },
+
+    relationDic: {
+        name: '字典管理',
+        link: '/app/relation',
+        component: load(() => import('@/view/relation-dic-page')),
+        needAuth: false
+    },
 };
 
-const { dic, tool, label, text } = urlObj;
+const { dic, tool, label, text, relationDic } = urlObj;
 
-export const routes = [dic, tool, label, text];
+export const routes = [dic, tool, label, text, relationDic];

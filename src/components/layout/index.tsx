@@ -18,9 +18,9 @@ function App(props) {
     }, []);
     return (
         <Layout>
-            <HeaderCustom />
+            {/* <HeaderCustom /> */}
             <Layout className="g-layout">
-                <SiderCustom setCollapsed={(params: boolean) => setCollapsed(params)} />
+                {/* <SiderCustom setCollapsed={(params: boolean) => setCollapsed(params)} /> */}
                 <ContentCustom collapsed={collapsed} auth={{ menus: menus, user: user }} />
             </Layout>
         </Layout>

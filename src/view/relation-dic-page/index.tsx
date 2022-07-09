@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import classNames from 'classnames';
+import DrawLine from './draw-line';
 import { connect, relations, relationsNames } from './constan';
 import './index.less';
 
@@ -8,22 +9,25 @@ export default function RelationDicPage() {
     const [second, setSecond] = useState(null);
     const FirstRef = useRef(null);
     const SecondRef = useRef(null);
+    const [activeRelation, setActiveRelation] = useState(null);
 
-    const handleConnect = (first, second) => {
+    const handleConnect = () => {
+        setActiveRelation(connect(FirstRef.current, SecondRef.current, 'green', 1));
+
         setTimeout(() => {
-            setFirst("")
-            setSecond("")
+            setFirst('');
+            setSecond('');
         }, 1000);
     };
 
     useEffect(() => {
         if (first && second) {
-            handleConnect(first, second );
+            handleConnect();
         }
     }, [first, second]);
 
     return (
-        <div>
+        <div className="u-operation">
             <section className="content">
                 <div className="left">
                     <div>第一层级</div>
@@ -31,8 +35,8 @@ export default function RelationDicPage() {
                         <div
                             key={item}
                             className={classNames('item', 'cyan', { active: item == first })}
-                            onClick={(e) => {
-                                FirstRef.current = e.target
+                            onClick={e => {
+                                FirstRef.current = e.target;
                                 setFirst(item);
                             }}
                         >
@@ -46,7 +50,7 @@ export default function RelationDicPage() {
                         <div
                             className={classNames('item', 'blue', { active: item == second })}
                             key={item}
-                            onClick={() => {
+                            onClick={e => {
                                 SecondRef.current = e.target;
                                 setSecond(item);
                             }}
@@ -61,6 +65,9 @@ export default function RelationDicPage() {
                 <div>
                     {first} - {second}
                 </div>
+            </section>
+            <section>
+                <DrawLine {...activeRelation} />
             </section>
         </div>
     );

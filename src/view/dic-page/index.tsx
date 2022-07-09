@@ -12,7 +12,7 @@ export default function Dictionary(props) {
         .getItem('dictIds')
         ?.split(',')
         .map(item => (item = Number(item)));
-    const { data, dispatch: getDicTableData, isLoading } = useFetch(getDicAll, { page: 0, size: Infinity });
+    const { data, dispatch: getDicTableData, isLoading } = useFetch(getDicAll, { page: 0, size: Infinity, dictType: 1 });
     const [selectedKeys, setSelectedKeys] = useState(dictIdss);
 
     useEffect(() => {

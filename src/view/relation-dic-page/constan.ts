@@ -26,30 +26,40 @@ export const connect = (div1, div2, color, thickness) => {
 
     const angle = Math.atan2(y1 - y2, x1 - x2) * (180 / Math.PI);
 
-    const htmlLine =
-        "<div style='padding:0px; margin:0px; height:" +
-        thickness +
-        'px; background-color:' +
-        color +
-        '; line-height:1px; position:absolute; left:' +
-        cx +
-        'px; top:' +
-        cy +
-        'px; width:' +
-        length +
-        'px; -moz-transform:rotate(' +
-        angle +
-        'deg); -webkit-transform:rotate(' +
-        angle +
-        'deg); -o-transform:rotate(' +
-        angle +
-        'deg); -ms-transform:rotate(' +
-        angle +
-        'deg); transform:rotate(' +
-        angle +
-        "deg);' />";
+    return {
+        length,
+        thickness,
+        cx,
+        cy,
+        angle
+    };
 
-    document.body.innerHTML += htmlLine;
+    // const htmlLine =
+    //     "<div style='padding:0px; margin:0px; height:" +
+    //     thickness +
+    //     'px; background-color:' +
+    //     color +
+    //     '; line-height:1px; position:absolute; left:' +
+    //     cx +
+    //     'px; top:' +
+    //     cy +
+    //     'px; width:' +
+    //     length +
+    //     'px; -moz-transform:rotate(' +
+    //     angle +
+    //     'deg); -webkit-transform:rotate(' +
+    //     angle +
+    //     'deg); -o-transform:rotate(' +
+    //     angle +
+    //     'deg); -ms-transform:rotate(' +
+    //     angle +
+    //     'deg); transform:rotate(' +
+    //     angle +
+    //     "deg);' />";
+
+    // console.log(htmlLine);
+
+    //  document.body.innerHTML += htmlLine;
 };
 
 export const relations = [{ a: 'zhangz', b: 'shiyang', relation: '同事' }];

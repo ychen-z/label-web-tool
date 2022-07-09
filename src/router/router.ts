@@ -15,33 +15,48 @@ export const urlObj = {
         needAuth: false
     },
 
-    text: {
-        name: '字典管理',
-        link: '/app/text',
+    dicText: {
+        name: '字典语料',
+        link: '/app/dic-text',
+        component: load(() => import('@/view/text-page')),
+        needAuth: false
+    },
+
+    relation: {
+        name: '关系管理',
+        link: '/app/rel',
+        component: load(() => import('@/view/dic-page')),
+        needAuth: false
+    },
+
+    relationText: {
+        name: '关系语料',
+        link: '/app/rel-text',
         component: load(() => import('@/view/text-page')),
         needAuth: false
     },
     label: {
-        name: '字典管理',
+        name: '实体',
         link: '/app/label',
         component: load(() => import('@/view/label-page')),
         needAuth: false
     },
-    tool: {
-        name: '字典管理',
-        link: '/app/tool',
+
+    toolHandle: {
+        name: '实体抽取',
+        link: '/app/tool-handle',
         component: load(() => import('@/view/tool-page')),
         needAuth: false
     },
 
-    relationDic: {
-        name: '字典管理',
-        link: '/app/relation',
+    relationHandle: {
+        name: '关系抽取',
+        link: '/app/rel-handle',
         component: load(() => import('@/view/relation-dic-page')),
         needAuth: false
-    },
+    }
 };
 
-const { dic, tool, label, text, relationDic } = urlObj;
+const { dic, dicText, relation, relationText, toolHandle, label, relationHandle } = urlObj;
 
-export const routes = [dic, tool, label, text, relationDic];
+export const routes = [dic, relation, dicText, relationText, toolHandle, label, relationHandle];

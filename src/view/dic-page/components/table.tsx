@@ -84,7 +84,7 @@ export default function DictTable(props) {
                         <Divider type="vertical" />
                         <Export data={record} />
                         <Divider type="vertical" />
-                        <Del id={record.id} func={delDic} refresh={refresh} />
+                        <Del dictType={dictType} id={record.id} func={delDic} refresh={refresh} />
                     </Space>
                 );
             }

@@ -61,7 +61,7 @@ function TableList(props) {
                         </a>
                     </ModalAdd>
                     <Divider type="vertical" />
-                    <Del id={record.id} func={delDictData} refresh={props.getList} />
+                    <Del dictType={dictType} id={record.id} func={delDictData} refresh={props.getList} />
                 </Space>
             )
         }

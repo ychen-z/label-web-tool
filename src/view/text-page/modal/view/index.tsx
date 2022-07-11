@@ -9,11 +9,12 @@ import ModalAdd from '../text-data';
 import { TemplateSearchParams } from './interface';
 import './index.less';
 
-function Index(props) {
-    const { textsName, id: textId, refresh, textType } = props;
+function View(props) {
+    const { textsName, id: textId, refresh, textType, subTitle } = props;
     const DEFAULT_PARAM = {
         page: 1,
-        size: 10
+        size: 10,
+        textType
     };
 
     const [selectedKeys, setSelectedKeys] = useState<number[]>([]);
@@ -62,7 +63,7 @@ function Index(props) {
             >
                 <div className="u-table">
                     <div className="u-opera-row">
-                        <ModalAdd refresh={getList} data={{ textId }}>
+                        <ModalAdd refresh={getList} subTitle={subTitle} textType={textType} data={{ textId }}>
                             <Button type="primary">+ 增加语料数据</Button>
                         </ModalAdd>
                     </div>
@@ -83,4 +84,4 @@ function Index(props) {
     );
 }
 
-export default Index;
+export default View;

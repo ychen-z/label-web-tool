@@ -32,7 +32,7 @@ export default function TextTable(props) {
             width: 140,
             read: read,
             render: (text, record) => {
-                return read ? text : <View {...record} refresh={refresh} />;
+                return read ? text : <View {...record} subTitle={subTitle} textType={textType} refresh={refresh} />;
             }
         },
         {
@@ -76,7 +76,7 @@ export default function TextTable(props) {
 
                         <Export data={row} />
                         <Divider type="vertical" />
-                        <Del id={row.id} func={delText} refresh={refresh} />
+                        <Del textType={textType} id={row.id} func={delText} refresh={refresh} />
                     </Space>
                 );
             }

@@ -10,4 +10,4 @@ export const delDic = (data: any) => del({ url: '/dict/' + data }); // 删除字
 export const getDicByKey = (data: any) => get({ url: '/dictData/dict/' + data.dictId, data }); // 查询单条字典信息
 export const postDictData = (data: any) => post({ url: '/dictData/', data }); // 插入字典数据
 export const putDictData = (data: any) => put({ url: '/dictData/', data }); // 插入字典数据
-export const delDictData = (data: any) => del({ url: '/dictData/' + data }); // 删除字典数据
+export const delDictData = (data: any) => del({ url: '/dictData/' + data.id, data }); // 删除字典数据

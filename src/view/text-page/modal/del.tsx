@@ -6,14 +6,15 @@ import useFetch from '@/hooks/common/useFetch';
 interface Props {
     refresh?: Function;
     id: string | number;
+    textType: 1 | 0;
     func: (req: any) => Promise<unknown>;
 }
 
 function Del(props: Props) {
-    const { func, id } = props;
+    const { func, id, textType } = props;
     const { dispatch: dispatchDeleteApp } = useFetch(func, null, false);
     const onDel = () => {
-        dispatchDeleteApp(id).then((data: any) => {
+        dispatchDeleteApp({ id, textType }).then((data: any) => {
             props?.refresh();
             message.success('删除成功');
         });

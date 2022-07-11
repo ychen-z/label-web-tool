@@ -6,16 +6,18 @@ import { putDictData, postDictData } from '@/axios';
 interface Props {
     data?: Record<string, any>;
     type: 'ADD' | 'EDIT';
+    dictType: 0 | 1;
+    subTitle?: string;
     onCancel: Function;
     refresh: Function;
 }
 
 const ADDModal = (props: Props) => {
     const [form] = Form.useForm();
-    const { data, onCancel, refresh, type } = props;
+    const { data, onCancel, refresh, type, dictType, subTitle } = props;
     const { dispatch: addFunc } = useFetch(postDictData, null, false); // 新增
     const { dispatch: updateFunc } = useFetch(putDictData, null, false); // 更新
-    const title = type === 'EDIT' ? '编辑字典数据' : '新增字典数据';
+    const title = (type === 'EDIT' ? '编辑' : '新增') + subTitle + '数据';
 
     const onSubmit = (values: any) => {
         form.validateFields().then(values => {
@@ -42,7 +44,7 @@ const ADDModal = (props: Props) => {
 
     return (
         <Modal form={form} title={title} visible onOk={onSubmit} onCancel={onCancel}>
-            <Form form={form} labelCol={{ span: 6 }} wrapperCol={{ span: 16 }} initialValues={data} scrollToFirstError>
+            <Form form={form} labelCol={{ span: 6 }} wrapperCol={{ span: 16 }} initialValues={{ ...data, dictType }} scrollToFirstError>
                 <Form.Item hidden label="dictId" name="dictId">
                     <Input />
                 </Form.Item>

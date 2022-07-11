@@ -1,5 +1,5 @@
 import React, { ComponentType } from 'react';
-import { Redirect, Route, Switch } from 'react-router-dom';
+import { Redirect, Route, Switch, withRouter } from 'react-router-dom';
 import E403 from '@/view/exception/E403';
 import E405 from '@/view/exception/E405';
 import E404 from '@/view/exception/not-found';
@@ -89,4 +89,4 @@ const CRouter = (props: any) => {
         </Switch>
     );
 };
-export default CRouter;
+export default withRouter(CRouter);

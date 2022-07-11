@@ -9,7 +9,7 @@ const Modal2 = props => {
                 {props.children || '+新建'}
             </span>
 
-            {visible && <Modal {...props} onCancel={() => setVisible(false)} />}
+            {visible && <Modal {...props} subTitle={props.subTitle} onCancel={() => setVisible(false)} />}
         </>
     );
 };

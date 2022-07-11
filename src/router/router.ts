@@ -9,18 +9,18 @@ const load = (loader: any) =>
 
 export const urlObj = {
     dic: {
-        name: '字典管理',
-        link: '/app/dic',
+        name: '管理',
+        link: '/app/mng/:type',
         component: load(() => import('@/view/dic-page')),
         needAuth: false
     },
 
-    dicText: {
-        name: '字典语料',
-        link: '/app/dic-text',
-        component: load(() => import('@/view/text-page')),
-        needAuth: false
-    },
+    // dicText: {
+    //     name: '字典语料',
+    //     link: '/app/dic-text',
+    //     component: load(() => import('@/view/text-page')),
+    //     needAuth: false
+    // },
 
     relation: {
         name: '关系管理',
@@ -57,6 +57,6 @@ export const urlObj = {
     }
 };
 
-const { dic, dicText, relation, relationText, toolHandle, label, relationHandle } = urlObj;
+const { dic, relation, relationText, toolHandle, label, relationHandle } = urlObj;
 
-export const routes = [dic, relation, dicText, relationText, toolHandle, label, relationHandle];
+export const routes = [dic, relation, relationText, toolHandle, label, relationHandle];

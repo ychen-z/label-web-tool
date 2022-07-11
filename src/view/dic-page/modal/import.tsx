@@ -8,6 +8,7 @@ import { postDic, updateDic } from '@/axios';
 interface Props {
     data?: Record<string, any>;
     type: 'ADD' | 'EDIT';
+    subTitle: string;
     onCancel: Function;
     refresh: Function;
 }
@@ -26,13 +27,13 @@ const cover = {
 
 const ADDModal = (props: Props) => {
     const [form] = Form.useForm();
-    const { data, onCancel, refresh, type } = props;
+    const { data, onCancel, refresh, type, subTitle, dictType } = props;
     const [focus, setFocus] = useState(false);
     const [showChromePicker, setShowChromePicker] = useState(false);
     const [color, setColor] = useState('#fff');
     const { dispatch: updateFunc } = useFetch(updateDic, null, false); // 更新
     const { dispatch: addFunc } = useFetch(postDic, null, false); // 新增
-    const title = type === 'EDIT' ? '编辑字典' : '新增字典';
+    const title = (type === 'EDIT' ? '编辑' : '新增') + subTitle;
 
     const fetch = (values: any) => {
         form.validateFields().then(values => {
@@ -99,8 +100,12 @@ const ADDModal = (props: Props) => {
 
     return (
         <Modal title={title} visible onOk={fetch} onCancel={onCancel}>
-            <Form form={form} labelCol={{ span: 6 }} wrapperCol={{ span: 16 }} initialValues={data} scrollToFirstError>
+            <Form form={form} labelCol={{ span: 6 }} wrapperCol={{ span: 16 }} initialValues={{ ...data, dictType }} scrollToFirstError>
                 <Form.Item hidden label="id" name="id">
+                    <Input disabled />
+                </Form.Item>
+
+                <Form.Item label="dictType" name="dictType">
                     <Input disabled />
                 </Form.Item>
 
@@ -108,11 +113,11 @@ const ADDModal = (props: Props) => {
                     <Input disabled />
                 </Form.Item>
 
-                <Form.Item rules={[{ required: true, message: '请填写' }]} label="字典名称" name="dictionaryName">
+                <Form.Item rules={[{ required: true, message: '请填写' }]} label={subTitle + '名称'} name="dictionaryName">
                     <Input placeholder="请输入" maxLength={200} />
                 </Form.Item>
 
-                <Form.Item rules={[{ required: true, message: '请填写' }]} label="字典描述" name="dictionaryDescribe">
+                <Form.Item rules={[{ required: true, message: '请填写' }]} label={subTitle + '描述'} name="dictionaryDescribe">
                     <Input.TextArea placeholder="请输入" maxLength={2000} />
                 </Form.Item>
 

@@ -10,7 +10,7 @@ import { delDic } from '@/axios';
 import View from '../modal/view/index';
 
 export default function DictTable(props) {
-    const { loading, refresh, dataSource = [], read, model } = props;
+    const { loading, refresh, dataSource = [], read, model, subTitle, dictType } = props;
     const { dispatchDict } = useContext(GlobalContext);
     const rowSelection = {
         selectedRowKeys: props.selectedKeys,
@@ -25,7 +25,7 @@ export default function DictTable(props) {
 
     const columns = [
         {
-            title: '字典名称',
+            title: subTitle + '名称',
             dataIndex: 'dictionaryName',
             key: 'dictionaryName',
             width: 140,
@@ -35,7 +35,7 @@ export default function DictTable(props) {
             }
         },
         {
-            title: '字典描述',
+            title: subTitle + '描述',
             dataIndex: 'dictionaryDescribe',
             key: 'dictionaryDescribe',
             read: read,
@@ -64,7 +64,7 @@ export default function DictTable(props) {
             width: 140
         },
         {
-            title: '字典容量 (字)',
+            title: subTitle + '容量 (字)',
             dataIndex: 'dictsContent',
             key: 'dictsContent',
             width: 140
@@ -75,7 +75,7 @@ export default function DictTable(props) {
             render: (text: string, record: any) => {
                 return (
                     <Space>
-                        <Update data={record} type="EDIT" refresh={refresh}>
+                        <Update data={record} dictType={dictType} subTitle={subTitle} type="EDIT" refresh={refresh}>
                             <a>
                                 <IconSet type="icon-bianji" /> 编辑
                             </a>

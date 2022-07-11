@@ -21,7 +21,7 @@ const ADDModal = (props: Props) => {
 
     const onSubmit = (values: any) => {
         form.validateFields().then(values => {
-            values.alias = values.alias.split('，');
+            values.alias = values.alias?.split('，');
             values.id
                 ? updateFunc(values).then(res => {
                       message.success('操作成功');
@@ -48,18 +48,36 @@ const ADDModal = (props: Props) => {
                 <Form.Item hidden label="dictId" name="dictId">
                     <Input />
                 </Form.Item>
-
                 <Form.Item hidden label="id" name="id">
                     <Input />
                 </Form.Item>
-
-                <Form.Item rules={[{ required: true, message: '请填写' }]} label="全称" name="name">
-                    <Input placeholder="全称" maxLength={200} />
+                <Form.Item label="dictType" name="dictType">
+                    <Input />
                 </Form.Item>
 
-                <Form.Item label="别名" name="alias">
-                    <Input.TextArea placeholder="请输入别名，不同别名间请以“ ，”分割" maxLength={200} />
-                </Form.Item>
+                {dictType == 0 && (
+                    <>
+                        <Form.Item rules={[{ required: true, message: '请填写' }]} label="全称" name="name">
+                            <Input placeholder="全称" maxLength={200} />
+                        </Form.Item>
+
+                        <Form.Item label="别名" name="alias">
+                            <Input.TextArea placeholder="请输入别名，不同别名间请以“ ，”分割" maxLength={200} />
+                        </Form.Item>
+                    </>
+                )}
+
+                {dictType == 1 && (
+                    <>
+                        <Form.Item rules={[{ required: true, message: '请填写' }]} label="头实体" name="name">
+                            <Input placeholder="输入头实体" maxLength={200} />
+                        </Form.Item>
+
+                        <Form.Item rules={[{ required: true, message: '请填写' }]} label="尾实体" name="endName">
+                            <Input placeholder="输入尾实体" maxLength={200} />
+                        </Form.Item>
+                    </>
+                )}
             </Form>
         </Modal>
     );

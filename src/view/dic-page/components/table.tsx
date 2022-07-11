@@ -31,7 +31,7 @@ export default function DictTable(props) {
             width: 140,
             read: read,
             render: (text, record) => {
-                return read ? text : <View {...record} refresh={refresh} />;
+                return read ? text : <View {...record} dictType={dictType} subTitle={subTitle} refresh={refresh} />;
             }
         },
         {

@@ -66,7 +66,6 @@ function TableList(props: TemplateTableProps) {
                 rowKey="id"
                 rowSelection={rowSelection}
                 dataSource={props.list}
-                columns={columns}
                 onChange={handleTableChange}
                 tableLayout="fixed"
                 pagination={{ current: props.pagination.page, total: props.pagination.total, showQuickJumper: true, showSizeChanger: true }}

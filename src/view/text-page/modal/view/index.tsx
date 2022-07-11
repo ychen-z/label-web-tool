@@ -10,7 +10,7 @@ import { TemplateSearchParams } from './interface';
 import './index.less';
 
 function Index(props) {
-    const { textsName, id: textId, refresh } = props;
+    const { textsName, id: textId, refresh, textType } = props;
     const DEFAULT_PARAM = {
         page: 1,
         size: 10
@@ -71,6 +71,7 @@ function Index(props) {
                         loading={isLoading}
                         list={templateList}
                         textId={textId}
+                        textType={textType}
                         setSelectedKeys={setSelectedKeys}
                         selectedKeys={selectedKeys}
                         refresh={getList}

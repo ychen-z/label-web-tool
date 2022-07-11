@@ -3,15 +3,23 @@ import { MenuItemType } from './interface';
 const MENU_MAP: MenuItemType[] = [
     {
         id: 1,
-        name: '实体管理',
-        link: '/app/mng/dic',
-        icon: 'icon-shujuzidian'
-    },
-    {
-        id: 2,
-        name: '关系管理',
-        link: '/app/mng/rel',
-        icon: 'icon-shujuzidian'
+        name: '管理',
+        link: '/app/mng',
+        icon: 'icon-shujuzidian',
+        children: [
+            {
+                id: 1,
+                name: '实体管理',
+                link: '/app/mng/dic',
+                icon: 'icon-shujuzidian'
+            },
+            {
+                id: 2,
+                name: '关系管理',
+                link: '/app/mng/rel',
+                icon: 'icon-shujuzidian'
+            }
+        ]
     },
     {
         id: 3,

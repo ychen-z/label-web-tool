@@ -2,7 +2,7 @@ import { MenuItemType } from './interface';
 
 const MENU_MAP: MenuItemType[] = [
     {
-        id: 1,
+        id: 10,
         name: '管理',
         link: '/app/mng',
         icon: 'icon-shujuzidian',
@@ -22,16 +22,24 @@ const MENU_MAP: MenuItemType[] = [
         ]
     },
     {
-        id: 3,
-        name: '字典语料',
-        link: '/app/dic-text',
-        icon: 'icon-yuliao'
-    },
-    {
-        id: 4,
-        name: '关系语料',
-        link: '/app/rel-text',
-        icon: 'icon-yuliao'
+        id: 11,
+        name: '语料',
+        link: '/app/text',
+        icon: 'icon-yuliao',
+        children: [
+            {
+                id: 3,
+                name: '实体语料',
+                link: '/app/text/dic'
+                // icon: 'icon-yuliao'
+            },
+            {
+                id: 4,
+                name: '关系语料',
+                link: '/app/text/rel'
+                // icon: 'icon-yuliao'
+            }
+        ]
     },
     {
         id: 5,

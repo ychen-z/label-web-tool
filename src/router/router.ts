@@ -8,33 +8,20 @@ const load = (loader: any) =>
     });
 
 export const urlObj = {
-    dic: {
+    mng: {
         name: '管理',
         link: '/app/mng/:type',
         component: load(() => import('@/view/dic-page')),
         needAuth: false
     },
 
-    // dicText: {
-    //     name: '字典语料',
-    //     link: '/app/dic-text',
-    //     component: load(() => import('@/view/text-page')),
-    //     needAuth: false
-    // },
-
-    relation: {
-        name: '关系管理',
-        link: '/app/rel',
-        component: load(() => import('@/view/dic-page')),
-        needAuth: false
-    },
-
-    relationText: {
-        name: '关系语料',
-        link: '/app/rel-text',
+    Text: {
+        name: '语料',
+        link: '/app/text/:type',
         component: load(() => import('@/view/text-page')),
         needAuth: false
     },
+
     label: {
         name: '实体',
         link: '/app/label',
@@ -57,6 +44,6 @@ export const urlObj = {
     }
 };
 
-const { dic, relation, relationText, toolHandle, label, relationHandle } = urlObj;
+const { mng, Text, toolHandle, label, relationHandle } = urlObj;
 
-export const routes = [dic, relation, relationText, toolHandle, label, relationHandle];
+export const routes = [mng, Text, toolHandle, label, relationHandle];

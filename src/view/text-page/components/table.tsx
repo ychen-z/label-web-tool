@@ -10,7 +10,7 @@ import { delText } from '@/axios';
 import View from '../modal/view/index';
 
 export default function TextTable(props) {
-    const { loading, refresh, dataSource, read } = props;
+    const { loading, refresh, dataSource, read, subTitle, textType } = props;
     const { dispatchText } = useContext(GlobalContext);
 
     const rowSelection = {
@@ -26,7 +26,7 @@ export default function TextTable(props) {
 
     const columns = [
         {
-            title: '语料名称',
+            title: subTitle + '名称',
             dataIndex: 'textsName',
             key: 'textsName',
             width: 140,
@@ -36,7 +36,7 @@ export default function TextTable(props) {
             }
         },
         {
-            title: '语料描述',
+            title: subTitle + '描述',
             read: read,
             dataIndex: 'textsDescribe',
             key: 'textsDescribe',
@@ -62,11 +62,13 @@ export default function TextTable(props) {
             render: (elem: any, row: any, index: number) => {
                 return (
                     <Space>
-                        <UpdateModal data={row} type="EDIT" refresh={refresh}>
-                            <a>
-                                <IconSet type="icon-bianji" /> 编辑
-                            </a>
-                        </UpdateModal>
+                        {textType == 0 && (
+                            <UpdateModal data={row} subTitle={subTitle} textType={textType} type="EDIT" refresh={refresh}>
+                                <a>
+                                    <IconSet type="icon-bianji" /> 编辑
+                                </a>
+                            </UpdateModal>
+                        )}
                         <Divider type="vertical" />
                         <Export data={row} />
                         <Divider type="vertical" />

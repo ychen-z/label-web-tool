@@ -8,6 +8,7 @@ import { postDic, updateDic } from '@/axios';
 interface Props {
     data?: Record<string, any>;
     type: 'ADD' | 'EDIT';
+    dictType: 1 | 0;
     subTitle: string;
     onCancel: Function;
     refresh: Function;

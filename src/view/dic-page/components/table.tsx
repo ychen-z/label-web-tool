@@ -67,7 +67,8 @@ export default function DictTable(props) {
             title: subTitle + '容量 (字)',
             dataIndex: 'dictsContent',
             key: 'dictsContent',
-            width: 140
+            width: 140,
+            hidden: dictType == 1
         },
         {
             title: '操作',
@@ -110,7 +111,7 @@ export default function DictTable(props) {
             rowKey="id"
             rowSelection={rowSelection}
             dataSource={dataSource}
-            columns={columns.filter(item => item.read == read)}
+            columns={columns.filter(item => item.read == read && !item.hidden)}
             pagination={false}
         />
     );

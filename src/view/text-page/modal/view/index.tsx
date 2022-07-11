@@ -51,7 +51,6 @@ function Index(props) {
             <UDrawer
                 callback={refresh}
                 trigger={<a>{textsName}</a>}
-                maskClosable={false}
                 title={'查看' + textsName + '详情'}
                 beforeShow={beforeShow}
                 className="m-template"

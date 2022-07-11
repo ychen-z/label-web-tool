@@ -80,7 +80,7 @@ export default class SelfUpload extends Component {
 
     render() {
         const { fileList = [] } = this.state;
-        const { children = <Content accept={this.props.accept} />, action = '/api/file/upload', maxCount = Infinity, ...rest } = this.props;
+        const { children = <Content accept={this.props.accept} />, action = '/mock/test/api/file/upload', maxCount = Infinity, ...rest } = this.props;
         return (
             <Upload action={action} {...rest} fileList={fileList} onChange={this.onChange}>
                 {fileList.length < maxCount && children}

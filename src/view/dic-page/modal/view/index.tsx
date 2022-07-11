@@ -51,7 +51,6 @@ function Template(props) {
             <UDrawer
                 callback={refresh}
                 trigger={<a>{dictionaryName}</a>}
-                maskClosable={false}
                 title={'查看' + dictionaryName + '详情'}
                 beforeShow={beforeShow}
                 className="m-template"

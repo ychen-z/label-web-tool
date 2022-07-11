@@ -3,7 +3,7 @@ import { MenuItemType } from './interface';
 const MENU_MAP: MenuItemType[] = [
     {
         id: 10,
-        name: '管理',
+        name: '字典管理',
         link: '/app/mng',
         icon: 'icon-shujuzidian',
         children: [

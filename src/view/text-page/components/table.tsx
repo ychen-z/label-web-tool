@@ -53,6 +53,7 @@ export default function TextTable(props) {
             title: '语料容量 (字)',
             dataIndex: 'textsContent',
             key: 'textsContent',
+            hidden: textType == 1,
             width: 140,
             render: (text, record) => text || '--'
         },
@@ -63,13 +64,16 @@ export default function TextTable(props) {
                 return (
                     <Space>
                         {textType == 0 && (
-                            <UpdateModal data={row} subTitle={subTitle} textType={textType} type="EDIT" refresh={refresh}>
-                                <a>
-                                    <IconSet type="icon-bianji" /> 编辑
-                                </a>
-                            </UpdateModal>
+                            <>
+                                <UpdateModal data={row} subTitle={subTitle} textType={textType} type="EDIT" refresh={refresh}>
+                                    <a>
+                                        <IconSet type="icon-bianji" /> 编辑
+                                    </a>
+                                </UpdateModal>
+                                <Divider type="vertical" />
+                            </>
                         )}
-                        <Divider type="vertical" />
+
                         <Export data={row} />
                         <Divider type="vertical" />
                         <Del id={row.id} func={delText} refresh={refresh} />
@@ -84,7 +88,7 @@ export default function TextTable(props) {
             rowKey="id"
             rowSelection={rowSelection}
             dataSource={dataSource}
-            columns={columns.filter(item => item.read == read)}
+            columns={columns.filter(item => item.read == read && !item.hidden)}
             pagination={false}
         />
     );

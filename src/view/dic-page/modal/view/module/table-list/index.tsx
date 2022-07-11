@@ -25,6 +25,14 @@ function TableList(props) {
                 return <div>{text ? text.join('，') : '--'}</div>;
             }
         },
+
+        {
+            title: '尾实体',
+            dataIndex: 'endName',
+            key: 'endName',
+            ellipsis: true
+        },
+
         {
             title: '操作',
             dataIndex: 'action',

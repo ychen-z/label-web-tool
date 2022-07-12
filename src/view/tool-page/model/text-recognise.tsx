@@ -19,13 +19,16 @@ export default function TextRecognition(props) {
     const { dispatch: dispatchGetModelSample } = useFetch(getModelSample, null, false);
 
     const onFinish = values => {
-        dispatch({ ...values, dictIds: localStorage.getItem('dictIds')?.split(','), textIds: localStorage.getItem('textIds')?.split(',') }).then(
-            res => {
-                refreshState();
-                setUpdate(update + 1);
-                message.success('操作成功');
-            }
-        );
+        dispatch({
+            ...values,
+            textType,
+            dictIds: localStorage.getItem('dictIds-' + textType)?.split(','),
+            textIds: localStorage.getItem('textIds-' + textType)?.split(',')
+        }).then(res => {
+            refreshState();
+            setUpdate(update + 1);
+            message.success('操作成功');
+        });
     };
 
     /**

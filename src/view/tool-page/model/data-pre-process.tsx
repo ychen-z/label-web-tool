@@ -50,8 +50,8 @@ export default function DataPreProcess(props) {
         dispatchSetClusterAndVector({
             ...values,
             textType,
-            dictIds: localStorage.getItem('dictIds')?.split(','),
-            textIds: localStorage.getItem('textIds')?.split(',')
+            dictIds: localStorage.getItem('dictIds-' + textType)?.split(','),
+            textIds: localStorage.getItem('textIds-' + textType)?.split(',')
         }).then(res => {
             notification.success({
                 message: '操作成功',

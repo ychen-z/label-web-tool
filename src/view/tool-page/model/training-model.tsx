@@ -10,7 +10,8 @@ const { Option } = Select;
  *
  * @returns 模型训练
  */
-export default function TrainingModel() {
+export default function TrainingModel(props) {
+    const { textType } = props;
     const { refreshState } = useContext(GlobalContext);
     const { dispatch: dispatchPostTrainModel, isLoading } = useFetch(postTrainModel, { page: 0, size: Infinity }, false);
     const { data: currentRateData, dispatch: dispatchGetCurrentRate } = useFetch(getCurrentRate, null);
@@ -19,11 +20,11 @@ export default function TrainingModel() {
     const onFinish = values => {
         console.log('训练');
         var dictIds = localStorage
-            .getItem('dictIds')
+            .getItem('dictIds-' + textType)
             ?.split(',')
             .map(item => (item = Number(item)));
         var textIds = localStorage
-            .getItem('textIds')
+            .getItem('textIds-' + textType)
             ?.split(',')
             .map(item => (item = Number(item)));
 

@@ -82,10 +82,10 @@ export default function ToolPage() {
     const renderdom = ({ step }) => {
         const element = {
             '-1': <Loading />,
-            0: <DataImport />,
+            0: <DataImport textType={textType} />,
             1: <DataPreProcess textType={textType} />,
             2: <ManualNamed />,
-            3: <TrainingModel />,
+            3: <TrainingModel textType={textType} />,
             4: <TextRecognition />,
             5: null
         };
@@ -129,11 +129,19 @@ export default function ToolPage() {
 
     // 存储字典
     const dispatchDict = v => {
-        localStorage.setItem('dictIds', v.join(','));
+        if (!v) {
+            localStorage.removeItem('dictIds-' + textType);
+        } else {
+            localStorage.setItem('dictIds-' + textType, v?.join(','));
+        }
     };
 
     const dispatchText = v => {
-        localStorage.setItem('textIds', v.join(','));
+        if (!v) {
+            localStorage.removeItem('textIds-' + textType);
+        } else {
+            localStorage.setItem('textIds-' + textType, v?.join(','));
+        }
     };
 
     // 重置当前
@@ -155,10 +163,14 @@ export default function ToolPage() {
     useEffect(() => {
         if (dispatch) {
             dispatch().then((res: any) => {
+                if (res.status == 0) {
+                    // 初始化设置
+                    dispatchDict(res.dictIds);
+                    dispatchText(res.textIds);
+                }
+
                 goto(res.status);
                 setStatuInfo(res.msg);
-                res.dictIds && dispatchDict(res.dictIds);
-                res.textIds && dispatchText(res.textIds);
             });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps

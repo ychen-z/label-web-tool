@@ -19,12 +19,8 @@ export default function Dictionary(props) {
     const dictType = TYPES[params.type];
     const subTitle = dictType == 1 ? '关系' : '实体';
 
-    const dictIdss = localStorage
-        .getItem('dictIds')
-        ?.split(',')
-        .map(item => (item = Number(item)));
     const { data, dispatch: getDicTableData, isLoading } = useFetch(getDicAll, { page: 0, size: Infinity, dictType }, false);
-    const [selectedKeys, setSelectedKeys] = useState(dictIdss);
+    const [selectedKeys, setSelectedKeys] = useState([]);
 
     useEffect(() => {
         if (setDicLength) {
@@ -33,7 +29,12 @@ export default function Dictionary(props) {
     }, [selectedKeys, setDicLength]);
 
     useEffect(() => {
+        let dictIdss = localStorage
+            .getItem('dictIds-' + dictType)
+            ?.split(',')
+            .map(item => (item = Number(item)));
         getDicTableData({ page: 0, size: Infinity, dictType });
+        setSelectedKeys(dictIdss);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [dictType]);
     return (

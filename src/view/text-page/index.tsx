@@ -18,12 +18,9 @@ export default function Text(props) {
 
     const textType = TYPES[params.type];
     const subTitle = textType == 1 ? '关系' : '实体';
-    const textIdss = localStorage
-        .getItem('textIds')
-        ?.split(',')
-        .map(item => (item = Number(item)));
+
     const { data, dispatch: getTextTableData, isLoading: loading } = useFetch(getTextAll, { page: 0, size: Infinity, textType }, false);
-    const [selectedKeys, setSelectedKeys] = useState(textIdss);
+    const [selectedKeys, setSelectedKeys] = useState<any>([]);
     const [, setSelectedRows] = useState([]);
 
     useEffect(() => {
@@ -33,6 +30,13 @@ export default function Text(props) {
     }, [selectedKeys, setTextLength]);
 
     useEffect(() => {
+        let textIdss = localStorage
+            .getItem('textIds-' + textType)
+            ?.split(',')
+            .map(item => (item = Number(item)));
+
+        setSelectedKeys(textIdss);
+
         getTextTableData({ page: 0, size: Infinity, textType });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [textType]);

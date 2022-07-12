@@ -1,6 +1,6 @@
 import { get, put, post, del } from '../../http';
 
-// 字典接口
+// 语料接口
 export const getTextAll = (data: any) => get({ url: '/text/', data }); // 获取语料列表
 export const postText = (data: any) => post({ url: '/text/?textType=' + data.textType, data }); // 插入语料词条
 export const updateText = (data: any) => put({ url: '/text/', data }); // 更新语料

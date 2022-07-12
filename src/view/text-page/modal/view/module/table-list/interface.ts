@@ -8,5 +8,7 @@ export interface TemplateTableProps {
     list: TemplateItem[];
     loading: boolean;
     getList: Function;
+    textType: 1 | 0;
+    refresh: Function;
     pagination: PaginationProps;
 }

@@ -6,7 +6,7 @@ export const getToolState = (data: any) => get({ url: '/textCluster/status', dat
 // 工具管理
 export const setClusterAndVector = (data: any) => post({ url: '/textCluster/clusterAndVector?textType=' + data.textType, data }); // 聚类并向量化
 export const getPreSample = (data: any) => get({ url: '/textCluster/preSample', data }); // 聚类并向量化
-export const getModelSample = (data: any) => get({ url: '/textCluster/modelSample?rate=' + data }); // 聚类并向量化
+export const getModelSample = (data: any) => get({ url: '/textCluster/modelSample', data }); // 聚类并向量化
 export const getSampleData = (data: any) => get({ url: '/textData/sampleData', data });
 export const postTrainModel = (data: any) => post({ url: '/textCluster/trainModel', data });
 export const getCurrentRate = (data: any) => get({ url: '/textCluster/rate', data });
@@ -25,7 +25,7 @@ export const delTextLabel = (data: any) => del({ url: '/textLabel/' + data });
 
 // 视图
 export const getScatter = (data: any) => get({ url: '/textCluster/scatter', data });
-export const getWordCloudByClusterId = (clusterId: any) => get({ url: '/textCluster/wordCloud/' + clusterId });
+export const getWordCloudByClusterId = (data: any) => get({ url: '/textCluster/wordCloud/' + data.clusterId, data });
 
 // 标签管理
 export const getLabelList = (data: any) => get({ url: '/label/all', data });
@@ -33,5 +33,5 @@ export const updateLabel = (data: any) => put({ url: '/label', data });
 export const postLabel = (data: any) => post({ url: '/label/add', data }); // 增加label
 // export const delLabel = (labelId: any) => del({ url: '/label/' + labelId });
 
-export const resetCurrent = () => post({ url: '/textCluster/resetTask' });
-export const resetAll = () => post({ url: '/textCluster/resetProject' });
+export const resetCurrent = data => post({ url: '/textCluster/resetTask?textType=' + data });
+export const resetAll = data => post({ url: '/textCluster/resetProject?textType=' + data });

@@ -26,7 +26,7 @@ export default function DataPreProcess(props) {
     const [tranningLoading, setTranningLoading] = useState(false);
     const { dispatch: dispatchSetClusterAndVector, isLoading: loading } = useFetch(setClusterAndVector, { page: 0, size: Infinity }, false);
     const { dispatch: dispatchGetPreSample } = useFetch(getPreSample, null, false);
-    const { data: scatterData, dispatch: dispatchGetScatter } = useFetch(getScatter, null);
+    const { data: scatterData, dispatch: dispatchGetScatter } = useFetch(getScatter, { textType });
 
     const onChangeTabs = v => {
         setActiveKey(v);
@@ -37,7 +37,7 @@ export default function DataPreProcess(props) {
             if (res && res.status == 11) {
                 message.success('聚类成功！');
                 setTranningLoading(false);
-                dispatchGetScatter(); // 获取散点图
+                dispatchGetScatter({ textType }); // 获取散点图
                 setInterval(null);
             }
         });
@@ -145,7 +145,7 @@ export default function DataPreProcess(props) {
                             <div>
                                 <ScatterContext.Provider value={{ updateCluster }}>
                                     {clusterId > -1 && <ScatterEchart data={scatterData} />}
-                                    {clusterId > -1 && <WordsCloudEchart clusterId={clusterId} />}
+                                    {clusterId > -1 && <WordsCloudEchart clusterId={clusterId} textType={textType} />}
                                 </ScatterContext.Provider>
                             </div>
                         </TabPane>

@@ -34,7 +34,7 @@ export const WordCloudOptions = {
 const initial = { data: [], error: undefined, loading: true };
 
 export default function WordsCloudEcharts(props) {
-    const { clusterId } = props;
+    const { clusterId, textType } = props;
     const [wordData, setWordData] = useState(initial);
     const { data: wordsCloudData, dispatch, isLoading } = useFetch(getWordCloudByClusterId, null, false);
 
@@ -69,7 +69,7 @@ export default function WordsCloudEcharts(props) {
     }, [wordsCloudData]);
 
     useEffect(() => {
-        dispatch(clusterId);
+        dispatch({ clusterId, textType });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [clusterId]);
 

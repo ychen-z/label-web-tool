@@ -10,20 +10,18 @@ const MENU_MAP: MenuItemType[] = [
             {
                 id: 1,
                 name: '实体字典',
-                link: '/app/mng/dic',
-                icon: 'icon-shujuzidian'
+                link: '/app/mng/dic'
             },
             {
                 id: 2,
                 name: '关系字典',
-                link: '/app/mng/rel',
-                icon: 'icon-shujuzidian'
+                link: '/app/mng/rel'
             }
         ]
     },
     {
         id: 11,
-        name: '语料',
+        name: '语料管理',
         link: '/app/text',
         icon: 'icon-yuliao',
         children: [

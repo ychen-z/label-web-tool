@@ -13,42 +13,6 @@ import TrainingModel from './model/training-model'; // 训练
 import DataExport from './components/data-export'; // 导出
 import './index.less';
 
-// 流程操作
-const OP_BTNS = [
-    {
-        name: '加载数据/字典',
-        type: 0,
-        top: 0,
-        stopArea: 0
-    },
-    {
-        name: '数据预处理',
-        type: 1,
-        top: 58 * 2
-    },
-    {
-        name: '手工标注',
-        type: 2,
-        top: 58 * 3 + 59
-    },
-    {
-        name: '训练模型',
-        type: 3,
-        top: 58 * 5 + 60
-    },
-    {
-        name: '语料识别',
-        type: 4,
-        top: 58 * 7 + 61
-    },
-    {
-        name: <DataExport />,
-        type: 5,
-        top: 58 * 9 + 62,
-        status: true // 当前模块不渲染
-    }
-];
-
 const stop = {
     0: 0,
     1: 200,
@@ -78,6 +42,42 @@ export default function ToolPage() {
     const textType = TYPES[params.type];
     const subTitle = textType == 1 ? '关系' : '实体';
     console.log(subTitle);
+
+    // 流程操作
+    const OP_BTNS = [
+        {
+            name: '加载数据/字典',
+            type: 0,
+            top: 0,
+            stopArea: 0
+        },
+        {
+            name: '数据预处理',
+            type: 1,
+            top: 58 * 2
+        },
+        {
+            name: '手工标注',
+            type: 2,
+            top: 58 * 3 + 59
+        },
+        {
+            name: '训练模型',
+            type: 3,
+            top: 58 * 5 + 60
+        },
+        {
+            name: '语料识别',
+            type: 4,
+            top: 58 * 7 + 61
+        },
+        {
+            name: <DataExport textType={textType} />,
+            type: 5,
+            top: 58 * 9 + 62,
+            status: true // 当前模块不渲染
+        }
+    ];
 
     const renderdom = ({ step }) => {
         const element = {
@@ -138,7 +138,7 @@ export default function ToolPage() {
 
     // 重置当前
     const _resetCurrent = v => {
-        dispatchResetCurrent().then(res => {
+        dispatchResetCurrent(textType).then(res => {
             message.success('操作成功');
             refreshState();
         });
@@ -146,7 +146,7 @@ export default function ToolPage() {
 
     // 重置所有
     const _resetAll = v => {
-        dispatchResetAll().then(res => {
+        dispatchResetAll(textType).then(res => {
             message.success('操作成功');
             refreshState();
         });

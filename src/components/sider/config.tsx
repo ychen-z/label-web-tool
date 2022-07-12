@@ -42,16 +42,22 @@ const MENU_MAP: MenuItemType[] = [
         ]
     },
     {
-        id: 5,
-        name: '实体抽取',
-        link: '/app/tool-handle',
-        icon: 'icon-shiti'
-    },
-    {
-        id: 6,
-        name: '关系抽取',
-        link: '/app/rel-handle',
-        icon: 'icon-shiti'
+        id: 12,
+        name: '抽取工具',
+        link: '/app/tool',
+        icon: 'icon-shiti',
+        children: [
+            {
+                id: 5,
+                name: '实体抽取',
+                link: '/app/tool/dic'
+            },
+            {
+                id: 6,
+                name: '关系抽取',
+                link: '/app/tool/rel'
+            }
+        ]
     }
 
     // {

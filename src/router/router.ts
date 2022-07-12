@@ -29,9 +29,9 @@ export const urlObj = {
         needAuth: false
     },
 
-    toolHandle: {
+    Tool: {
         name: '实体抽取',
-        link: '/app/tool-handle',
+        link: '/app/tool/:type',
         component: load(() => import('@/view/tool-page')),
         needAuth: false
     },
@@ -44,6 +44,6 @@ export const urlObj = {
     }
 };
 
-const { mng, Text, toolHandle, label, relationHandle } = urlObj;
+const { mng, Text, Tool, label, relationHandle } = urlObj;
 
-export const routes = [mng, Text, toolHandle, label, relationHandle];
+export const routes = [mng, Text, Tool, label, relationHandle];

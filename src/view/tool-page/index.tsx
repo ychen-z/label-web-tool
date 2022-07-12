@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Card, Tag, Button, Popconfirm, message } from 'antd';
+import { useParams } from 'react-router-dom';
 import { GlobalContext } from '@/context';
 import useFetch from '@/hooks/common/useFetch';
 import { getToolState, resetCurrent, resetAll } from '@/axios';
@@ -56,6 +57,11 @@ const stop = {
     4: '100%'
 };
 
+var TYPES = {
+    rel: 1,
+    dic: 0
+};
+
 const formatStatus = (status, step) => {
     const _status = Math.floor((status || 0) / 10);
     // 可以进行下一项
@@ -67,11 +73,17 @@ const formatStatus = (status, step) => {
 };
 
 export default function ToolPage() {
+    const params = useParams() as any;
+
+    const textType = TYPES[params.type];
+    const subTitle = textType == 1 ? '关系' : '实体';
+    console.log(subTitle);
+
     const renderdom = ({ step }) => {
         const element = {
             '-1': <Loading />,
             0: <DataImport />,
-            1: <DataPreProcess />,
+            1: <DataPreProcess textType={textType} />,
             2: <ManualNamed />,
             3: <TrainingModel />,
             4: <TextRecognition />,
@@ -80,7 +92,7 @@ export default function ToolPage() {
         return element[step];
     };
 
-    const { dispatch } = useFetch(getToolState, null, false);
+    const { dispatch } = useFetch(getToolState, { textType }, false);
     const { dispatch: dispatchResetCurrent } = useFetch(resetCurrent, null, false);
     const { dispatch: dispatchResetAll } = useFetch(resetAll, null, false);
     const [count, setCount] = useState({ step: -1, active: false });
@@ -145,12 +157,12 @@ export default function ToolPage() {
             dispatch().then((res: any) => {
                 goto(res.status);
                 setStatuInfo(res.msg);
-                dispatchDict(res.dictIds);
-                dispatchText(res.textIds);
+                res.dictIds && dispatchDict(res.dictIds);
+                res.textIds && dispatchText(res.textIds);
             });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [dispatch]);
+    }, [dispatch, textType]);
 
     return (
         <GlobalContext.Provider

@@ -4,8 +4,8 @@ import { get, put, post, del } from '../../http';
 export const getToolState = (data: any) => get({ url: '/textCluster/status', data }); // 聚类并向量化
 
 // 工具管理
-export const setClusterAndVector = (data: any) => post({ url: '/textCluster/clusterAndVector', data }); // 聚类并向量化
-export const getPreSample = (data: any) => get({ url: '/textCluster/preSample?rate=' + data }); // 聚类并向量化
+export const setClusterAndVector = (data: any) => post({ url: '/textCluster/clusterAndVector?textType=' + data.textType, data }); // 聚类并向量化
+export const getPreSample = (data: any) => get({ url: '/textCluster/preSample', data }); // 聚类并向量化
 export const getModelSample = (data: any) => get({ url: '/textCluster/modelSample?rate=' + data }); // 聚类并向量化
 export const getSampleData = (data: any) => get({ url: '/textData/sampleData', data });
 export const postTrainModel = (data: any) => post({ url: '/textCluster/trainModel', data });

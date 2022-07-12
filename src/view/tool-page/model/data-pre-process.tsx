@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Form, Input, Button, Select, Slider, Tabs, message, notification, Spin } from 'antd';
-import { ScatterContext, GlobalContext } from '@/context';
 import { useInterval } from 'ahooks';
+import { ScatterContext, GlobalContext } from '@/context';
 import useFetch from '@/hooks/common/useFetch';
 import Table from '../components/table-list/index';
 import WordsCloudEchart from '../components/word-cloud-echart';
@@ -15,7 +15,8 @@ const { TabPane } = Tabs;
  *
  * @returns 数据预处理
  */
-export default function DataPreProcess() {
+export default function DataPreProcess(props) {
+    const { textType } = props;
     const { refreshState } = useContext(GlobalContext);
     const [activeKey, setActiveKey] = useState('1');
     const [interval, setInterval] = useState(null);
@@ -31,14 +32,13 @@ export default function DataPreProcess() {
         setActiveKey(v);
     };
 
-
     useInterval(() => {
-        refreshState((res)=>{
-            if(res && res.status == 11 ){
+        refreshState(res => {
+            if (res && res.status == 11) {
                 message.success('聚类成功！');
-                setTranningLoading(false)
+                setTranningLoading(false);
                 dispatchGetScatter(); // 获取散点图
-                setInterval(null)
+                setInterval(null);
             }
         });
     }, interval);
@@ -49,6 +49,7 @@ export default function DataPreProcess() {
     const onTranning = values => {
         dispatchSetClusterAndVector({
             ...values,
+            textType,
             dictIds: localStorage.getItem('dictIds')?.split(','),
             textIds: localStorage.getItem('textIds')?.split(',')
         }).then(res => {
@@ -56,7 +57,7 @@ export default function DataPreProcess() {
                 message: '操作成功',
                 description: '开始聚类，成功后可执行采样'
             });
-            setTranningLoading(true)
+            setTranningLoading(true);
             setInterval(5000);
         });
     };
@@ -66,7 +67,7 @@ export default function DataPreProcess() {
      */
     const onSample = () => {
         if (sliderValue) {
-            dispatchGetPreSample(sliderValue / 100).then(res => {
+            dispatchGetPreSample({ rate: sliderValue / 100, textType }).then(res => {
                 localStorage.setItem('labelState', 'pre');
                 setSampleState(true);
                 message.success('采样成功');
@@ -94,19 +95,20 @@ export default function DataPreProcess() {
                 wrapperCol={{ span: 16 }}
                 onFinish={onTranning}
             >
-                <Form.Item label="向量化方法" name="model" rules={[{ required: true, message: '请输入' }]}>
+                {/* <Form.Item label="向量化方法" name="model" rules={[{ required: true, message: '请输入' }]}>
                     <Select>
                         <Option value="dec2Vec">dec2Vec</Option>
                     </Select>
-                </Form.Item>
+                </Form.Item> */}
                 <Form.Item label="向量维度" name="vectorScale" rules={[{ required: true, message: '请输入' }]}>
                     <Input />
                 </Form.Item>
-                <Form.Item label="聚类方法" name="method">
+                {/* <Form.Item label="聚类方法" name="method">
                     <Select>
                         <Option value="Kmeans">Kmeans</Option>
                     </Select>
-                </Form.Item>
+                </Form.Item> */}
+
                 <Form.Item label="聚类类数" name="clusterCount" rules={[{ required: true, message: '请输入' }]}>
                     <Input />
                 </Form.Item>
@@ -119,7 +121,7 @@ export default function DataPreProcess() {
                     </Form.Item>
                 </div>
             </Form>
-            
+
             <Spin tip="聚类中..." spinning={tranningLoading}>
                 <section className="u-sample">
                     <div className="u-sample-content">
@@ -153,7 +155,6 @@ export default function DataPreProcess() {
                     </Tabs>
                 </section>
             </Spin>
-            
         </div>
     );
 }

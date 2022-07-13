@@ -9,6 +9,7 @@ import {
     getTextLabelPreOne,
     getTextLabelNextOne,
     getTextLabelResult,
+    getRelationsTextLabelResult,
     postTextLabel,
     delTextLabel,
     getTextLable,
@@ -32,7 +33,8 @@ export default function HandleTag(props) {
     const { dispatch: dispatchPreone, isLoading: preLoading } = useFetch(getTextLabelPreOne, null, false);
     const { dispatch: dispatchGetTextLable } = useFetch(getTextLable, null, false);
     const { dispatch: dispatchNextone, isLoading: nextLoading } = useFetch(getTextLabelNextOne, null, false);
-    const { data: textLabelResult, dispatch: dispatchGetTextLabelResult } = useFetch(getTextLabelResult, null, false);
+    const { data: textLabelResult, dispatch: dispatchGetTextLabelResult } = useFetch(getTextLabelResult, null, false); // 获取实体打标结果
+    const { data: relationsTextLabelResult, dispatch: dispatchPostRelationsTextLabelResult } = useFetch(getRelationsTextLabelResult, null, false); // 获取关系打标结果
     const { dispatch: dispatchPostTextLabel } = useFetch(postTextLabel, null, false);
     const { dispatch: dispatchDelLabel } = useFetch(delTextLabel, null, false);
 
@@ -117,7 +119,7 @@ export default function HandleTag(props) {
                             dispatchDelLabel(id).then(res => {
                                 message.success('删除成功');
                                 // 获取最新打标数据
-                                dispatchGetTextLable(textLabeOne.id).then(res => {
+                                dispatchGetTextLable({ id: textLabeOne.id, textType }).then(res => {
                                     setTextLableOne(res);
                                 });
                             });
@@ -164,17 +166,21 @@ export default function HandleTag(props) {
     }, []);
 
     useEffect(() => {
-        if (textLabeOne) {
-            dispatchGetTextLabelResult({ id: textLabeOne.id });
+        if (textLabeOne && textType == 0) {
+            dispatchGetTextLabelResult({ id: textLabeOne.id }); // 获取实体打标结果
+        }
+
+        if (textLabeOne && textType == 1) {
+            dispatchPostRelationsTextLabelResult({ id: textLabeOne.id, textType }); // 获取关系打标结果
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [textLabeOne]);
+    }, [textLabeOne, textType]);
 
     useEffect(() => {
         if (userText && userKey) {
             dispatchPostTextLabel({ label: userText, keyCode: keycodeRef.current, textDataId: textLabeOne.id, textType }).then(res => {
                 message.success('打标成功！');
-                dispatchGetTextLable(textLabeOne.id).then(res => {
+                dispatchGetTextLable({ id: textLabeOne.id, textType }).then(res => {
                     setTextLableOne(res);
                 });
                 setUserText('');
@@ -224,7 +230,21 @@ export default function HandleTag(props) {
                     </section>
                     <section className="u-handle-view">
                         <Card title={<strong>打标结果</strong>}>
-                            <div className="u-handle-view-content">{formatData(textLabelResult?.content)}</div>
+                            {textType == 0 && <div className="u-handle-view-content">{formatData(textLabelResult?.content)}</div>}
+
+                            {textType == 1 && (
+                                <div>
+                                    {relationsTextLabelResult?.content?.map(item => {
+                                        return (
+                                            <div className="u-desc" style={{ color: item.color }}>
+                                                <span className="title">头实体: </span>
+                                                {item.headEntity}； <span className="title">尾实体: </span>
+                                                {item.tailEntity}；<span className="title">关系: </span> {item.dictName}
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            )}
                         </Card>
                     </section>
                 </>

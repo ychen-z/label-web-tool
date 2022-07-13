@@ -16,11 +16,12 @@ export const postModelMark = (data: any) => post({ url: '/textCluster/modelMark'
 // 打标
 export const getTextLabelCount = (data: any) => get({ url: '/textLabel/count', data });
 export const getTextLabelOne = (data: any) => get({ url: '/textLabel/takeOne', data });
-export const getTextLable = (data: any) => get({ url: '/textData/' + data });
+export const getTextLable = (data: any) => get({ url: '/textData/' + data.id + '?textType=' + data.textType });
 export const getTextLabelNextOne = (data: any) => get({ url: '/textLabel/takeNextOne', data });
 export const getTextLabelPreOne = (data: any) => get({ url: '/textLabel/takePreOne', data });
-export const getTextLabelResult = (data: any) => get({ url: '/textLabel/textData/' + data.id, data });
+export const getTextLabelResult = (data: any) => get({ url: '/textLabel/textData/' + data.id, data }); // 实体打标结果
 export const postTextLabel = (data: any) => post({ url: '/textLabel/?textType=' + data.textType, data }); // 实体打标
+export const getRelationsTextLabelResult = (data: any) => get({ url: `/textLabel/relation/${data.id}?textType=` + data.textType }); // 关系打标结果
 export const delTextLabel = (data: any) => del({ url: '/textLabel/' + data });
 
 // 视图

@@ -20,7 +20,7 @@ export const getTextLable = (data: any) => get({ url: '/textData/' + data });
 export const getTextLabelNextOne = (data: any) => get({ url: '/textLabel/takeNextOne', data });
 export const getTextLabelPreOne = (data: any) => get({ url: '/textLabel/takePreOne', data });
 export const getTextLabelResult = (data: any) => get({ url: '/textLabel/textData/' + data.id, data });
-export const postTextLabel = (data: any) => post({ url: '/textLabel/', data });
+export const postTextLabel = (data: any) => post({ url: '/textLabel/?textType=' + data.textType, data }); // 实体打标
 export const delTextLabel = (data: any) => del({ url: '/textLabel/' + data });
 
 // 视图
@@ -31,7 +31,6 @@ export const getWordCloudByClusterId = (data: any) => get({ url: '/textCluster/w
 export const getLabelList = (data: any) => get({ url: '/label/all', data });
 export const updateLabel = (data: any) => put({ url: '/label', data });
 export const postLabel = (data: any) => post({ url: '/label/add', data }); // 增加label
-// export const delLabel = (labelId: any) => del({ url: '/label/' + labelId });
 
 export const resetCurrent = data => post({ url: '/textCluster/resetTask?textType=' + data });
 export const resetAll = data => post({ url: '/textCluster/resetProject?textType=' + data });

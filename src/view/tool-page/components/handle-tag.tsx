@@ -20,7 +20,8 @@ import './index.less';
  *
  * @returns 打标页面
  */
-export default function HandleTag() {
+export default function HandleTag(props) {
+    const { textType } = props;
     const { refreshState } = useContext(GlobalContext);
     const [userText, setUserText] = useState<string>('');
     const [userKey, setUserKey] = useState<string>('');
@@ -42,25 +43,27 @@ export default function HandleTag() {
         refreshState();
         type === 'NEXT' &&
             dispatchNextone({
-                id: textLabeOne?.id
+                id: textLabeOne?.id,
+                textType
             }).then(res => {
                 setTextLableOne(res);
-                dispatchGetTextLabelCount(); // 重新获取数量
+                dispatchGetTextLabelCount({ textType }); // 重新获取数量
             });
 
         type === 'PRE' &&
             dispatchPreone({
-                id: textLabeOne?.id
+                id: textLabeOne?.id,
+                textType
             }).then(res => {
                 setTextLableOne(res);
-                dispatchGetTextLabelCount(); // 重新获取数量
+                dispatchGetTextLabelCount({ textType }); // 重新获取数量
             });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     };
 
     // 校对接口
     const check = () => {
-        dispatchPostTextLabel({ textDataId: textLabeOne.id }).then(res => {
+        dispatchPostTextLabel({ textDataId: textLabeOne.id, textType }).then(res => {
             message.success('校对通过');
             getOne('NEXT');
         });
@@ -169,7 +172,7 @@ export default function HandleTag() {
 
     useEffect(() => {
         if (userText && userKey) {
-            dispatchPostTextLabel({ label: userText, keyCode: keycodeRef.current, textDataId: textLabeOne.id }).then(res => {
+            dispatchPostTextLabel({ label: userText, keyCode: keycodeRef.current, textDataId: textLabeOne.id, textType }).then(res => {
                 message.success('打标成功！');
                 dispatchGetTextLable(textLabeOne.id).then(res => {
                     setTextLableOne(res);
@@ -216,6 +219,7 @@ export default function HandleTag() {
                             }
                         >
                             <div className="u-handle-area-content" dangerouslySetInnerHTML={{ __html: textLabeOne?.textMark }} />
+                            {textType == 1 && <div>关系打标</div>}
                         </Card>
                     </section>
                     <section className="u-handle-view">

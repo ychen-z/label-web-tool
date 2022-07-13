@@ -14,17 +14,29 @@ function TableList(props) {
     };
 
     const columns = [
+        // {
+        //     title: '语料',
+        //     dataIndex: 'text',
+        //     key: 'text'
+        // },
         {
-            title: '语料',
-            dataIndex: 'text',
-            key: 'text'
-        },
-        {
-            title: '匹配结果',
+            // title: '匹配结果',
             dataIndex: 'textMark',
             key: 'textMark',
-            render: text => {
-                return <div dangerouslySetInnerHTML={{ __html: text }} />;
+            render: (text, record) => {
+                return (
+                    <>
+                        <div dangerouslySetInnerHTML={{ __html: text || record.text }} />
+                        {!!record.relations?.length &&
+                            record.relations.map(item => (
+                                <div className="u-desc" style={{ color: item.color }}>
+                                    <span className="title">头实体: </span>
+                                    {item.headEntity}； <span className="title">尾实体: </span>
+                                    {item.tailEntity}；<span className="title">关系: </span> {item.dictName}
+                                </div>
+                            ))}
+                    </>
+                );
             }
         }
     ];

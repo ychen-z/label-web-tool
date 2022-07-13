@@ -16,8 +16,8 @@ export default function TextTable(props) {
     const rowSelection = {
         selectedRowKeys: props.selectedKeys,
         onChange: (selectedRowKeys, selectedRows) => {
+            dispatchText?.(selectedRowKeys);
             props.setSelectedKeys(selectedRowKeys);
-            dispatchText(selectedRowKeys);
         },
         getCheckboxProps: record => ({
             id: record.id + ''

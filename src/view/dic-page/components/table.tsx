@@ -15,7 +15,7 @@ export default function DictTable(props) {
     const rowSelection = {
         selectedRowKeys: props.selectedKeys,
         onChange: (selectedRowKeys, selectedRows) => {
-            dispatchDict(selectedRowKeys);
+            dispatchDict?.(selectedRowKeys);
             props.setSelectedKeys(selectedRowKeys);
         },
         getCheckboxProps: record => ({

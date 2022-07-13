@@ -84,7 +84,7 @@ export default function ToolPage() {
             '-1': <Loading />,
             0: <DataImport textType={textType} />,
             1: <DataPreProcess textType={textType} />,
-            2: <ManualNamed />,
+            2: <ManualNamed textType={textType} />,
             3: <TrainingModel textType={textType} />,
             4: <TextRecognition />,
             5: null

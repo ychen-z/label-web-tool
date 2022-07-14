@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import classNames from 'classnames';
 import DrawLine from './draw-line';
-import { connect, relations, relationsNames } from './constan';
+import { connect, relations, relationsNames } from './tools';
 import './index.less';
 
 export default function RelationDicPage() {

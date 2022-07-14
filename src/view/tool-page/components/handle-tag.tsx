@@ -4,6 +4,7 @@ import { GlobalContext } from '@/context';
 import IconSet from '@/components/icon';
 import useFetch from '@/hooks/common/useFetch';
 import DicTable from '@/view/dic-page';
+import Relation from './relation';
 import {
     getTextLabelCount,
     getTextLabelPreOne,
@@ -12,10 +13,22 @@ import {
     getRelationsTextLabelResult,
     postTextLabel,
     delTextLabel,
-    getTextLable,
+    getTextLabel, // 获取当前打标详情
     getHistoryRates
 } from '@/axios';
 import './index.less';
+
+const _entitys = [
+    {
+        id: 9276695571716,
+        textDataId: 9276695301956,
+        dictName: '设备',
+        color: '#3fb7d0',
+        label: '电机',
+        start: 3,
+        end: 4
+    }
+];
 
 /**
  *
@@ -31,7 +44,7 @@ export default function HandleTag(props) {
     const { data: historyRateData = [] } = useFetch(getHistoryRates, null); // 轮次
     const { data: textLabelCount, dispatch: dispatchGetTextLabelCount } = useFetch(getTextLabelCount, null, false);
     const { dispatch: dispatchPreone, isLoading: preLoading } = useFetch(getTextLabelPreOne, null, false);
-    const { dispatch: dispatchGetTextLable } = useFetch(getTextLable, null, false);
+    const { dispatch: dispatchGetTextLabel } = useFetch(getTextLabel, null, false);
     const { dispatch: dispatchNextone, isLoading: nextLoading } = useFetch(getTextLabelNextOne, null, false);
     const { data: textLabelResult, dispatch: dispatchGetTextLabelResult } = useFetch(getTextLabelResult, null, false); // 获取实体打标结果
     const { data: relationsTextLabelResult, dispatch: dispatchPostRelationsTextLabelResult } = useFetch(getRelationsTextLabelResult, null, false); // 获取关系打标结果
@@ -68,6 +81,14 @@ export default function HandleTag(props) {
         dispatchPostTextLabel({ textDataId: textLabeOne.id, textType }).then(res => {
             message.success('校对通过');
             getOne('NEXT');
+        });
+    };
+
+    // 关系打标
+    const handleReationsLabel = () => {
+        // 获取当前预料的香气
+        dispatchGetTextLabel({ id: textLabeOne.id, textType }).then(res => {
+            setTextLableOne(res);
         });
     };
 
@@ -119,7 +140,7 @@ export default function HandleTag(props) {
                             dispatchDelLabel(id).then(res => {
                                 message.success('删除成功');
                                 // 获取最新打标数据
-                                dispatchGetTextLable({ id: textLabeOne.id, textType }).then(res => {
+                                dispatchGetTextLabel({ id: textLabeOne.id, textType }).then(res => {
                                     setTextLableOne(res);
                                 });
                             });
@@ -176,11 +197,12 @@ export default function HandleTag(props) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [textLabeOne, textType]);
 
+    // 实体打标
     useEffect(() => {
         if (userText && userKey) {
             dispatchPostTextLabel({ label: userText, keyCode: keycodeRef.current, textDataId: textLabeOne.id, textType }).then(res => {
                 message.success('打标成功！');
-                dispatchGetTextLable({ id: textLabeOne.id, textType }).then(res => {
+                dispatchGetTextLabel({ id: textLabeOne.id, textType }).then(res => {
                     setTextLableOne(res);
                 });
                 setUserText('');
@@ -205,7 +227,7 @@ export default function HandleTag(props) {
                     <DicTable read type="tag" />
                     <section className="u-handle-area">
                         <Card
-                            title={<strong>打标工作区</strong>}
+                            title={<strong>{textType == 1 ? '关系' : '实体'}打标工作区</strong>}
                             extra={
                                 !!textLabelCount?.needCount && (
                                     <>
@@ -225,7 +247,14 @@ export default function HandleTag(props) {
                             }
                         >
                             <div className="u-handle-area-content" dangerouslySetInnerHTML={{ __html: textLabeOne?.textMark }} />
-                            {textType == 1 && <div>关系打标</div>}
+
+                            {textType == 1 && (
+                                <Relation
+                                    entitys={textLabeOne?.entitys}
+                                    relations={textLabeOne?.relations}
+                                    handleReationsLabel={handleReationsLabel}
+                                />
+                            )}
                         </Card>
                     </section>
                     <section className="u-handle-view">

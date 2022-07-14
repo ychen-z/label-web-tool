@@ -39,7 +39,7 @@ export const urlObj = {
     relationHandle: {
         name: '关系抽取',
         link: '/app/rel-handle',
-        component: load(() => import('@/view/relation-dic-page')),
+        component: load(() => import('@/view/relation')),
         needAuth: false
     }
 };

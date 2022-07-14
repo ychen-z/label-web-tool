@@ -26,6 +26,7 @@ export default function HandleTag(props) {
     const { textType } = props;
     const { refreshState } = useContext(GlobalContext);
     const [userText, setUserText] = useState<string>('');
+    const [entityKey, setEntityKey] = useState(0);
     const [userKey, setUserKey] = useState<string>('');
     const [textLabeOne, setTextLableOne] = useState();
     const [selectEntity, setSelectEntity] = useState({});
@@ -186,6 +187,7 @@ export default function HandleTag(props) {
 
         if (textLabeOne && textType == 1) {
             dispatchPostRelationsTextLabelResult({ id: textLabeOne.id, textType }); // 获取关系打标结果
+            setEntityKey(Math.random());
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [textLabeOne, textType]);
@@ -211,11 +213,10 @@ export default function HandleTag(props) {
             dispatchPostTextLabel({ keyCode: keycodeRef.current, textDataId: textLabeOne.id, textType, ...selectEntity }).then(res => {
                 message.success('关系打标成功！');
                 setSelectEntity(null);
+                setUserKey('');
                 dispatchGetTextLabel({ id: textLabeOne.id, textType }).then(res => {
                     setTextLableOne(res);
                 });
-                setUserText('');
-                setUserKey('');
             });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -260,6 +261,7 @@ export default function HandleTag(props) {
 
                             {textType == 1 && (
                                 <Relation
+                                    key={entityKey}
                                     entitys={textLabeOne?.entitys}
                                     relations={textLabeOne?.relations}
                                     handleReationsLabel={handleReationsLabel}
@@ -268,7 +270,7 @@ export default function HandleTag(props) {
                         </Card>
                     </section>
                     <section className="u-handle-view">
-                        <Card title={<strong>打标结果</strong>}>
+                        <Card title={<strong>{textType == 1 ? '关系' : '实体'}打标结果</strong>}>
                             {textType == 0 && <div className="u-handle-view-content">{formatData(textLabelResult?.content)}</div>}
 
                             {textType == 1 && (

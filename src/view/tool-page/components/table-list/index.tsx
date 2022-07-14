@@ -14,13 +14,13 @@ function TableList(props) {
     };
 
     const columns = [
-        // {
-        //     title: '语料',
-        //     dataIndex: 'text',
-        //     key: 'text'
-        // },
         {
-            // title: '匹配结果',
+            title: '语料',
+            dataIndex: 'text',
+            key: 'text'
+        },
+        {
+            title: '识别结果',
             dataIndex: 'textMark',
             key: 'textMark',
             render: (text, record) => {

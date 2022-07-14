@@ -18,18 +18,6 @@ import {
 } from '@/axios';
 import './index.less';
 
-const _entitys = [
-    {
-        id: 9276695571716,
-        textDataId: 9276695301956,
-        dictName: '设备',
-        color: '#3fb7d0',
-        label: '电机',
-        start: 3,
-        end: 4
-    }
-];
-
 /**
  *
  * @returns 打标页面
@@ -40,6 +28,7 @@ export default function HandleTag(props) {
     const [userText, setUserText] = useState<string>('');
     const [userKey, setUserKey] = useState<string>('');
     const [textLabeOne, setTextLableOne] = useState();
+    const [selectEntity, setSelectEntity] = useState({});
     const keycodeRef = useRef<string>();
     const { data: historyRateData = [] } = useFetch(getHistoryRates, null); // 轮次
     const { data: textLabelCount, dispatch: dispatchGetTextLabelCount } = useFetch(getTextLabelCount, null, false);
@@ -85,10 +74,11 @@ export default function HandleTag(props) {
     };
 
     // 关系打标
-    const handleReationsLabel = () => {
-        // 获取当前预料的香气
-        dispatchGetTextLabel({ id: textLabeOne.id, textType }).then(res => {
-            setTextLableOne(res);
+    const handleReationsLabel = (headEntityId, tailEntityId) => {
+        // 获取当前预料的详情
+        setSelectEntity({
+            headEntityId,
+            tailEntityId
         });
     };
 
@@ -109,19 +99,22 @@ export default function HandleTag(props) {
         }
     }, []);
 
-    const getSelectString = useCallback(event => {
-        function getSelectedNode() {
-            if (document.selection) return document.selection.createRange().parentElement();
-            else {
-                var selection = window.getSelection();
-                if (selection.rangeCount > 0) return selection.getRangeAt(0).startContainer.parentNode;
+    const getSelectString = useCallback(
+        event => {
+            function getSelectedNode() {
+                if (document.selection) return document.selection.createRange().parentElement();
+                else {
+                    var selection = window.getSelection();
+                    if (selection.rangeCount > 0) return selection.getRangeAt(0).startContainer.parentNode;
+                }
             }
-        }
-        var selectText = window?.getSelection()?.toString();
-        if (selectText && 'u-handle-area-content' === getSelectedNode().className) {
-            setUserText(selectText);
-        }
-    }, []);
+            var selectText = window?.getSelection()?.toString();
+            if (selectText && textType == 0 && 'u-handle-area-content' === getSelectedNode().className) {
+                setUserText(selectText);
+            }
+        },
+        [textType]
+    );
 
     const formatData = (data = []) => {
         if (!data.length) return <>暂无数据</>;
@@ -201,7 +194,7 @@ export default function HandleTag(props) {
     useEffect(() => {
         if (userText && userKey) {
             dispatchPostTextLabel({ label: userText, keyCode: keycodeRef.current, textDataId: textLabeOne.id, textType }).then(res => {
-                message.success('打标成功！');
+                message.success('实体打标成功！');
                 dispatchGetTextLabel({ id: textLabeOne.id, textType }).then(res => {
                     setTextLableOne(res);
                 });
@@ -211,6 +204,23 @@ export default function HandleTag(props) {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userKey, userText]);
+
+    // 关系打标
+    useEffect(() => {
+        if (selectEntity?.headEntityId && userKey) {
+            dispatchPostTextLabel({ keyCode: keycodeRef.current, textDataId: textLabeOne.id, textType, ...selectEntity }).then(res => {
+                message.success('关系打标成功！');
+                setSelectEntity(null);
+                dispatchGetTextLabel({ id: textLabeOne.id, textType }).then(res => {
+                    setTextLableOne(res);
+                });
+                setUserText('');
+                setUserKey('');
+            });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userKey, selectEntity]);
+
     return (
         <div className="u-handle">
             <section className="header">

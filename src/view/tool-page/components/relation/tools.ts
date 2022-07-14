@@ -61,6 +61,3 @@ export const connect = (div1, div2, color, thickness) => {
 
     //  document.body.innerHTML += htmlLine;
 };
-
-export const relations = [{ a: 'zhangz', b: 'shiyang', relation: '同事' }];
-export const relationsNames = ['zhangz', 'shiyang'];

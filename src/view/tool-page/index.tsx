@@ -186,7 +186,7 @@ export default function ToolPage() {
         >
             <div className="m-tool-page">
                 <Card
-                    className="left"
+                    className="left-panel"
                     title={
                         <>
                             流程状态: <Tag color="#f5222d">{statusInfo}</Tag>
@@ -217,9 +217,9 @@ export default function ToolPage() {
                         ))}
                     </div>
                 </Card>
-                <section className="right">
+                <section className="right-panel">
                     {renderdom(count)}
-                    <div className={`${count.active ? 'active' : 'stop'}`} style={{ height: stop[count.step] }} />
+                    <div className={`${count.active ? 'current' : 'not-allowed'}`} style={{ height: stop[count.step] }} />
                 </section>
             </div>
         </GlobalContext.Provider>

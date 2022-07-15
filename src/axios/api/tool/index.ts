@@ -22,7 +22,7 @@ export const getTextLabelPreOne = (data: any) => get({ url: '/textLabel/takePreO
 export const getTextLabelResult = (data: any) => get({ url: '/textLabel/textData/' + data.id, data }); // 实体打标结果
 export const postTextLabel = (data: any) => post({ url: '/textLabel/?textType=' + data.textType, data }); // 实体打标
 export const getRelationsTextLabelResult = (data: any) => get({ url: `/textLabel/relation/${data.id}?textType=` + data.textType }); // 关系打标结果
-export const delTextLabel = (data: any) => del({ url: '/textLabel/' + data });
+export const delTextLabel = (data: any) => del({ url: '/textLabel/' + data.id + '?textType=' + data.textType });
 
 // 视图
 export const getScatter = (data: any) => get({ url: '/textCluster/scatter', data });

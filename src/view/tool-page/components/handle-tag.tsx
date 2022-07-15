@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useCallback, useRef, useContext } from 'react';
 import { Button, Card, message, Tag, Alert, Progress } from 'antd';
+import { DeleteOutlined } from '@ant-design/icons';
 import { GlobalContext } from '@/context';
 import IconSet from '@/components/icon';
 import useFetch from '@/hooks/common/useFetch';
@@ -83,6 +84,16 @@ export default function HandleTag(props) {
         });
     };
 
+    const handleClose = id => {
+        dispatchDelLabel({ id, textType }).then(res => {
+            message.success('删除成功');
+            // 获取最新打标数据
+            dispatchGetTextLabel({ id: textLabeOne.id, textType }).then(res => {
+                setTextLableOne(res);
+            });
+        });
+    };
+
     const handleUserKeyPress = useCallback(event => {
         const { key, keyCode, ctrlKey, altKey, shiftKey } = event;
         if (keyCode === 32 || (keyCode >= 65 && keyCode <= 90)) {
@@ -131,7 +142,7 @@ export default function HandleTag(props) {
                     <span className="title">{item} :</span>
                     {groupByCategory[item].map(items => {
                         const close = id => {
-                            dispatchDelLabel(id).then(res => {
+                            dispatchDelLabel({ id, textType }).then(res => {
                                 message.success('删除成功');
                                 // 获取最新打标数据
                                 dispatchGetTextLabel({ id: textLabeOne.id, textType }).then(res => {
@@ -281,6 +292,15 @@ export default function HandleTag(props) {
                                                 <span className="title">头实体: </span>
                                                 {item.headEntity}； <span className="title">尾实体: </span>
                                                 {item.tailEntity}；<span className="title">关系: </span> {item.dictName}
+                                                <span
+                                                    style={{ marginLeft: '12px' }}
+                                                    title="删除"
+                                                    onClick={() => {
+                                                        handleClose(item.id);
+                                                    }}
+                                                >
+                                                    <DeleteOutlined />
+                                                </span>
                                             </div>
                                         );
                                     })}

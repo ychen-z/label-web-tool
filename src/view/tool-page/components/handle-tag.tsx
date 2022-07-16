@@ -13,6 +13,7 @@ import {
     getTextLabelResult,
     getRelationsTextLabelResult,
     postTextLabel,
+    postRelationCheckTextLabel,
     delTextLabel,
     getTextLabel, // 获取当前打标详情
     getHistoryRates
@@ -40,6 +41,7 @@ export default function HandleTag(props) {
     const { data: textLabelResult, dispatch: dispatchGetTextLabelResult } = useFetch(getTextLabelResult, null, false); // 获取实体打标结果
     const { data: relationsTextLabelResult, dispatch: dispatchPostRelationsTextLabelResult } = useFetch(getRelationsTextLabelResult, null, false); // 获取关系打标结果
     const { dispatch: dispatchPostTextLabel } = useFetch(postTextLabel, null, false);
+    const { dispatch: dispatchPostRelationCheckTextLabel } = useFetch(postRelationCheckTextLabel, null, false);
     const { dispatch: dispatchDelLabel } = useFetch(delTextLabel, null, false);
 
     // 取一条新数据进行打标
@@ -69,10 +71,17 @@ export default function HandleTag(props) {
 
     // 校对接口
     const check = () => {
-        dispatchPostTextLabel({ textDataId: textLabeOne.id, textType }).then(res => {
-            message.success('校对通过');
-            getOne('NEXT');
-        });
+        if (textType == 1) {
+            dispatchPostRelationCheckTextLabel({ textType, id: textLabeOne.id }).then(res => {
+                message.success('校对通过');
+                getOne('NEXT');
+            });
+        } else {
+            dispatchPostTextLabel({ textDataId: textLabeOne.id, textType }).then(res => {
+                message.success('校对通过');
+                getOne('NEXT');
+            });
+        }
     };
 
     // 关系打标
@@ -270,7 +279,7 @@ export default function HandleTag(props) {
                         >
                             <div className="u-handle-area-content" dangerouslySetInnerHTML={{ __html: textLabeOne?.textMark }} />
 
-                            {textType == 1 && (
+                            {textType == 1 && textLabeOne?.entitys?.length > 1 && (
                                 <Relation
                                     key={entityKey}
                                     entitys={textLabeOne?.entitys}
@@ -283,7 +292,6 @@ export default function HandleTag(props) {
                     <section className="u-handle-view">
                         <Card title={<strong>{textType == 1 ? '关系' : '实体'}打标结果</strong>}>
                             {textType == 0 && <div className="u-handle-view-content">{formatData(textLabelResult?.content)}</div>}
-
                             {textType == 1 && (
                                 <div>
                                     {relationsTextLabelResult?.content?.map(item => {

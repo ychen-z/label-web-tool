@@ -150,7 +150,7 @@ export default function DataPreProcess(props) {
                             </div>
                         </TabPane>
                         <TabPane tab="匹配情况" key="2">
-                            <Table />
+                            <Table textType={textType} />
                         </TabPane>
                     </Tabs>
                 </section>

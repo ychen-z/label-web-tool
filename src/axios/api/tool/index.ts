@@ -8,10 +8,10 @@ export const setClusterAndVector = (data: any) => post({ url: '/textCluster/clus
 export const getPreSample = (data: any) => get({ url: '/textCluster/preSample', data }); // 聚类并向量化
 export const getModelSample = (data: any) => get({ url: '/textCluster/modelSample', data }); // 聚类并向量化
 export const getSampleData = (data: any) => get({ url: '/textData/sampleData', data });
-export const postTrainModel = (data: any) => post({ url: '/textCluster/trainModel', data });
+export const postTrainModel = (data: any) => post({ url: '/textCluster/trainModel?textType=' + data.textType, data });
 export const getCurrentRate = (data: any) => get({ url: '/textCluster/rate', data });
 export const getHistoryRates = (data: any) => get({ url: '/textCluster/rates', data });
-export const postModelMark = (data: any) => post({ url: '/textCluster/modelMark', data });
+export const postModelMark = (data: any) => post({ url: '/textCluster/modelMark?textType=' + data.textType, data });
 
 // 打标
 export const getTextLabelCount = (data: any) => get({ url: '/textLabel/count', data });

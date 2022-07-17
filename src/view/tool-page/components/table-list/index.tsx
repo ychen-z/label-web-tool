@@ -6,10 +6,11 @@ import useFetch from '@/hooks/common/useFetch';
 import './index.less';
 
 function TableList(props) {
-    const { type, shouldUpdate } = props;
+    const { type, shouldUpdate, textType } = props;
     const DEFAULT_PARAM = {
         type: type || 'model', // model—模型抽样 pre—预处理抽样
         page: 1,
+        textType,
         size: 10
     };
 

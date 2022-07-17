@@ -80,7 +80,7 @@ export default function TextRecognition(props) {
                 </Form>
             </section>
             <section className="u-content">
-                <Table type="pre" shouldUpdate={update} />
+                <Table type="pre" shouldUpdate={update} textType={textType} />
             </section>
         </div>
     );

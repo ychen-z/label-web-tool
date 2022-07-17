@@ -15,7 +15,7 @@ import './index.less';
 
 const stop = {
     0: 0,
-    1: 200,
+    1: 128,
     2: '100%',
     3: '100%',
     4: '100%'
@@ -86,7 +86,7 @@ export default function ToolPage() {
             1: <DataPreProcess textType={textType} />,
             2: <ManualNamed textType={textType} />,
             3: <TrainingModel textType={textType} />,
-            4: <TextRecognition />,
+            4: <TextRecognition textType={textType} />,
             5: null
         };
         return element[step];

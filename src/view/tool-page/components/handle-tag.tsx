@@ -33,7 +33,7 @@ export default function HandleTag(props) {
     const [textLabeOne, setTextLableOne] = useState();
     const [selectEntity, setSelectEntity] = useState({});
     const keycodeRef = useRef<string>();
-    const { data: historyRateData = [] } = useFetch(getHistoryRates, null); // 轮次
+    const { data: historyRateData = [] } = useFetch(getHistoryRates, { textType }); // 轮次
     const { data: textLabelCount, dispatch: dispatchGetTextLabelCount } = useFetch(getTextLabelCount, null, false);
     const { dispatch: dispatchPreone, isLoading: preLoading } = useFetch(getTextLabelPreOne, null, false);
     const { dispatch: dispatchGetTextLabel } = useFetch(getTextLabel, null, false);

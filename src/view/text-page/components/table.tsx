@@ -74,7 +74,7 @@ export default function TextTable(props) {
                             </>
                         )}
 
-                        <Export data={row} />
+                        <Export data={row} textType={textType} />
                         <Divider type="vertical" />
                         <Del textType={textType} id={row.id} func={delText} refresh={refresh} />
                     </Space>

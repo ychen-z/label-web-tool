@@ -13,7 +13,7 @@ const { Option } = Select;
 export default function TrainingModel(props) {
     const { textType } = props;
     const { refreshState } = useContext(GlobalContext);
-    const { dispatch: dispatchPostTrainModel, isLoading } = useFetch(postTrainModel, { page: 0, size: Infinity }, false);
+    const { dispatch: dispatchPostTrainModel, isLoading } = useFetch(postTrainModel, { page: 0, textType, size: Infinity }, false);
     const { data: currentRateData, dispatch: dispatchGetCurrentRate } = useFetch(getCurrentRate, { textType });
     const { data: historyRateData, dispatch: dispatchGetHistoryRates } = useFetch(getHistoryRates, { textType });
 
@@ -28,7 +28,7 @@ export default function TrainingModel(props) {
             ?.split(',')
             .map(item => (item = Number(item)));
 
-        dispatchPostTrainModel({ ...values, textIds, dictIds }).then(res => {
+        dispatchPostTrainModel({ ...values, textIds, dictIds, textType }).then(res => {
             message.success('训练成功');
             refreshState();
             dispatchGetCurrentRate({ textType });

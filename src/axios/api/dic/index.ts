@@ -2,6 +2,7 @@ import { get, put, post, del } from '../../http';
 
 // 字典接口
 export const getDicAll = (data: any) => get({ url: '/dict/', data }); // 获取字典列表
+export const getActiveDic = (data: any) => get({ url: '/dict/marking', data }); // 获取正在标注的字典
 export const postDic = (data: any) => post({ url: '/dict/', data }); // 插入字典词条
 export const updateDic = (data: any) => put({ url: '/dict/', data }); // 更新字典
 export const delDic = (data: any) => del({ url: '/dict/' + data.id, data }); // 删除字典

@@ -6,10 +6,6 @@ declare module '*.jpeg';
 
 declare module '*.md';
 
-declare module 'js-md5';
-
-declare module 'lodash';
-
 declare module 'jquery';
 
 declare module 'crypto-js';

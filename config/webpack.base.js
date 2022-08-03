@@ -22,7 +22,7 @@ module.exports = {
     },
     externals: {
         // 将CDN形式加载的包从打包范围中移除（业务层的引入方式不变）
-        lodash: '_'
+        // lodash: '_'
     },
     resolve: {
         modules: ['node_modules', paths.appNodeModules],

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Button } from 'antd';
 import { useParams } from 'react-router-dom';
 import useFetch from '@/hooks/common/useFetch';
-import { getDicAll } from '@/axios';
+import { getDicAll, getActiveDic } from '@/axios';
 import Dictable from './components/table';
 import AddModal from './modal/add';
 import './index.less';
@@ -18,9 +18,10 @@ export default function Dictionary(props) {
 
     const dictType = TYPES[params.type];
     const subTitle = dictType == 1 ? '关系' : '实体';
-
-    const { data, dispatch: getDicTableData, isLoading } = useFetch(getDicAll, { page: 0, size: Infinity, dictType }, false);
+    const { dispatch: getDicTableData, isLoading } = useFetch(getDicAll, { page: 0, size: Infinity, dictType }, false);
+    const { dispatch: getActiveDicTableData } = useFetch(getActiveDic, { page: 0, size: Infinity, dictType }, false);
     const [selectedKeys, setSelectedKeys] = useState([]);
+    const [dataSource, setDataSource] = useState([]);
 
     useEffect(() => {
         if (setDicLength) {
@@ -29,12 +30,21 @@ export default function Dictionary(props) {
     }, [selectedKeys, setDicLength]);
 
     useEffect(() => {
-        let dictIdss = localStorage
-            .getItem('dictIds-' + dictType)
-            ?.split(',')
-            .map(item => (item = Number(item)));
-        getDicTableData({ page: 0, size: Infinity, dictType });
-        setSelectedKeys(dictIdss);
+        if (type === 'tag') {
+            // 预览模式
+            getActiveDicTableData({ dictType }).then(res => {
+                setDataSource(res);
+            });
+        } else {
+            getDicTableData({ page: 0, size: Infinity, dictType }).then(res => {
+                let dictIdss = localStorage
+                    .getItem('dictIds-' + dictType)
+                    ?.split(',')
+                    .map(item => (item = Number(item)));
+                setDataSource(res.content);
+                setSelectedKeys(dictIdss);
+            });
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [dictType]);
     return (
@@ -54,7 +64,7 @@ export default function Dictionary(props) {
                     subTitle={subTitle}
                     dictType={dictType}
                     loading={isLoading}
-                    dataSource={data?.content}
+                    dataSource={dataSource}
                     refresh={getDicTableData}
                     selectedKeys={selectedKeys}
                     setSelectedKeys={setSelectedKeys}

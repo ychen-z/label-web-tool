@@ -7,17 +7,16 @@ interface Props {
     data?: Record<string, any>;
     type: 'ADD' | 'EDIT';
     textType: 0 | 1;
-    subTitle?: string;
     onCancel: Function;
     refresh: Function;
 }
 
 const ADDModal = (props: Props) => {
     const [form] = Form.useForm();
-    const { data, onCancel, refresh, type, textType, subTitle } = props;
+    const { data, onCancel, refresh, type, textType } = props;
     const { dispatch: addFunc } = useFetch(postTextData, null, false); // 新增
     const { dispatch: updateFunc } = useFetch(putTextData, null, false); // 更新
-    const title = (type === 'EDIT' ? '编辑' : '新增') + subTitle + '数据';
+    const title = type === 'EDIT' ? '编辑数据' : '新增数据';
 
     const onSubmit = (values: any) => {
         form.validateFields().then(values => {

@@ -40,7 +40,7 @@ function TableList(props: TemplateTableProps) {
             ellipsis: true,
             render: (text, record) => (
                 <Space>
-                    <ModalAdd isEdit data={record} textType={textType} refresh={refresh}>
+                    <ModalAdd isEdit type="EDIT" data={record} textType={textType} refresh={refresh}>
                         <a>
                             <IconSet type="icon-bianji" /> 编辑
                         </a>

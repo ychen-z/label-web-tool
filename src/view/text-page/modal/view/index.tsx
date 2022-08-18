@@ -63,9 +63,11 @@ function View(props) {
             >
                 <div className="u-table">
                     <div className="u-opera-row">
-                        <ModalAdd refresh={getList} subTitle={subTitle} textType={textType} data={{ textId }}>
-                            <Button type="primary">+ 增加语料数据</Button>
-                        </ModalAdd>
+                        {textType == 0 && (
+                            <ModalAdd refresh={getList} subTitle={subTitle} textType={textType} data={{ textId }}>
+                                <Button type="primary">+ 增加语料数据</Button>
+                            </ModalAdd>
+                        )}
                     </div>
 
                     <Table

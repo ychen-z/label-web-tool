@@ -10,14 +10,14 @@ import { delText } from '@/axios';
 import View from '../modal/view/index';
 
 export default function TextTable(props) {
-    const { loading, refresh, dataSource, read } = props;
+    const { loading, refresh, dataSource, read, subTitle, textType } = props;
     const { dispatchText } = useContext(GlobalContext);
 
     const rowSelection = {
         selectedRowKeys: props.selectedKeys,
         onChange: (selectedRowKeys, selectedRows) => {
+            dispatchText?.(selectedRowKeys);
             props.setSelectedKeys(selectedRowKeys);
-            dispatchText(selectedRowKeys);
         },
         getCheckboxProps: record => ({
             id: record.id + ''
@@ -26,17 +26,17 @@ export default function TextTable(props) {
 
     const columns = [
         {
-            title: '语料名称',
+            title: subTitle + '名称',
             dataIndex: 'textsName',
             key: 'textsName',
             width: 140,
             read: read,
             render: (text, record) => {
-                return read ? text : <View {...record} refresh={refresh} />;
+                return read ? text : <View {...record} subTitle={subTitle} textType={textType} refresh={refresh} />;
             }
         },
         {
-            title: '语料描述',
+            title: subTitle + '描述',
             read: read,
             dataIndex: 'textsDescribe',
             key: 'textsDescribe',
@@ -53,6 +53,7 @@ export default function TextTable(props) {
             title: '语料容量 (字)',
             dataIndex: 'textsContent',
             key: 'textsContent',
+            hidden: textType == 1,
             width: 140,
             render: (text, record) => text || '--'
         },
@@ -62,15 +63,20 @@ export default function TextTable(props) {
             render: (elem: any, row: any, index: number) => {
                 return (
                     <Space>
-                        <UpdateModal data={row} type="EDIT" refresh={refresh}>
-                            <a>
-                                <IconSet type="icon-bianji" /> 编辑
-                            </a>
-                        </UpdateModal>
+                        {textType == 0 && (
+                            <>
+                                <UpdateModal data={row} subTitle={subTitle} textType={textType} type="EDIT" refresh={refresh}>
+                                    <a>
+                                        <IconSet type="icon-bianji" /> 编辑
+                                    </a>
+                                </UpdateModal>
+                                <Divider type="vertical" />
+                            </>
+                        )}
+
+                        <Export data={row} textType={textType} />
                         <Divider type="vertical" />
-                        <Export data={row} />
-                        <Divider type="vertical" />
-                        <Del id={row.id} func={delText} refresh={refresh} />
+                        <Del textType={textType} id={row.id} func={delText} refresh={refresh} />
                     </Space>
                 );
             }
@@ -82,7 +88,7 @@ export default function TextTable(props) {
             rowKey="id"
             rowSelection={rowSelection}
             dataSource={dataSource}
-            columns={columns.filter(item => item.read == read)}
+            columns={columns.filter(item => item.read == read && !item.hidden)}
             pagination={false}
         />
     );

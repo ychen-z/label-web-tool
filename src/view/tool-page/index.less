@@ -1,54 +1,54 @@
 .m-tool-page {
     display: flex;
 
-    .left {
-        background: #FFF;
+    .left-panel {
+        background: #fff;
         border-radius: 4px;
-    }
 
-    .content {
-        position: relative;
-        width: 348px;
-        height: 645px;
-        padding: 0 80px;
-        background-image: url("../../assets/img/flow.png");
-        background-size: cover;
+        .content {
+            position: relative;
+            width: 348px;
+            height: 645px;
+            padding: 0 80px;
+            background-image: url('../../assets/img/flow.png');
+            background-size: cover;
 
-        .item {
-            position: absolute;
-            left: 112px;
-            width: 136px;
-            height: 61px;
-            font-size: 16px;
-            font-weight: bolder;
-            line-height: 61px;
-            text-align: center;
-            cursor: pointer;
-            background: #FFF;
-            border: 1px solid blue;
-            border-radius: 14px;
+            .item {
+                position: absolute;
+                left: 112px;
+                width: 136px;
+                height: 61px;
+                font-size: 16px;
+                font-weight: bolder;
+                line-height: 61px;
+                text-align: center;
+                cursor: pointer;
+                background: #fff;
+                border: 1px solid blue;
+                border-radius: 14px;
 
-            &:hover {
+                &:hover {
+                    color: red;
+                    border: 1px solid red;
+                }
+            }
+
+            .active {
                 color: red;
                 border: 1px solid red;
             }
         }
-
-        .active {
-            color: red;
-            border: 1px solid red;
-        }
     }
 
-    .right {
+    .right-panel {
         position: relative;
         flex: 1;
         padding: 20px;
         margin-left: 24px;
-        background: #FFF;
+        background: #fff;
         border-radius: 4px;
 
-        .stop {
+        .not-allowed {
             position: absolute;
             top: 0;
             left: 0;
@@ -58,7 +58,7 @@
             background: transparent;
         }
 
-        .active {
+        .current {
             display: none;
         }
     }
@@ -143,11 +143,12 @@
             padding: 12px;
             margin: 2px;
             text-align: center;
-            background-color: #F5F5F5;
+            background-color: #f5f5f5;
         }
     }
 }
 
+//预料识别
 .m-text-recognition {
     .header {
         display: flex;

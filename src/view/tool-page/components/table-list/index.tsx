@@ -6,10 +6,11 @@ import useFetch from '@/hooks/common/useFetch';
 import './index.less';
 
 function TableList(props) {
-    const { type, shouldUpdate } = props;
+    const { type, shouldUpdate, textType } = props;
     const DEFAULT_PARAM = {
         type: type || 'model', // model—模型抽样 pre—预处理抽样
         page: 1,
+        textType,
         size: 10
     };
 
@@ -20,11 +21,23 @@ function TableList(props) {
             key: 'text'
         },
         {
-            title: '匹配结果',
+            title: '识别结果',
             dataIndex: 'textMark',
             key: 'textMark',
-            render: text => {
-                return <div dangerouslySetInnerHTML={{ __html: text }} />;
+            render: (text, record) => {
+                return (
+                    <>
+                        <div dangerouslySetInnerHTML={{ __html: text || record.text }} />
+                        {!!record.relations?.length &&
+                            record.relations.map(item => (
+                                <div className="u-desc" style={{ color: item.color }}>
+                                    <span className="title">头实体: </span>
+                                    {item.headEntity}； <span className="title">尾实体: </span>
+                                    {item.tailEntity}；<span className="title">关系: </span> {item.dictName}
+                                </div>
+                            ))}
+                    </>
+                );
             }
         }
     ];

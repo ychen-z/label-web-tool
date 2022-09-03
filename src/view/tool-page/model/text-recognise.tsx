@@ -10,7 +10,8 @@ const { Option } = Select;
  *
  * @returns 语料识别
  */
-export default function TextRecognition() {
+export default function TextRecognition(props) {
+    const { textType } = props;
     const { refreshState } = useContext(GlobalContext);
     const [sliderValue, setSliderValue] = useState(1);
     const [update, setUpdate] = useState(0);
@@ -18,13 +19,16 @@ export default function TextRecognition() {
     const { dispatch: dispatchGetModelSample } = useFetch(getModelSample, null, false);
 
     const onFinish = values => {
-        dispatch({ ...values, dictIds: localStorage.getItem('dictIds')?.split(','), textIds: localStorage.getItem('textIds')?.split(',') }).then(
-            res => {
-                refreshState();
-                setUpdate(update + 1);
-                message.success('操作成功');
-            }
-        );
+        dispatch({
+            ...values,
+            textType,
+            dictIds: localStorage.getItem('dictIds-' + textType)?.split(','),
+            textIds: localStorage.getItem('textIds-' + textType)?.split(',')
+        }).then(res => {
+            refreshState();
+            setUpdate(update + 1);
+            message.success('操作成功');
+        });
     };
 
     /**
@@ -33,7 +37,7 @@ export default function TextRecognition() {
     const onSample = () => {
         console.log('采样');
         if (sliderValue) {
-            dispatchGetModelSample(sliderValue / 100).then(res => {
+            dispatchGetModelSample({ rate: sliderValue / 100, textType }).then(res => {
                 localStorage.setItem('labelState', 'model');
                 refreshState();
                 message.success('采样成功');
@@ -76,7 +80,7 @@ export default function TextRecognition() {
                 </Form>
             </section>
             <section className="u-content">
-                <Table type="pre" shouldUpdate={update} />
+                <Table type="pre" shouldUpdate={update} textType={textType} />
             </section>
         </div>
     );

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Card, Tag, Button, Popconfirm, message } from 'antd';
+import { useParams } from 'react-router-dom';
 import { GlobalContext } from '@/context';
 import useFetch from '@/hooks/common/useFetch';
 import { getToolState, resetCurrent, resetAll } from '@/axios';
@@ -12,48 +13,17 @@ import TrainingModel from './model/training-model'; // 训练
 import DataExport from './components/data-export'; // 导出
 import './index.less';
 
-// 流程操作
-const OP_BTNS = [
-    {
-        name: '加载数据/字典',
-        type: 0,
-        top: 0,
-        stopArea: 0
-    },
-    {
-        name: '数据预处理',
-        type: 1,
-        top: 58 * 2
-    },
-    {
-        name: '手工标注',
-        type: 2,
-        top: 58 * 3 + 59
-    },
-    {
-        name: '训练模型',
-        type: 3,
-        top: 58 * 5 + 60
-    },
-    {
-        name: '语料识别',
-        type: 4,
-        top: 58 * 7 + 61
-    },
-    {
-        name: <DataExport />,
-        type: 5,
-        top: 58 * 9 + 62,
-        status: true // 当前模块不渲染
-    }
-];
-
 const stop = {
     0: 0,
-    1: 200,
+    1: 128,
     2: '100%',
     3: '100%',
     4: '100%'
+};
+
+var TYPES = {
+    rel: 1,
+    dic: 0
 };
 
 const formatStatus = (status, step) => {
@@ -67,20 +37,62 @@ const formatStatus = (status, step) => {
 };
 
 export default function ToolPage() {
+    const params = useParams() as any;
+
+    const textType = TYPES[params.type];
+    const subTitle = textType == 1 ? '关系' : '实体';
+    console.log(subTitle);
+
+    // 流程操作
+    const OP_BTNS = [
+        {
+            name: '加载数据/字典',
+            type: 0,
+            top: 0,
+            stopArea: 0
+        },
+        {
+            name: '数据预处理',
+            type: 1,
+            top: 58 * 2
+        },
+        {
+            name: '手工标注',
+            type: 2,
+            top: 58 * 3 + 59
+        },
+        {
+            name: '训练模型',
+            type: 3,
+            top: 58 * 5 + 60
+        },
+        {
+            name: '语料识别',
+            type: 4,
+            top: 58 * 7 + 61
+        },
+        {
+            name: <DataExport textType={textType} />,
+            type: 5,
+            top: 58 * 9 + 62,
+            status: true // 当前模块不渲染
+        }
+    ];
+
     const renderdom = ({ step }) => {
         const element = {
             '-1': <Loading />,
-            0: <DataImport />,
-            1: <DataPreProcess />,
-            2: <ManualNamed />,
-            3: <TrainingModel />,
-            4: <TextRecognition />,
+            0: <DataImport textType={textType} />,
+            1: <DataPreProcess textType={textType} />,
+            2: <ManualNamed textType={textType} />,
+            3: <TrainingModel textType={textType} />,
+            4: <TextRecognition textType={textType} />,
             5: null
         };
         return element[step];
     };
 
-    const { dispatch } = useFetch(getToolState, null, false);
+    const { dispatch } = useFetch(getToolState, { textType }, false);
     const { dispatch: dispatchResetCurrent } = useFetch(resetCurrent, null, false);
     const { dispatch: dispatchResetAll } = useFetch(resetAll, null, false);
     const [count, setCount] = useState({ step: -1, active: false });
@@ -117,16 +129,24 @@ export default function ToolPage() {
 
     // 存储字典
     const dispatchDict = v => {
-        localStorage.setItem('dictIds', v.join(','));
+        if (!v) {
+            localStorage.removeItem('dictIds-' + textType);
+        } else {
+            localStorage.setItem('dictIds-' + textType, v?.join(','));
+        }
     };
 
     const dispatchText = v => {
-        localStorage.setItem('textIds', v.join(','));
+        if (!v) {
+            localStorage.removeItem('textIds-' + textType);
+        } else {
+            localStorage.setItem('textIds-' + textType, v?.join(','));
+        }
     };
 
     // 重置当前
     const _resetCurrent = v => {
-        dispatchResetCurrent().then(res => {
+        dispatchResetCurrent(textType).then(res => {
             message.success('操作成功');
             refreshState();
         });
@@ -134,7 +154,7 @@ export default function ToolPage() {
 
     // 重置所有
     const _resetAll = v => {
-        dispatchResetAll().then(res => {
+        dispatchResetAll(textType).then(res => {
             message.success('操作成功');
             refreshState();
         });
@@ -143,14 +163,18 @@ export default function ToolPage() {
     useEffect(() => {
         if (dispatch) {
             dispatch().then((res: any) => {
+                if (res.status == 0) {
+                    // 初始化设置
+                    dispatchDict(res.dictIds);
+                    dispatchText(res.textIds);
+                }
+
                 goto(res.status);
                 setStatuInfo(res.msg);
-                dispatchDict(res.dictIds);
-                dispatchText(res.textIds);
             });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [dispatch]);
+    }, [dispatch, textType]);
 
     return (
         <GlobalContext.Provider
@@ -162,7 +186,7 @@ export default function ToolPage() {
         >
             <div className="m-tool-page">
                 <Card
-                    className="left"
+                    className="left-panel"
                     title={
                         <>
                             流程状态: <Tag color="#f5222d">{statusInfo}</Tag>
@@ -193,9 +217,9 @@ export default function ToolPage() {
                         ))}
                     </div>
                 </Card>
-                <section className="right">
+                <section className="right-panel">
                     {renderdom(count)}
-                    <div className={`${count.active ? 'active' : 'stop'}`} style={{ height: stop[count.step] }} />
+                    <div className={`${count.active ? 'current' : 'not-allowed'}`} style={{ height: stop[count.step] }} />
                 </section>
             </div>
         </GlobalContext.Provider>

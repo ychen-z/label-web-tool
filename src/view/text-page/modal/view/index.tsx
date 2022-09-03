@@ -9,11 +9,12 @@ import ModalAdd from '../text-data';
 import { TemplateSearchParams } from './interface';
 import './index.less';
 
-function Index(props) {
-    const { textsName, id: textId, refresh } = props;
+function View(props) {
+    const { textsName, id: textId, refresh, textType, subTitle } = props;
     const DEFAULT_PARAM = {
         page: 1,
-        size: 10
+        size: 10,
+        textType
     };
 
     const [selectedKeys, setSelectedKeys] = useState<number[]>([]);
@@ -51,7 +52,6 @@ function Index(props) {
             <UDrawer
                 callback={refresh}
                 trigger={<a>{textsName}</a>}
-                maskClosable={false}
                 title={'查看' + textsName + '详情'}
                 beforeShow={beforeShow}
                 className="m-template"
@@ -63,15 +63,18 @@ function Index(props) {
             >
                 <div className="u-table">
                     <div className="u-opera-row">
-                        <ModalAdd refresh={getList} data={{ textId }}>
-                            <Button type="primary">+ 增加语料数据</Button>
-                        </ModalAdd>
+                        {textType == 0 && (
+                            <ModalAdd refresh={getList} subTitle={subTitle} textType={textType} data={{ textId }}>
+                                <Button type="primary">+ 增加语料数据</Button>
+                            </ModalAdd>
+                        )}
                     </div>
 
                     <Table
                         loading={isLoading}
                         list={templateList}
                         textId={textId}
+                        textType={textType}
                         setSelectedKeys={setSelectedKeys}
                         selectedKeys={selectedKeys}
                         refresh={getList}
@@ -83,4 +86,4 @@ function Index(props) {
     );
 }
 
-export default Index;
+export default View;

@@ -14,12 +14,13 @@ const service: AxiosInstance = axios.create({
 
 const source: { [key: string]: any } = {}; // cancelToken存储
 let requestList: string[] = []; // 请求url存储
+const SPECIAL = '/api/textCluster/status';
 
 service.interceptors.request.use(
     (config: any) => {
         // header 中增加 32 位签名
         config.url = `/api${config.url}`;
-        if (/get/i.test(config.method)) {
+        if (/get/i.test(config.method) && config.url != SPECIAL) {
             // 检测是否存在该请求
             const requestIndex = requestList.findIndex(el => el === config.url);
             if (requestIndex > -1) {

@@ -13,7 +13,7 @@ const { sourceMapEnabled } = require('./env');
 const webpackConfig = smp.wrap(
     merge(baseWebpackConfig, {
         mode: 'production',
-        devtool: 'source-map',
+        // devtool: 'none',
         module: {
             rules: [
                 {
@@ -113,15 +113,17 @@ const webpackConfig = smp.wrap(
         ],
         optimization: {
             minimize: true,
-            concatenateModules: true,
+            chunkIds: "named",
             splitChunks: {
-                chunks: 'all',
-                minSize: {
-                    javascript: 20000
+                cacheGroups: {
+                    commons: {
+                        test: /[\\/]node_modules[\\/]/,
+                        name: 'vendors',
+                        chunks: 'all'
+                    }
                 }
             },
-
-            minimizer: [new CssMinimizerPlugin()],
+            // minimizer: [new CssMinimizerPlugin()],
 
             // 生成runtime chunk，以达到优化持久化缓存的目的
             // runtimeChunk: true

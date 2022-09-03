@@ -10,7 +10,7 @@ import { TemplateSearchParams } from './interface';
 import './index.less';
 
 function Template(props) {
-    const { dictionaryName, id: dictId, refresh } = props;
+    const { dictionaryName, id: dictId, refresh, dictType, subTitle } = props;
     const DEFAULT_PARAM = {
         page: 1,
         size: 10
@@ -51,7 +51,6 @@ function Template(props) {
             <UDrawer
                 callback={refresh}
                 trigger={<a>{dictionaryName}</a>}
-                maskClosable={false}
                 title={'查看' + dictionaryName + '详情'}
                 beforeShow={beforeShow}
                 className="m-template"
@@ -63,7 +62,7 @@ function Template(props) {
             >
                 <div className="u-table">
                     <div className="u-opera-row">
-                        <ModalAdd refresh={getList} data={{ dictId }}>
+                        <ModalAdd refresh={getList} dictType={dictType} subTitle={subTitle} data={{ dictId }}>
                             <Button type="primary">+ 增加字典</Button>
                         </ModalAdd>
                     </div>
@@ -71,6 +70,8 @@ function Template(props) {
                     <Table
                         loading={isLoading}
                         list={templateList}
+                        dictType={dictType}
+                        subTitle={subTitle}
                         dictId={dictId}
                         setSelectedKeys={setSelectedKeys}
                         selectedKeys={selectedKeys}

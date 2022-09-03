@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Upload, message, Button, Icon } from 'antd';
-import { isEqual } from 'lodash';
+import { isEqual } from '@/utils/tools';
 
 // 默认文件上传样式
 const Content = ({ accept = '' }) => (

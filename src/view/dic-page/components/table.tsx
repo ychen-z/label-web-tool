@@ -10,12 +10,12 @@ import { delDic } from '@/axios';
 import View from '../modal/view/index';
 
 export default function DictTable(props) {
-    const { loading, refresh, dataSource = [], read, model } = props;
+    const { loading, refresh, dataSource = [], read, model, subTitle, dictType } = props;
     const { dispatchDict } = useContext(GlobalContext);
     const rowSelection = {
         selectedRowKeys: props.selectedKeys,
         onChange: (selectedRowKeys, selectedRows) => {
-            dispatchDict(selectedRowKeys);
+            dispatchDict?.(selectedRowKeys);
             props.setSelectedKeys(selectedRowKeys);
         },
         getCheckboxProps: record => ({
@@ -25,17 +25,17 @@ export default function DictTable(props) {
 
     const columns = [
         {
-            title: '字典名称',
+            title: subTitle + '名称',
             dataIndex: 'dictionaryName',
             key: 'dictionaryName',
             width: 140,
             read: read,
             render: (text, record) => {
-                return read ? text : <View {...record} refresh={refresh} />;
+                return read ? text : <View {...record} dictType={dictType} subTitle={subTitle} refresh={refresh} />;
             }
         },
         {
-            title: '字典描述',
+            title: subTitle + '描述',
             dataIndex: 'dictionaryDescribe',
             key: 'dictionaryDescribe',
             read: read,
@@ -64,10 +64,11 @@ export default function DictTable(props) {
             width: 140
         },
         {
-            title: '字典容量 (字)',
+            title: subTitle + '容量 (字)',
             dataIndex: 'dictsContent',
             key: 'dictsContent',
-            width: 140
+            width: 140,
+            hidden: dictType == 1
         },
         {
             title: '操作',
@@ -75,7 +76,7 @@ export default function DictTable(props) {
             render: (text: string, record: any) => {
                 return (
                     <Space>
-                        <Update data={record} type="EDIT" refresh={refresh}>
+                        <Update data={record} dictType={dictType} subTitle={subTitle} type="EDIT" refresh={refresh}>
                             <a>
                                 <IconSet type="icon-bianji" /> 编辑
                             </a>
@@ -83,7 +84,7 @@ export default function DictTable(props) {
                         <Divider type="vertical" />
                         <Export data={record} />
                         <Divider type="vertical" />
-                        <Del id={record.id} func={delDic} refresh={refresh} />
+                        <Del dictType={dictType} id={record.id} func={delDic} refresh={refresh} />
                     </Space>
                 );
             }
@@ -110,7 +111,7 @@ export default function DictTable(props) {
             rowKey="id"
             rowSelection={rowSelection}
             dataSource={dataSource}
-            columns={columns.filter(item => item.read == read)}
+            columns={columns.filter(item => item.read == read && !item.hidden)}
             pagination={false}
         />
     );

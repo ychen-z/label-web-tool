@@ -10,28 +10,29 @@ const { Option } = Select;
  *
  * @returns 模型训练
  */
-export default function TrainingModel() {
+export default function TrainingModel(props) {
+    const { textType } = props;
     const { refreshState } = useContext(GlobalContext);
-    const { dispatch: dispatchPostTrainModel, isLoading } = useFetch(postTrainModel, { page: 0, size: Infinity }, false);
-    const { data: currentRateData, dispatch: dispatchGetCurrentRate } = useFetch(getCurrentRate, null);
-    const { data: historyRateData, dispatch: dispatchGetHistoryRates } = useFetch(getHistoryRates, null);
+    const { dispatch: dispatchPostTrainModel, isLoading } = useFetch(postTrainModel, { page: 0, textType, size: Infinity }, false);
+    const { data: currentRateData, dispatch: dispatchGetCurrentRate } = useFetch(getCurrentRate, { textType });
+    const { data: historyRateData, dispatch: dispatchGetHistoryRates } = useFetch(getHistoryRates, { textType });
 
     const onFinish = values => {
         console.log('训练');
         var dictIds = localStorage
-            .getItem('dictIds')
+            .getItem('dictIds-' + textType)
             ?.split(',')
             .map(item => (item = Number(item)));
         var textIds = localStorage
-            .getItem('textIds')
+            .getItem('textIds-' + textType)
             ?.split(',')
             .map(item => (item = Number(item)));
 
-        dispatchPostTrainModel({ ...values, textIds, dictIds }).then(res => {
+        dispatchPostTrainModel({ ...values, textIds, dictIds, textType }).then(res => {
             message.success('训练成功');
             refreshState();
-            dispatchGetCurrentRate();
-            dispatchGetHistoryRates();
+            dispatchGetCurrentRate({ textType });
+            dispatchGetHistoryRates({ textType });
         });
     };
 

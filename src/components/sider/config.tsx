@@ -2,22 +2,60 @@ import { MenuItemType } from './interface';
 
 const MENU_MAP: MenuItemType[] = [
     {
-        id: 1,
+        id: 10,
         name: '字典管理',
-        link: '/app/dic',
-        icon: 'icon-shujuzidian'
+        link: '/app/mng',
+        icon: 'icon-shujuzidian',
+        children: [
+            {
+                id: 1,
+                name: '实体字典',
+                link: '/app/mng/dic'
+            },
+            {
+                id: 2,
+                name: '关系字典',
+                link: '/app/mng/rel'
+            }
+        ]
     },
     {
-        id: 2,
+        id: 11,
         name: '语料管理',
         link: '/app/text',
-        icon: 'icon-yuliao'
+        icon: 'icon-yuliao',
+        children: [
+            {
+                id: 3,
+                name: '实体语料',
+                link: '/app/text/dic'
+                // icon: 'icon-yuliao'
+            },
+            {
+                id: 4,
+                name: '关系语料',
+                link: '/app/text/rel'
+                // icon: 'icon-yuliao'
+            }
+        ]
     },
     {
-        id: 3,
-        name: '实体抽取',
+        id: 12,
+        name: '抽取工具',
         link: '/app/tool',
-        icon: 'icon-shiti'
+        icon: 'icon-shiti',
+        children: [
+            {
+                id: 5,
+                name: '实体抽取',
+                link: '/app/tool/dic'
+            },
+            {
+                id: 6,
+                name: '关系抽取',
+                link: '/app/tool/rel'
+            }
+        ]
     }
 
     // {

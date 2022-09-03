@@ -6,7 +6,7 @@ function Header(props: any) {
     return (
         <nav className="g-header-nav">
             <div className="g-header-nav-logo" />
-            <div className="g-header-nav-title">实体抽取工具</div>
+            <div className="g-header-nav-title">知识抽取工具</div>
         </nav>
     );
 }

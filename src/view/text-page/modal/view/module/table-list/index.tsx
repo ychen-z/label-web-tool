@@ -9,12 +9,27 @@ import Del from '../../../del';
 import './index.less';
 
 function TableList(props: TemplateTableProps) {
-    const { refresh } = props;
+    const { refresh, textType } = props;
     const columns = [
         {
             title: '语料',
-            dataIndex: 'text',
-            key: 'text'
+            dataIndex: 'textMark',
+            key: 'textMark',
+            render: (text, record) => {
+                return (
+                    <>
+                        <div dangerouslySetInnerHTML={{ __html: text || record.text }} />
+                        {!!record.relations?.length &&
+                            record.relations.map(item => (
+                                <div className="u-desc" style={{ color: item.color }}>
+                                    <span className="title">头实体: </span>
+                                    {item.headEntity}； <span className="title">尾实体: </span>
+                                    {item.tailEntity}；<span className="title">关系: </span> {item.dictName}
+                                </div>
+                            ))}
+                    </>
+                );
+            }
         },
 
         {
@@ -25,13 +40,13 @@ function TableList(props: TemplateTableProps) {
             ellipsis: true,
             render: (text, record) => (
                 <Space>
-                    <ModalAdd isEdit data={record} refresh={refresh}>
+                    <ModalAdd isEdit type="EDIT" data={record} textType={textType} refresh={refresh}>
                         <a>
                             <IconSet type="icon-bianji" /> 编辑
                         </a>
                     </ModalAdd>
                     <Divider type="vertical" />
-                    <Del id={record.id} func={delTextData} refresh={refresh} />
+                    <Del id={record.id} textType={textType} func={delTextData} refresh={refresh} />
                 </Space>
             )
         }
@@ -64,9 +79,9 @@ function TableList(props: TemplateTableProps) {
             <Table
                 loading={props.loading}
                 rowKey="id"
+                columns={columns}
                 rowSelection={rowSelection}
                 dataSource={props.list}
-                columns={columns}
                 onChange={handleTableChange}
                 tableLayout="fixed"
                 pagination={{ current: props.pagination.page, total: props.pagination.total, showQuickJumper: true, showSizeChanger: true }}

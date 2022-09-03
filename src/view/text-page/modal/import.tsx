@@ -7,16 +7,18 @@ import { postText, updateText } from '@/axios';
 interface Props {
     data?: Record<string, any>;
     type: 'ADD' | 'EDIT';
+    textType: 0 | 1;
+    subTitle?: string;
     onCancel: Function;
     refresh: Function;
 }
 
 const ADDModal = (props: Props) => {
     const [form] = Form.useForm();
-    const { data, onCancel, refresh, type } = props;
+    const { data, onCancel, refresh, type, textType, subTitle } = props;
     const { dispatch: updateFunc } = useFetch(updateText, null, false); // 更新
     const { dispatch: addFunc } = useFetch(postText, null, false); // 新增
-    const title = type === 'EDIT' ? '编辑语料' : '新增语料';
+    const title = (type === 'EDIT' ? '编辑' : '新增') + subTitle;
 
     const fetch = (values: any) => {
         form.validateFields().then(values => {
@@ -37,8 +39,12 @@ const ADDModal = (props: Props) => {
 
     return (
         <Modal title={title} visible onOk={fetch} onCancel={onCancel}>
-            <Form form={form} labelCol={{ span: 6 }} wrapperCol={{ span: 16 }} initialValues={data} scrollToFirstError>
+            <Form form={form} labelCol={{ span: 6 }} wrapperCol={{ span: 16 }} initialValues={{ ...data, textType }} scrollToFirstError>
                 <Form.Item hidden label="id" name="id">
+                    <Input disabled />
+                </Form.Item>
+
+                <Form.Item label="textType" name="textType">
                     <Input disabled />
                 </Form.Item>
 

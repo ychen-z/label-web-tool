@@ -42,6 +42,18 @@ function isObject(obj) {
     return typeof obj === 'object' && null !== obj;
 }
 
+export const renderSize = value => {
+    if (null == value || value == '') {
+        return '0 Bytes';
+    }
+    var unitArr = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+    var index = 0;
+    var srcsize = parseFloat(value);
+    index = Math.floor(Math.log(srcsize) / Math.log(1024));
+    var size = (srcsize / Math.pow(1024, index)).toFixed(2);
+    return size + unitArr[index];
+};
+
 export const isEqual = (obj1, obj2) => {
     // 1.判断是不是引用类型，不是引用
     if (!isObject(obj1) || !isObject(obj2)) {

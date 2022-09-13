@@ -1,7 +1,7 @@
 module.exports = {
     printWidth: 150, // 设置prettier单行输出（不折行）的（最大）长度
 
-    tabWidth: 4, // 设置工具每一个水平缩进的空格数
+    tabWidth: 2, // 设置工具每一个水平缩进的空格数
 
     useTabs: false, // 使用tab（制表位）缩进而非空格
 
@@ -29,5 +29,5 @@ module.exports = {
 
     proseWrap: 'preserve', // (v1.8.2+)
 
-    jsxBracketSameLine: false, // jsx闭合标签在同一行
-}
+    jsxBracketSameLine: false // jsx闭合标签在同一行
+};

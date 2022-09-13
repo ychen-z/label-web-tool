@@ -1,40 +1,57 @@
 {
-    "extends": ["stylelint-config-standard", "stylelint-config-recess-order"],
-    "ignoreFiles": ["src/**/*.tsx"],
+    "extends": [
+        "stylelint-config-standard",
+        "stylelint-config-recess-order"
+    ],
+    "ignoreFiles": [
+        "src/**/*.tsx"
+    ],
     "rules": {
-        "indentation": 4,
-
+        "indentation": 2,
         "number-leading-zero": "never",
-
         "string-quotes": "double",
-
         "declaration-block-trailing-semicolon": "always",
-
         "length-zero-no-unit": true,
-
         "declaration-empty-line-before": [
             "never",
-            { "ignore": [ "after-declaration" ] }
+            {
+                "ignore": [
+                    "after-declaration"
+                ]
+            }
         ],
         "rule-empty-line-before": [
             "always",
-            { "except": [ "after-single-line-comment", "first-nested" ] }
+            {
+                "except": [
+                    "after-single-line-comment",
+                    "first-nested"
+                ]
+            }
         ],
-        "block-closing-brace-empty-line-before": [ "never" ],
+        "block-closing-brace-empty-line-before": [
+            "never"
+        ],
         "at-rule-empty-line-before": [
             "always",
-            { "ignore": [ "inside-block", "blockless-after-same-name-blockless" ] }
+            {
+                "ignore": [
+                    "inside-block",
+                    "blockless-after-same-name-blockless"
+                ]
+            }
         ],
         "selector-pseudo-class-no-unknown": [
             true,
             {
-                "ignorePseudoClasses": ["global"]
+                "ignorePseudoClasses": [
+                    "global"
+                ]
             }
         ],
         "max-empty-lines": 1,
         "no-eol-whitespace": true,
         "no-missing-end-of-source-newline": true,
-
         "unit-case": "lower",
         "color-hex-case": "upper",
         "value-keyword-case": "lower",
@@ -45,7 +62,6 @@
         "selector-pseudo-element-case": "lower",
         "selector-type-case": "lower",
         "media-feature-name-case": "lower",
-
         "block-opening-brace-space-before": "always",
         "comment-whitespace-inside": "always",
         "declaration-colon-space-after": "always",

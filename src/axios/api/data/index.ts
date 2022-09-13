@@ -4,12 +4,9 @@ import { get, put, post, del } from '../../http';
 export const getFileData = (data: any) => get({ url: '/fileInfo/', data }); // 获取文件接口
 export const getFileById = (data: any) => get({ url: '/fileInfo/' + data }); // 获取文件详情
 export const delFile = (data: any) => del({ url: '/fileInfo/' + data }); // 删除文件
-export const fileUpload = (data: any) =>
-  post({
-    url: '/fileInfo/upload',
-    data
-  }); // 文件上传
+export const fileUpload = (data: any) => post({ url: '/fileInfo/upload', data }); // 文件上传
 export const updateFileName = (data: any) => put({ url: '/fileInfo/updateName', data }); // 文件更新
+export const updateFileContent = (data: any) => put({ url: '/fileInfo/updateContent', data }); // 文件内容更新
 
 // export const getActiveDic = (data: any) => get({ url: '/dict/marking', data }); // 获取正在标注的字典
 // export const postDic = (data: any) => post({ url: '/dict/', data }); // 插入字典词条

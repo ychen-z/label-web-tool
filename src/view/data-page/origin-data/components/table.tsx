@@ -6,6 +6,7 @@ import { delFile } from '@/axios';
 import { renderSize } from '@/utils/tools';
 import UpdateModal from '../modal/add';
 import Del from '../modal/del';
+import RevertDrawer from '../modal/revert-drawer';
 
 const TEXT = {
   NO_CONVERT: { status: 'warning', name: '未转换' },
@@ -70,7 +71,7 @@ export default function OriginTable(props) {
               </a>
             </UpdateModal>
             <Divider type="vertical" />
-            <a>转换</a>
+            <RevertDrawer id={row.id} />
             <Divider type="vertical" />
             <Del id={row.id} func={delFile} refresh={refresh} />
           </Space>

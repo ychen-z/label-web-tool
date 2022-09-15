@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Input, Space, Button, message } from 'antd';
+import IconSet from '@/components/icon';
 import Drawer from '@/components/common/u-drawer';
 import { getFileById, updateFileContent } from '@/axios';
 import './index.less';
@@ -43,7 +44,11 @@ const RevertDrawer = props => {
         </Button>
       }
       width="80vw"
-      trigger={<a>转换</a>}
+      trigger={
+        <a>
+          <IconSet type="icon-fenzu" /> 转换
+        </a>
+      }
     >
       <div className="content">
         <div className="item">

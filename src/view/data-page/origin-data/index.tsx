@@ -2,19 +2,15 @@ import React, { useEffect } from 'react';
 import { Button } from 'antd';
 import useFetch from '@/hooks/common/useFetch';
 import { getFileData } from '@/axios';
-import OriginDataTable from '../components/table';
-import AddModal from './modal/add';
+import Table from '../components/origin-table';
+import AddModal from '../modal/add';
 import './index.less';
 
 export default function OriginData(props) {
-  const { data, dispatch: getOriginData, isLoading: loading } = useFetch(
-    getFileData,
-    { page: 0, size: Infinity, fileType: 'ORIGINAL_CORPUS' },
-    false
-  );
+  const { data, dispatch, isLoading: loading } = useFetch(getFileData, { page: 0, size: Infinity, fileType: 'ORIGINAL_CORPUS' }, false);
 
   useEffect(() => {
-    getOriginData({ page: 0, size: Infinity, fileType: 'ORIGINAL_CORPUS' });
+    dispatch({ page: 0, size: Infinity, fileType: 'ORIGINAL_CORPUS' });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -22,12 +18,12 @@ export default function OriginData(props) {
     <div className="origin-data-page">
       <section className="m-list">
         <div className="u-operation">
-          <AddModal type="ADD" refresh={getOriginData}>
+          <AddModal type="ADD" refresh={dispatch}>
             <Button type="primary">+ 文件导入</Button>
           </AddModal>
         </div>
 
-        <OriginDataTable loading={loading} dataSource={data?.content} refresh={getOriginData} />
+        <Table loading={loading} dataSource={data?.content} refresh={dispatch} />
       </section>
     </div>
   );

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Button } from 'antd';
 import useFetch from '@/hooks/common/useFetch';
 import { getFileData } from '@/axios';
-import OriginDataTable from './components/table';
+import OriginDataTable from '../components/table';
 import AddModal from './modal/add';
 import './index.less';
 

@@ -39,17 +39,23 @@ const ADDModal = (props: Props) => {
   return (
     <Modal title={title} visible onOk={fetch} onCancel={onCancel}>
       <Form form={form} labelCol={{ span: 6 }} wrapperCol={{ span: 16 }} initialValues={{ ...data, fileType }} scrollToFirstError>
+        {['ENTITY_CORPUS', 'ENTITY_CORPUS'].includes(fileType) && (
+          <Form.Item label="模板地址">
+            <a>这是一个模板地址</a>
+          </Form.Item>
+        )}
+
         <Form.Item hidden label="id" name="id">
           <Input disabled />
         </Form.Item>
 
-        <Form.Item label="fileType" name="fileType">
+        <Form.Item hidden label="fileType" name="fileType">
           <Input disabled />
         </Form.Item>
 
         {type == 'EDIT' && (
           <Form.Item label="文件名称" name="fileName">
-            <Input.TextArea placeholder="请输入" maxLength={2000} />
+            <Input placeholder="请输入" maxLength={200} />
           </Form.Item>
         )}
 

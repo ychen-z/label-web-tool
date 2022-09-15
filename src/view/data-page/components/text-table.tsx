@@ -8,7 +8,7 @@ import Del from '../modal/del';
 import ViewModal from '../modal/view-modal';
 
 export default function OriginTable(props) {
-  const { loading, refresh, dataSource } = props;
+  const { loading, refresh, dataSource, fileType } = props;
 
   // const rowSelection = {
   //   selectedRowKeys: props.selectedKeys,
@@ -28,6 +28,7 @@ export default function OriginTable(props) {
       key: 'fileName',
       width: 240
     },
+
     {
       title: '文件类型',
       dataIndex: 'fileExt',
@@ -61,5 +62,21 @@ export default function OriginTable(props) {
       }
     }
   ];
+
+  // 实体类型
+  fileType === 'ENTITY_CORPUS' &&
+    columns.splice(1, 0, {
+      title: '实体类型',
+      dataIndex: 'entity',
+      key: 'entity'
+    });
+
+  // 关系类型
+  fileType === 'RELATION_CORPUS' &&
+    columns.splice(1, 0, {
+      title: '关系类型',
+      dataIndex: 'relation',
+      key: 'relation'
+    });
   return <Table loading={loading} rowKey="id" dataSource={dataSource} columns={columns} pagination={false} />;
 }

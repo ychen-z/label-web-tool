@@ -11,7 +11,6 @@ export default (props: IModalProps) => {
 
   const onClick = async () => {
     form && form.resetFields(); // 重置表单
-
     if (typeof beforeShow === 'boolean' && !beforeShow) return;
 
     /**

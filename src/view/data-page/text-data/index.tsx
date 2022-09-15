@@ -4,6 +4,7 @@ import useFetch from '@/hooks/common/useFetch';
 import { getFileData } from '@/axios';
 import Table from '../components/text-table';
 import AddModal from '../modal/add';
+import RgCheckInModal from '../modal/rg-check-in-modal';
 import './index.less';
 
 export default function TextData(props) {
@@ -21,6 +22,8 @@ export default function TextData(props) {
           <AddModal type="ADD" refresh={dispatch}>
             <Button type="primary">+ 文本数据导入</Button>
           </AddModal>
+
+          <RgCheckInModal refresh={dispatch} />
         </div>
 
         <Table loading={loading} dataSource={data?.content} refresh={dispatch} />

@@ -5,6 +5,7 @@ import { delFile } from '@/axios';
 import { renderSize } from '@/utils/tools';
 import UpdateModal from '../modal/add';
 import Del from '../modal/del';
+import ViewModal from '../modal/view-modal';
 
 export default function OriginTable(props) {
   const { loading, refresh, dataSource } = props;
@@ -45,13 +46,9 @@ export default function OriginTable(props) {
       render: (elem: any, row: any, index: number) => {
         return (
           <Space>
-            <UpdateModal data={row} type="EDIT" refresh={refresh}>
-              <a>
-                <IconSet type="icon-yulan-dakai" /> 查看
-              </a>
-            </UpdateModal>
+            <ViewModal id={row.id} />
             <Divider type="vertical" />
-            <UpdateModal data={row} type="EDIT" refresh={refresh}>
+            <UpdateModal fileType="TXT_CORPUS" data={row} type="EDIT" refresh={refresh}>
               <a>
                 <IconSet type="icon-bianji" /> 编辑
               </a>

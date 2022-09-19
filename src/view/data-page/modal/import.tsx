@@ -39,9 +39,11 @@ const ADDModal = (props: Props) => {
   return (
     <Modal title={title} visible onOk={fetch} onCancel={onCancel}>
       <Form form={form} labelCol={{ span: 6 }} wrapperCol={{ span: 16 }} initialValues={{ ...data, fileType }} scrollToFirstError>
-        {['ENTITY_CORPUS', 'ENTITY_CORPUS'].includes(fileType) && (
-          <Form.Item label="模板地址">
-            <a>这是一个模板地址</a>
+        {['ENTITY_CORPUS', 'RELATION_CORPUS'].includes(fileType) && (
+          <Form.Item label="模板下载">
+            <a href="/files/%E4%B8%89%E5%85%83%E7%BB%84%E6%A8%A1%E6%9D%BF.xlsx" target="_blank">
+              结构化数据模板
+            </a>
           </Form.Item>
         )}
 

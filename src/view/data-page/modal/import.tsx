@@ -61,7 +61,7 @@ const ADDModal = (props: Props) => {
 
         {type == 'ADD' && (
           <Form.Item label="文件" name="filePath" valuePropName="fileList">
-            <Upload action="/mock/test/api/fileInfo/upload" maxCount="1" accept="xls,xlsx,txt,pdf" />
+            <Upload action="/api/fileInfo/upload" maxCount="1" accept="xls,xlsx,txt,pdf" />
           </Form.Item>
         )}
       </Form>

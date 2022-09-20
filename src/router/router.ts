@@ -65,9 +65,22 @@ export const urlObj = {
     link: '/app/data/triple',
     component: load(() => import('@/view/data-page/triple-data')),
     needAuth: false
+  },
+  DeviceData: {
+    name: '设备树数据',
+    link: '/app/data/device',
+    component: load(() => import('@/view/data-page/device-data')),
+    needAuth: false
+  },
+
+  GraphPage: {
+    name: '图谱构建',
+    link: '/app/graph',
+    component: load(() => import('@/view/graph-page/index')),
+    needAuth: false
   }
 };
 
-const { mng, Text, Tool, label, relationHandle, OriginData, TextData, EntityData, TripleData } = urlObj;
+const { mng, Text, Tool, label, relationHandle, OriginData, TextData, EntityData, TripleData, DeviceData, GraphPage } = urlObj;
 
-export const routes = [mng, Text, Tool, label, relationHandle, OriginData, TextData, EntityData, TripleData];
+export const routes = [mng, Text, Tool, label, relationHandle, OriginData, TextData, EntityData, TripleData, DeviceData, GraphPage];

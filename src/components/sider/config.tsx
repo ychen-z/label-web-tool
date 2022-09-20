@@ -82,8 +82,19 @@ const MENU_MAP: MenuItemType[] = [
         id: 53,
         name: '三元组数据',
         link: '/app/data/triple'
+      },
+      {
+        id: 54,
+        name: '设备树',
+        link: '/app/data/device'
       }
     ]
+  },
+  {
+    id: 6,
+    name: '图谱构建',
+    link: '/app/graph',
+    icon: 'icon-shiti'
   }
 ];
 

@@ -9,6 +9,8 @@ export const updateFileName = (data: any) => put({ url: '/fileInfo/updateName', 
 export const updateFileContent = (data: any) => put({ url: '/fileInfo/updateContent', data }); // 文件内容更新
 export const manualImport = (data: any) => post({ url: '/fileInfo/manualImport', data }); // 人工导入
 
+export const getTripleTreeData = (data: any) => get({ url: '/triple/tree', data }); // 树
+
 // export const getActiveDic = (data: any) => get({ url: '/dict/marking', data }); // 获取正在标注的字典
 // export const postDic = (data: any) => post({ url: '/dict/', data }); // 插入字典词条
 // export const updateDic = (data: any) => put({ url: '/dict/', data }); // 更新字典

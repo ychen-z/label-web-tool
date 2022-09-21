@@ -11,7 +11,7 @@ export default function TripleData(props) {
   const { data, dispatch, isLoading: loading } = useFetch(getFileData, { page: 0, size: Infinity, fileType: 'TXT_CORPUS' }, false);
 
   useEffect(() => {
-    dispatch({ page: 0, size: Infinity, fileType: 'RELATION_CORPUS' });
+    dispatch({ page: 0, size: Infinity, fileType: 'EQUIPMENT' });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -19,14 +19,14 @@ export default function TripleData(props) {
     <div className="origin-data-page">
       <section className="m-list">
         <div className="u-operation">
-          <AddModal type="ADD" fileType="RELATION_CORPUS" refresh={dispatch}>
+          <AddModal type="ADD" fileType="EQUIPMENT" refresh={dispatch}>
             <Button type="primary">+ 模板导入</Button>
           </AddModal>
 
-          <RgCheckInModal refresh={dispatch} fileType="RELATION_CORPUS" />
+          <RgCheckInModal refresh={dispatch} fileType="EQUIPMENT" />
         </div>
 
-        <Table fileType="RELATION_CORPUS" loading={loading} dataSource={data?.content} refresh={dispatch} />
+        <Table fileType="EQUIPMENT" loading={loading} dataSource={data?.content} refresh={dispatch} />
       </section>
     </div>
   );

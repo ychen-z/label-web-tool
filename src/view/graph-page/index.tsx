@@ -1,7 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-// import the core library.
-import ReactEChartsCore from 'echarts-for-react/lib/core';
-
 // then import echarts modules those you have used manually.
 import * as echarts from 'echarts';
 // import 'echarts/lib/chart/bar';
@@ -87,9 +84,6 @@ export default function Graph() {
               ...item,
               id: item.id + '',
               category: categories.findIndex(_ => _ == item.entityType)
-              // value: index + 10,
-              // x: index + 10,
-              // y: index + 10
             };
           }),
           links: graph.links.map(item => {
@@ -131,8 +125,6 @@ export default function Graph() {
       setData(res);
     });
   }, []);
-
-  // const onChartReadyCallback = () => {};
 
   return (
     <div

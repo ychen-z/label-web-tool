@@ -85,15 +85,21 @@ const MENU_MAP: MenuItemType[] = [
       },
       {
         id: 54,
-        name: '设备树',
+        name: '设备树数据',
         link: '/app/data/device'
       }
     ]
   },
   {
     id: 6,
-    name: '图谱构建',
+    name: '图谱可视化',
     link: '/app/graph',
+    icon: 'icon-shiti'
+  },
+  {
+    id: 7,
+    name: '高级应用',
+    link: '/app/high',
     icon: 'icon-shiti'
   }
 ];

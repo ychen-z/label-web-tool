@@ -42,12 +42,14 @@ export const urlObj = {
     component: load(() => import('@/view/relation')),
     needAuth: false
   },
+
   OriginData: {
     name: '原始数据',
     link: '/app/data/origin',
     component: load(() => import('@/view/data-page/origin-data')),
     needAuth: false
   },
+
   TextData: {
     name: '文本数据',
     link: '/app/data/text',
@@ -74,13 +76,20 @@ export const urlObj = {
   },
 
   GraphPage: {
-    name: '图谱构建',
+    name: '图谱可视化',
     link: '/app/graph',
     component: load(() => import('@/view/graph-page/index')),
+    needAuth: false
+  },
+
+  HighGraphPage: {
+    name: '图谱高级应用',
+    link: '/app/high',
+    component: load(() => import('@/view/high-graph-page/index')),
     needAuth: false
   }
 };
 
-const { mng, Text, Tool, label, relationHandle, OriginData, TextData, EntityData, TripleData, DeviceData, GraphPage } = urlObj;
+const { mng, Text, Tool, label, relationHandle, OriginData, TextData, EntityData, TripleData, DeviceData, GraphPage, HighGraphPage } = urlObj;
 
-export const routes = [mng, Text, Tool, label, relationHandle, OriginData, TextData, EntityData, TripleData, DeviceData, GraphPage];
+export const routes = [mng, Text, Tool, label, relationHandle, OriginData, TextData, EntityData, TripleData, DeviceData, GraphPage, HighGraphPage];

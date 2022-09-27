@@ -33,7 +33,7 @@ const RevertDrawer = props => {
   return (
     <Drawer
       className="m-revert-drawer"
-      title="文件转换"
+      title="文字提取"
       visible={visible}
       maskClosable
       onClose={onClose}
@@ -46,7 +46,7 @@ const RevertDrawer = props => {
       width="80vw"
       trigger={
         <a>
-          <IconSet type="icon-fenzu" /> 转换
+          <IconSet type="icon-fenzu" /> 文字提取
         </a>
       }
     >

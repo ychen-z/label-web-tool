@@ -28,7 +28,7 @@ const ADDModal = (props: Props) => {
             onCancel && onCancel();
             refresh && refresh();
           })
-        : addFunc(values).then(res => {
+        : addFunc({ ...values, id: values.filePath }).then(res => {
             message.success('操作成功');
             onCancel && onCancel();
             refresh && refresh();
@@ -42,7 +42,7 @@ const ADDModal = (props: Props) => {
         {['ENTITY_CORPUS', 'RELATION_CORPUS'].includes(fileType) && (
           <Form.Item label="模板下载">
             <a href="/files/%E4%B8%89%E5%85%83%E7%BB%84%E6%A8%A1%E6%9D%BF.xlsx" target="_blank">
-              结构化数据模板
+              结构化数据模板1
             </a>
           </Form.Item>
         )}
@@ -63,7 +63,7 @@ const ADDModal = (props: Props) => {
 
         {type == 'ADD' && (
           <Form.Item label="文件" name="filePath" valuePropName="fileList">
-            <Upload action="/api/fileInfo/upload" maxCount="1" accept="xls,xlsx,txt,pdf" />
+            <Upload action="/mock/test/api/fileInfo/upload" maxCount="1" accept="doc,docx,txt,pdf,png,jpg,jpeg" />
           </Form.Item>
         )}
       </Form>

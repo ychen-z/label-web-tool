@@ -63,7 +63,7 @@ export const urlObj = {
     needAuth: false
   },
   TripleData: {
-    name: '三元组数据',
+    name: '关系数据',
     link: '/app/data/triple',
     component: load(() => import('@/view/data-page/triple-data')),
     needAuth: false

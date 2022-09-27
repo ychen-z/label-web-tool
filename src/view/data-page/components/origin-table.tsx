@@ -61,8 +61,9 @@ export default function OriginTable(props) {
     },
     {
       title: '操作',
-      width: 220,
+      width: 300,
       render: (elem: any, row: any, index: number) => {
+        const { status } = elem;
         return (
           <Space>
             <UpdateModal data={row} type="EDIT" refresh={refresh}>
@@ -70,8 +71,13 @@ export default function OriginTable(props) {
                 <IconSet type="icon-bianji" /> 编辑
               </a>
             </UpdateModal>
-            <Divider type="vertical" />
-            <RevertDrawer id={row.id} />
+
+            {status === 'CONVERT_SUCCESS' && (
+              <>
+                <Divider type="vertical" />
+                <RevertDrawer id={row.id} />
+              </>
+            )}
             <Divider type="vertical" />
             <Del id={row.id} func={delFile} refresh={refresh} />
           </Space>

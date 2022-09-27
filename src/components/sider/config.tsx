@@ -80,7 +80,7 @@ const MENU_MAP: MenuItemType[] = [
       },
       {
         id: 53,
-        name: '三元组数据',
+        name: '关系数据',
         link: '/app/data/triple'
       },
       {

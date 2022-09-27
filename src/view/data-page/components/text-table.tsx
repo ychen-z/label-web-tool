@@ -25,15 +25,13 @@ export default function OriginTable(props) {
     {
       title: '文件名称',
       dataIndex: 'fileName',
-      key: 'fileName',
-      width: 240
+      key: 'fileName'
     },
-
-    {
-      title: '文件类型',
-      dataIndex: 'fileExt',
-      key: 'fileExt'
-    },
+    // {
+    //   title: '文件类型',
+    //   dataIndex: 'fileExt',
+    //   key: 'fileExt'
+    // },
     {
       title: '文件大小',
       dataIndex: 'fileSize',
@@ -43,7 +41,7 @@ export default function OriginTable(props) {
     },
     {
       title: '操作',
-      width: 300,
+      width: 280,
       render: (elem: any, row: any, index: number) => {
         return (
           <Space>
@@ -64,19 +62,19 @@ export default function OriginTable(props) {
   ];
 
   // 实体类型
-  fileType === 'ENTITY_CORPUS' &&
-    columns.splice(1, 0, {
-      title: '实体类型',
-      dataIndex: 'entity',
-      key: 'entity'
-    });
+  // fileType === 'ENTITY_CORPUS' &&
+  //   columns.splice(1, 0, {
+  //     title: '实体类型',
+  //     dataIndex: 'entity',
+  //     key: 'entity'
+  //   });
 
   // 关系类型
-  fileType === 'RELATION_CORPUS' &&
-    columns.splice(1, 0, {
-      title: '关系类型',
-      dataIndex: 'relation',
-      key: 'relation'
-    });
+  // fileType === 'RELATION_CORPUS' &&
+  //   columns.splice(1, 0, {
+  //     title: '关系类型',
+  //     dataIndex: 'relation',
+  //     key: 'relation'
+  //   });
   return <Table loading={loading} rowKey="id" dataSource={dataSource} columns={columns} pagination={false} />;
 }

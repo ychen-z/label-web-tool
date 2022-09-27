@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Button } from 'antd';
 import useFetch from '@/hooks/common/useFetch';
 import { getFileData } from '@/axios';
-import Table from '../components/text-table';
+import Table from '../components/common-table';
 import AddModal from '../modal/add';
 import RgCheckInModal from '../modal/rg-check-in-modal';
 import './index.less';

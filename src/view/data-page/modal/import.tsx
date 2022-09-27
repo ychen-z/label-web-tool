@@ -12,6 +12,11 @@ interface Props {
   refresh: Function;
 }
 
+const URL = {
+  ENTITY_CORPUS: '/files/%E4%B8%89%E5%85%83%E7%BB%84%E6%A8%A1%E6%9D%BF.xlsx',
+  RELATION_CORPUS: '/files/%E4%B8%89%E5%85%83%E7%BB%84%E6%A8%A1%E6%9D%BF.xlsx'
+};
+
 const ADDModal = (props: Props) => {
   const [form] = Form.useForm();
   const { data, onCancel, refresh, type, fileType = 'ORIGINAL_CORPUS' } = props;
@@ -39,10 +44,10 @@ const ADDModal = (props: Props) => {
   return (
     <Modal title={title} visible onOk={fetch} onCancel={onCancel}>
       <Form form={form} labelCol={{ span: 6 }} wrapperCol={{ span: 16 }} initialValues={{ ...data, fileType }} scrollToFirstError>
-        {['ENTITY_CORPUS', 'RELATION_CORPUS'].includes(fileType) && (
+        {type == 'ADD' && ['ENTITY_CORPUS', 'RELATION_CORPUS'].includes(fileType) && (
           <Form.Item label="模板下载">
-            <a href="/files/%E4%B8%89%E5%85%83%E7%BB%84%E6%A8%A1%E6%9D%BF.xlsx" target="_blank">
-              结构化数据模板1
+            <a href={URL[fileType]} target="_blank">
+              结构化数据模板
             </a>
           </Form.Item>
         )}
@@ -63,7 +68,7 @@ const ADDModal = (props: Props) => {
 
         {type == 'ADD' && (
           <Form.Item label="文件" name="filePath" valuePropName="fileList">
-            <Upload action="/mock/test/api/fileInfo/upload" maxCount="1" accept="doc,docx,txt,pdf,png,jpg,jpeg" />
+            <Upload action="/api/fileInfo/upload" maxCount="1" accept="doc,docx,txt,pdf,png,jpg,jpeg" />
           </Form.Item>
         )}
       </Form>

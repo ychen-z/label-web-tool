@@ -36,6 +36,7 @@ export default function OriginTable(props) {
           <Space>
             <ViewModal id={row.id} type={type} />
             <Divider type="vertical" />
+
             <UpdateModal fileType={fileType} data={row} type="EDIT" refresh={refresh}>
               <a>
                 <IconSet type="icon-bianji" /> 编辑

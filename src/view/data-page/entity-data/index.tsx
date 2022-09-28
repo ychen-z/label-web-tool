@@ -4,11 +4,10 @@ import useFetch from '@/hooks/common/useFetch';
 import { getFileData } from '@/axios';
 import Table from '../components/common-table';
 import AddModal from '../modal/add';
-import RgCheckInModal from '../modal/rg-check-in-modal';
 import './index.less';
 
 export default function ToolData(props) {
-  const { data, dispatch, isLoading: loading } = useFetch(getFileData, { page: 0, size: Infinity, fileType: 'TXT_CORPUS' }, false);
+  const { data, dispatch, isLoading: loading } = useFetch(getFileData, { page: 0, size: Infinity, fileType: 'ENTITY_CORPUS' }, false);
 
   useEffect(() => {
     dispatch({ page: 0, size: Infinity, fileType: 'ENTITY_CORPUS' });

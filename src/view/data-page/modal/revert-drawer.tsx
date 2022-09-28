@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { Input, Space, Button, message } from 'antd';
+import { Input, Button, message } from 'antd';
 import IconSet from '@/components/icon';
 import Drawer from '@/components/common/u-drawer';
 import { getFileById, updateFileContent } from '@/axios';
 import './index.less';
 
 const RevertDrawer = props => {
-  const { id } = props;
+  const { id, title, trigger } = props;
   const [url, setUrl] = useState(null);
   const [visible, setVisible] = useState(false);
   const [content, setContent] = useState('');
@@ -33,7 +33,7 @@ const RevertDrawer = props => {
   return (
     <Drawer
       className="m-revert-drawer"
-      title="文字提取"
+      title={title || '文字提取'}
       visible={visible}
       maskClosable
       onClose={onClose}
@@ -45,9 +45,11 @@ const RevertDrawer = props => {
       }
       width="80vw"
       trigger={
-        <a>
-          <IconSet type="icon-fenzu" /> 文字提取
-        </a>
+        trigger || (
+          <a>
+            <IconSet type="icon-fenzu" /> 文字提取
+          </a>
+        )
       }
     >
       <div className="content">

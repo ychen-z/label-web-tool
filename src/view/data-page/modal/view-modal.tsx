@@ -27,8 +27,7 @@ export default function ViewModal(props) {
       beforeShow={beforeShow}
       render={onCancel => {
         return (
-          <div>
-            {type === 'txt' && <div style={{ maxHeight: '480px', overflowY: 'scroll', whiteSpace: 'pre-wrap' }}>{content}</div>}
+          <>
             <div style={{ maxHeight: '480px', overflowY: 'scroll', whiteSpace: 'pre-wrap' }}>
               {type === 'txt' && content}
               {type === 'entity' && list.map(item => <p key={item.id} dangerouslySetInnerHTML={{ __html: item.textMark }} />)}
@@ -50,7 +49,7 @@ export default function ViewModal(props) {
                 我知道了
               </Button>
             </div>
-          </div>
+          </>
         );
       }}
       triggerDom={

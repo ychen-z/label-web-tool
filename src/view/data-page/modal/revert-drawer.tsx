@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Input, Space, Button, message } from 'antd';
 import IconSet from '@/components/icon';
 import Drawer from '@/components/common/u-drawer';

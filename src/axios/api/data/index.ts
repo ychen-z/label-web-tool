@@ -3,6 +3,7 @@ import { get, put, post, del } from '../../http';
 // 字典接口
 export const getFileData = (data: any) => get({ url: '/fileInfo/', data }); // 获取文件接口
 export const getFileById = (data: any) => get({ url: '/fileInfo/' + data }); // 获取文件详情
+export const getFileContent = (data: any) => get({ url: '/fileInfo/' + data.type + '/' + data.id }); // 获取文件详情
 export const delFile = (data: any) => del({ url: '/fileInfo/' + data }); // 删除文件
 export const fileUpload = (data: any) => post({ url: '/fileInfo/add', data }); // 文件上传
 export const tripleAdd = (data: any) => post({ url: '/triple/add', data }); // 导入三元组

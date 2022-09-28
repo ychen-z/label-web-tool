@@ -26,7 +26,7 @@ export default function ToolData(props) {
           {/* <RgCheckInModal refresh={dispatch} fileType="ENTITY_CORPUS" /> */}
         </div>
 
-        <Table fileType="ENTITY_CORPUS" loading={loading} dataSource={data?.content} refresh={dispatch} />
+        <Table fileType="ENTITY_CORPUS" type="entity" loading={loading} dataSource={data?.content} refresh={dispatch} />
       </section>
     </div>
   );

@@ -8,18 +8,7 @@ import Del from '../modal/del';
 import ViewModal from '../modal/view-modal';
 
 export default function OriginTable(props) {
-  const { loading, refresh, dataSource, fileType } = props;
-
-  // const rowSelection = {
-  //   selectedRowKeys: props.selectedKeys,
-  //   onChange: (selectedRowKeys, selectedRows) => {
-  //     dispatchText?.(selectedRowKeys);
-  //     props.setSelectedKeys(selectedRowKeys);
-  //   },
-  //   getCheckboxProps: record => ({
-  //     id: record.id + ''
-  //   })
-  // };
+  const { loading, refresh, dataSource, fileType, type } = props;
 
   const columns = [
     {
@@ -45,7 +34,7 @@ export default function OriginTable(props) {
       render: (elem: any, row: any, index: number) => {
         return (
           <Space>
-            <ViewModal id={row.id} />
+            <ViewModal id={row.id} type={type} />
             <Divider type="vertical" />
             <UpdateModal fileType={fileType} data={row} type="EDIT" refresh={refresh}>
               <a>

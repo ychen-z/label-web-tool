@@ -26,7 +26,7 @@ export default function TextData(props) {
           <RgCheckInModal refresh={dispatch} />
         </div>
 
-        <Table loading={loading} dataSource={data?.content} refresh={dispatch} />
+        <Table type="txt" loading={loading} dataSource={data?.content} refresh={dispatch} />
       </section>
     </div>
   );

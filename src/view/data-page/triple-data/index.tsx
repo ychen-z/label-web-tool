@@ -26,7 +26,7 @@ export default function TripleData(props) {
           {/* <RgCheckInModal refresh={dispatch} fileType="RELATION_CORPUS" /> */}
         </div>
 
-        <Table fileType="RELATION_CORPUS" loading={loading} dataSource={data?.content} refresh={dispatch} />
+        <Table fileType="RELATION_CORPUS" type="relation" loading={loading} dataSource={data?.content} refresh={dispatch} />
       </section>
     </div>
   );

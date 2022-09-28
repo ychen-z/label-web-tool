@@ -8,7 +8,7 @@ import RgCheckInModal from '../modal/rg-check-in-modal';
 import './index.less';
 
 export default function TripleData(props) {
-  const { data, dispatch, isLoading: loading } = useFetch(getFileData, { page: 0, size: Infinity, fileType: 'TXT_CORPUS' }, false);
+  const { data, dispatch, isLoading: loading } = useFetch(getFileData, { page: 0, size: Infinity, fileType: 'EQUIPMENT' }, false);
 
   useEffect(() => {
     dispatch({ page: 0, size: Infinity, fileType: 'EQUIPMENT' });

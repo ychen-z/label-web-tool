@@ -5,6 +5,8 @@ export const getFileData = (data: any) => get({ url: '/fileInfo/', data }); // �
 export const getFileById = (data: any) => get({ url: '/fileInfo/' + data }); // 获取文件详情
 export const delFile = (data: any) => del({ url: '/fileInfo/' + data }); // 删除文件
 export const fileUpload = (data: any) => post({ url: '/fileInfo/add', data }); // 文件上传
+export const tripleAdd = (data: any) => post({ url: '/triple/add', data }); // 导入三元组
+export const equipmentAdd = (data: any) => post({ url: '/equipment/add', data }); // 导入设备树
 export const updateFileName = (data: any) => put({ url: '/fileInfo/updateName', data }); // 文件更新
 export const updateFileContent = (data: any) => put({ url: '/fileInfo/updateContent', data }); // 文件内容更新
 export const manualImport = (data: any) => post({ url: '/fileInfo/manualImport', data }); // 人工导入

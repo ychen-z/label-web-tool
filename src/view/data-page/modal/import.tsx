@@ -2,12 +2,12 @@ import React from 'react';
 import { Form, Input, Modal, message } from 'antd';
 import Upload from '@/components/upload/SelfUpload';
 import useFetch from '@/hooks/common/useFetch';
-import { fileUpload, updateFileName } from '@/axios';
+import { fileUpload, updateFileName, tripleAdd, equipmentAdd } from '@/axios';
 
 interface Props {
   data?: Record<string, any>;
   type: 'ADD' | 'EDIT';
-  fileType?: 'ORIGINAL_CORPUS' | 'TXT_CORPUS' | 'ENTITY_CORPUS' | 'RELATION_CORPUS';
+  fileType?: 'ORIGINAL_CORPUS' | 'TXT_CORPUS' | 'ENTITY_CORPUS' | 'RELATION_CORPUS' | 'EQUIPMENT';
   onCancel: Function;
   refresh: Function;
 }
@@ -22,22 +22,42 @@ const ADDModal = (props: Props) => {
   const { data, onCancel, refresh, type, fileType = 'ORIGINAL_CORPUS' } = props;
   const { dispatch: updateFunc } = useFetch(updateFileName, null, false); // 更新
   const { dispatch: addFunc } = useFetch(fileUpload, null, false); // 新增
+  const { dispatch: tripleAddFunc } = useFetch(tripleAdd, null, false); // 导入三元组
+  const { dispatch: equipmentAddFunc } = useFetch(equipmentAdd, null, false); // 导入三元组
   const title = type === 'EDIT' ? '编辑' : '新增';
 
   const fetch = async () => {
     form.validateFields().then(values => {
       values.filePath = values.filePath?.length ? values.filePath[0]?.response.data.id : undefined;
-      values.id
-        ? updateFunc(values).then(res => {
-            message.success('操作成功');
-            onCancel && onCancel();
-            refresh && refresh();
-          })
-        : addFunc({ ...values, id: values.filePath }).then(res => {
+      if (type == 'EDIT') {
+        updateFunc(values).then(res => {
+          message.success('操作成功');
+          onCancel && onCancel();
+          refresh && refresh();
+        });
+      }
+
+      if (type === 'ADD') {
+        if (fileType === 'EQUIPMENT') {
+          addFunc({ ...values, id: values.filePath }).then(res => {
             message.success('操作成功');
             onCancel && onCancel();
             refresh && refresh();
           });
+        } else if (fileType === 'RELATION_CORPUS') {
+          addFunc({ ...values, id: values.filePath }).then(res => {
+            message.success('操作成功');
+            onCancel && onCancel();
+            refresh && refresh();
+          });
+        } else {
+          addFunc({ ...values, id: values.filePath }).then(res => {
+            message.success('操作成功');
+            onCancel && onCancel();
+            refresh && refresh();
+          });
+        }
+      }
     });
   };
 

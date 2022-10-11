@@ -16,7 +16,7 @@ export const getTripleTreeData = (data: any) => get({ url: '/triple/tree', data 
 export const getTripleSearchData = (data: any) => get({ url: '/triple/search', data }); // 故障搜索
 
 // 设备树
-export const getEquipmentTreeData = (data: any) => get({ url: '/equipment/tree?keyword=' + data }); // 获取设备树结构
+export const getEquipmentTreeData = (data: any) => get({ url: '/equipment/tree', data }); // 获取设备树结构
 export const getEquipmentSubTreeData = (data: any) => get({ url: '/equipment/subTree', data }); // 获取子树
 export const getEquipmentAutoComplete = (data: any) => get({ url: '/equipment/autoComplete?keyword=' + data }); // 获取设备搜索自动补齐
 export const postEquipmentAdd = (data: any) => post({ url: '/equipment/tree/add', data }); // 添加树节点

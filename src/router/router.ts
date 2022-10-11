@@ -75,6 +75,13 @@ export const urlObj = {
     needAuth: false
   },
 
+  DeviceTree: {
+    name: '设备树数据',
+    link: '/app/device/tree',
+    component: load(() => import('@/view/data-page/device-tree')),
+    needAuth: false
+  },
+
   GraphPage: {
     name: '图谱可视化',
     link: '/app/graph',
@@ -123,7 +130,8 @@ const {
   // HighGraphPage,
   HighSearch,
   HighFault,
-  HighExpert
+  HighExpert,
+  DeviceTree
 } = urlObj;
 
 export const routes = [
@@ -141,5 +149,6 @@ export const routes = [
   // HighGraphPage,
   HighSearch,
   HighFault,
-  HighExpert
+  HighExpert,
+  DeviceTree
 ];

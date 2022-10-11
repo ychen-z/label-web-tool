@@ -75,6 +75,13 @@ export const urlObj = {
     needAuth: false
   },
 
+  DeviceTree: {
+    name: '设备树数据',
+    link: '/app/device/tree',
+    component: load(() => import('@/view/data-page/device-tree')),
+    needAuth: false
+  },
+
   GraphPage: {
     name: '图谱可视化',
     link: '/app/graph',
@@ -90,6 +97,34 @@ export const urlObj = {
   }
 };
 
-const { mng, Text, Tool, label, relationHandle, OriginData, TextData, EntityData, TripleData, DeviceData, GraphPage, HighGraphPage } = urlObj;
+const {
+  mng,
+  Text,
+  Tool,
+  label,
+  relationHandle,
+  OriginData,
+  TextData,
+  EntityData,
+  TripleData,
+  DeviceData,
+  GraphPage,
+  HighGraphPage,
+  DeviceTree
+} = urlObj;
 
-export const routes = [mng, Text, Tool, label, relationHandle, OriginData, TextData, EntityData, TripleData, DeviceData, GraphPage, HighGraphPage];
+export const routes = [
+  mng,
+  Text,
+  Tool,
+  label,
+  relationHandle,
+  OriginData,
+  TextData,
+  EntityData,
+  TripleData,
+  DeviceData,
+  GraphPage,
+  HighGraphPage,
+  DeviceTree
+];

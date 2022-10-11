@@ -13,6 +13,7 @@ export const updateFileContent = (data: any) => put({ url: '/fileInfo/updateCont
 export const manualImport = (data: any) => post({ url: '/fileInfo/manualImport', data }); // 人工导入
 
 export const getTripleTreeData = (data: any) => get({ url: '/triple/tree', data }); // 树
+export const getTripleSearchData = (data: any) => get({ url: '/triple/search', data }); // 故障搜索
 
 // 设备树
 export const getEquipmentTreeData = (data: any) => get({ url: '/equipment/tree?keyword=' + data }); // 获取设备树结构

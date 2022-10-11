@@ -82,14 +82,64 @@ export const urlObj = {
     needAuth: false
   },
 
-  HighGraphPage: {
-    name: '图谱高级应用',
-    link: '/app/high',
-    component: load(() => import('@/view/high-graph-page/index')),
+  // HighGraphPage: {
+  //   name: '图谱高级应用',
+  //   link: '/app/high',
+  //   component: load(() => import('@/view/high-graph-page/index')),
+  //   needAuth: false
+  // },
+  HighSearch: {
+    name: '智能检索',
+    link: '/app/high/search',
+    component: load(() => import('@/view/high-graph-page/search/index')),
+    needAuth: false
+  },
+  HighFault: {
+    name: '故障查询',
+    link: '/app/high/fault',
+    component: load(() => import('@/view/high-graph-page/fault/index')),
+    needAuth: false
+  },
+  HighExpert: {
+    name: '智能检索',
+    link: '/app/high/expert',
+    component: load(() => import('@/view/high-graph-page/expert/index')),
     needAuth: false
   }
 };
 
-const { mng, Text, Tool, label, relationHandle, OriginData, TextData, EntityData, TripleData, DeviceData, GraphPage, HighGraphPage } = urlObj;
+const {
+  mng,
+  Text,
+  Tool,
+  label,
+  relationHandle,
+  OriginData,
+  TextData,
+  EntityData,
+  TripleData,
+  DeviceData,
+  GraphPage,
+  // HighGraphPage,
+  HighSearch,
+  HighFault,
+  HighExpert
+} = urlObj;
 
-export const routes = [mng, Text, Tool, label, relationHandle, OriginData, TextData, EntityData, TripleData, DeviceData, GraphPage, HighGraphPage];
+export const routes = [
+  mng,
+  Text,
+  Tool,
+  label,
+  relationHandle,
+  OriginData,
+  TextData,
+  EntityData,
+  TripleData,
+  DeviceData,
+  GraphPage,
+  // HighGraphPage,
+  HighSearch,
+  HighFault,
+  HighExpert
+];

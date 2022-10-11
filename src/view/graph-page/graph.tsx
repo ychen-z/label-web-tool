@@ -43,7 +43,7 @@ import 'echarts/lib/component/title';
 
 // import 'zrender/lib/vml/vml';
 
-import { getTripleTreeData } from '@/axios';
+import { getTripleTreeData, getTripleSearchData } from '@/axios';
 
 // Register the required components
 // echarts.use([GraphChart]);
@@ -53,7 +53,7 @@ import { getTripleTreeData } from '@/axios';
 // });
 
 export default function Graph(props) {
-  const { refresh } = props;
+  const { refresh, keyword, type = 'TREE', callback } = props;
   const [data, setData] = useState(null);
   const echartsRef = useRef(null);
   const getOption = graph => {
@@ -74,7 +74,7 @@ export default function Graph(props) {
         }
       ],
       animationDuration: 1500,
-      animationEasingUpdate: 'quinticInOut',
+      // animationEasingUpdate: 'quinticInOut',
       series: [
         {
           name: '图谱',
@@ -113,6 +113,7 @@ export default function Graph(props) {
       ]
     };
   };
+
   useEffect(() => {
     if (data) {
       var myChart = echarts.init(echartsRef.current);
@@ -122,10 +123,19 @@ export default function Graph(props) {
   }, [data]);
 
   useEffect(() => {
-    getTripleTreeData().then(res => {
-      setData(res);
-    });
-  }, [refresh]);
+    if (type === 'TREE') {
+      getTripleTreeData({ keyword }).then((res: any) => {
+        res.nodes.shift();
+        setData(res);
+      });
+    } else {
+      getTripleSearchData({ keyword }).then((res: any) => {
+        setData(res.tree);
+        callback?.(res.searchRes);
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [refresh, keyword]);
 
   return (
     <div

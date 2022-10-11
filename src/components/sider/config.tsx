@@ -92,7 +92,7 @@ const MENU_MAP: MenuItemType[] = [
   },
   {
     id: 6,
-    name: '图谱可视化',
+    name: '图谱构建',
     link: '/app/graph',
     icon: 'icon-shiti'
   },
@@ -100,7 +100,24 @@ const MENU_MAP: MenuItemType[] = [
     id: 7,
     name: '高级应用',
     link: '/app/high',
-    icon: 'icon-shiti'
+    icon: 'icon-shiti',
+    children: [
+      {
+        id: 70,
+        name: '智能检索',
+        link: '/app/high/search'
+      },
+      {
+        id: 71,
+        name: '故障查询',
+        link: '/app/high/fault'
+      },
+      {
+        id: 72,
+        name: '专家知识入库',
+        link: '/app/high/expert'
+      }
+    ]
   }
 ];
 

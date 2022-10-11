@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Tree, Dropdown, Menu } from 'antd';
 import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
-import { getEquipmentSubTreeData } from '@/axios';
+import { getEquipmentSubTreeData, delEquipmentById } from '@/axios';
 import useFetch from '@/hooks/common/useFetch';
+import DeL from './delTreeNode';
 
 interface DataNode {
   name: string;
@@ -51,6 +52,40 @@ const updateTreeData = (list: DataNode[], id: React.Key, children: DataNode[]): 
     return node;
   });
 
+// function deleteNode(arr, targetId) {
+//   for (let i = 0; i < arr.length; i++) {
+//     const node = arr[i];
+
+//     if (node.id === targetId) {
+//       arr.splice(i, 1);
+//       return arr;
+//     }
+
+//     // 判断children存在并且有数据
+//     if (Array.isArray(node.children) && node.children.length) {
+//       return deleteNode(node.children, targetId);
+//     }
+//   }
+// }
+
+/**
+ * 删除节点
+ * @param arr
+ * @param targetId
+ * @returns
+ */
+function filterDel(arr, targetId) {
+  arr.map((item, index) => {
+    if (item.id == targetId) {
+      arr.splice(index, 1);
+    }
+    if (Array.isArray(item.children) && item.children.length) {
+      filterDel(item.children, targetId);
+    }
+  });
+  return arr;
+}
+
 export default ({ initTreeData }) => {
   const [treeData, setTreeData] = useState(null);
 
@@ -64,19 +99,21 @@ export default ({ initTreeData }) => {
       }
 
       dispatch({ pid: id }).then(children => {
-        debugger;
         setTreeData(pre => updateTreeData(pre, id, children));
         resolve();
       });
     });
-  const TreeMenu = ({ name }) => {
+
+  const callback = id => setTreeData(pre => filterDel(pre, id));
+
+  const TreeMenu = ({ id }) => {
     return (
       <Menu>
         <Menu.Item key="2" icon={<PlusOutlined />}>
           新增子设备
         </Menu.Item>
         <Menu.Item key="1" icon={<DeleteOutlined />}>
-          删除 {name}
+          <DeL func={delEquipmentById} id={id} callback={id => callback(id)} />
         </Menu.Item>
       </Menu>
     );

@@ -62,11 +62,20 @@ export default function Graph(props) {
     });
     return {
       title: {
-        text: '图谱可视化'
+        text: '图谱可视化1'
         // top: 'bottom',
         // left: 'right'
       },
-      tooltip: {},
+      tooltip: {
+        //内边距
+        padding: [5, 10, 5, 10],
+        //params 传入进来的每个类目数据及echarts属性，ticket异步的类目名称，callback回调函数
+        formatter(params, ticket, callback) {
+          //自定义模板
+          let html = `<div style="max-width: 600px; word" ><div>${params.seriesName}</div><span style="margin-right:10%; width: 100%; white-space: pre-wrap;">${params.name}</span></div>`;
+          return html;
+        }
+      },
       legend: [
         {
           // selectedMode: 'single',
@@ -74,7 +83,6 @@ export default function Graph(props) {
         }
       ],
       animationDuration: 1500,
-      // animationEasingUpdate: 'quinticInOut',
       series: [
         {
           name: '图谱',

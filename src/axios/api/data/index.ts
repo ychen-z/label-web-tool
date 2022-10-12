@@ -21,3 +21,4 @@ export const getEquipmentSubTreeData = (data: any) => get({ url: '/equipment/sub
 export const getEquipmentAutoComplete = (data: any) => get({ url: '/equipment/autoComplete?keyword=' + data }); // 获取设备搜索自动补齐
 export const postEquipmentAdd = (data: any) => post({ url: '/equipment/tree/add', data }); // 添加树节点
 export const delEquipmentById = (data: any) => del({ url: '/equipment/tree/delete/' + data }); // 删除子树
+export const getRegulationById = (id: any) => get({ url: '/regulation/' + id }); // 获取规程详情

@@ -4,7 +4,7 @@ import './index.less';
 
 function Header(props: any) {
   return (
-    <nav className="g-header-nav">
+    <nav className="g-header-nav" style={{ display: 'none' }}>
       <div className="g-header-nav-logo" />
       <div className="g-header-nav-title">电厂关键设备知识图谱</div>
     </nav>

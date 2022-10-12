@@ -85,5 +85,5 @@ export default function OriginTable(props) {
       }
     }
   ];
-  return <Table loading={loading} rowKey="id" rowSelection={rowSelection} dataSource={dataSource} columns={columns} pagination={false} />;
+  return <Table loading={loading} rowKey="id" dataSource={dataSource} columns={columns} pagination={false} />;
 }

@@ -10,35 +10,35 @@ const load = (loader: any) =>
 export const urlObj = {
   mng: {
     name: '管理',
-    link: '/app/mng/:type',
+    link: '/app/graph/mng/:type',
     component: load(() => import('@/view/dic-page')),
     needAuth: false
   },
 
   Text: {
     name: '语料',
-    link: '/app/text/:type',
+    link: '/app/graph/text/:type',
     component: load(() => import('@/view/text-page')),
     needAuth: false
   },
 
   label: {
     name: '实体',
-    link: '/app/label',
+    link: '/app/graph/label',
     component: load(() => import('@/view/label-page')),
     needAuth: false
   },
 
   Tool: {
     name: '实体抽取',
-    link: '/app/tool/:type',
+    link: '/app/graph/tool/:type',
     component: load(() => import('@/view/tool-page')),
     needAuth: false
   },
 
   relationHandle: {
     name: '关系抽取',
-    link: '/app/rel-handle',
+    link: '/app/tool/rel-handle',
     component: load(() => import('@/view/relation')),
     needAuth: false
   },

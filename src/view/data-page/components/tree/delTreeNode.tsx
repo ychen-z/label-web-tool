@@ -1,6 +1,5 @@
 import React from 'react';
 import { Popconfirm, message } from 'antd';
-import { DeleteOutlined } from '@ant-design/icons';
 import useFetch from '@/hooks/common/useFetch';
 
 interface Props {
@@ -21,9 +20,7 @@ function Del(props: Props) {
 
   return (
     <Popconfirm key="2" title="确定删除吗?" okText="确定" cancelText="取消" onConfirm={onDel}>
-      <a>
-        <DeleteOutlined style={{ color: '#e6231f' }} /> 删除
-      </a>
+      <a>删除</a>
     </Popconfirm>
   );
 }

@@ -129,8 +129,7 @@ export default ({ initTreeData }) => {
 
   return (
     <Tree
-      style={{ maxHeight: 'calc(100vh - 150px)', overflowY: 'scroll' }}
-      autoExpandParent
+      style={{ minHeight: 'calc(100vh - 200px)', maxHeight: 'calc(100vh - 200px)', overflowY: 'scroll' }}
       loadData={onLoadData}
       treeData={convertData(treeData)}
       titleRender={item => (

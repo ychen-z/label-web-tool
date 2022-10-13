@@ -1,7 +1,6 @@
 import axios, { AxiosError, AxiosInstance, Method } from 'axios';
 import qs from 'qs';
 import { notification } from 'antd';
-import { getParams } from '@/utils/tools';
 import { rootURL, ServerCode, ServerCodeMap } from './config';
 import { RequestConfig, ResponseConfig, ResponseError } from './interface';
 

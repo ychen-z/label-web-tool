@@ -1,10 +1,12 @@
+@height: 60px;
+
 .g-header-nav {
     top: 0;
     display: flex;
     width: 100%;
     min-width: 1200px;
-    height: 60px;
-    line-height: 60px;
+    height: @height;
+    line-height: @height;
     background: @primary-color;
     box-shadow: 0 4px 6px 0 rgba(@black, 0.06);
 
@@ -32,26 +34,15 @@
         color: #fff;
         font-size: 16px;
         font-weight: 700;
-        line-height: 60px;
-    }
-
-    &-more {
-        display: inline-flex;
+        line-height: @height;
         flex: 1;
-        justify-content: flex-end;
-        color: @primary-font-color;
     }
 
-    &-text {
-        position: relative;
-        margin: 0 24px;
-        cursor: pointer;
-    }
-
-    &-question {
-        margin-left: 8px;
-    }
-
-    &-user {
+    &-login {
+        background: transparent;
+        color: #fff;
+        height: @height;
+        line-height: @height;
+        margin-right: 6px;
     }
 }

@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
-import { Button } from 'antd';
+import { Button, Divider } from 'antd';
 import { useHistory } from 'react-router-dom';
 import useFetch from '@/hooks/common/useFetch';
 import { getFileData } from '@/axios';
 import Table from '../components/common-table';
 import AddModal from '../modal/add';
-import RgCheckInModal from '../modal/rg-check-in-modal';
+// import RgCheckInModal from '../modal/rg-check-in-modal';
 import './index.less';
 
 export default function TripleData(props) {
@@ -24,9 +24,10 @@ export default function TripleData(props) {
       <section className="m-list">
         <div className="u-operation">
           <AddModal type="ADD" fileType="EQUIPMENT" refresh={dispatch}>
-            <Button type="primary">+ 模板导入</Button>
+            <Button>+ 模板导入</Button>
           </AddModal>
-          <RgCheckInModal refresh={dispatch} fileType="EQUIPMENT" />
+          <Divider type="vertical" />
+          {/* <RgCheckInModal refresh={dispatch} fileType="EQUIPMENT" /> */}
           <Button onClick={onNavigateTo} type="primary">
             查看设备树
           </Button>

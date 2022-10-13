@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Tree, Dropdown, Menu } from 'antd';
 import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
+
 import { getEquipmentSubTreeData, delEquipmentById } from '@/axios';
 import useFetch from '@/hooks/common/useFetch';
 import DeL from './delTreeNode';
+import AddNode from './add-node-modal'; // 新增节点
 
 interface DataNode {
   name: string;
@@ -11,16 +13,6 @@ interface DataNode {
   isLeaf?: boolean;
   children?: DataNode[];
 }
-
-// const initTreeData: DataNode[] = [
-//   { name: 'Expand to load', id: '0' },
-//   {
-//     name: 'Expand to load',
-//     id: '1',
-//     children: [{ name: 'Expand to load', id: '0-0' }]
-//   },
-//   { name: 'Tree Node', id: '2', isLeaf: true }
-// ];
 
 const convertData = (data: Array<any>) => {
   data.forEach(item => {
@@ -52,22 +44,6 @@ const updateTreeData = (list: DataNode[], id: React.Key, children: DataNode[]): 
     return node;
   });
 
-// function deleteNode(arr, targetId) {
-//   for (let i = 0; i < arr.length; i++) {
-//     const node = arr[i];
-
-//     if (node.id === targetId) {
-//       arr.splice(i, 1);
-//       return arr;
-//     }
-
-//     // 判断children存在并且有数据
-//     if (Array.isArray(node.children) && node.children.length) {
-//       return deleteNode(node.children, targetId);
-//     }
-//   }
-// }
-
 /**
  * 删除节点
  * @param arr
@@ -86,8 +62,8 @@ function filterDel(arr, targetId) {
   return arr;
 }
 
-export default ({ initTreeData }) => {
-  const [treeData, setTreeData] = useState(null);
+export default ({ initTreeData, refresh }) => {
+  const [treeData, setTreeData] = useState<any>(null);
 
   const { dispatch } = useFetch(getEquipmentSubTreeData, null);
 
@@ -98,22 +74,20 @@ export default ({ initTreeData }) => {
         return;
       }
 
-      dispatch({ pid: id }).then(children => {
+      dispatch({ pid: id }).then((children: any) => {
         setTreeData(pre => updateTreeData(pre, id, children));
         resolve();
       });
     });
 
-  const callback = id => setTreeData(pre => filterDel(pre, id));
-
   const TreeMenu = ({ id }) => {
     return (
       <Menu>
         <Menu.Item key="2" icon={<PlusOutlined />}>
-          新增子设备
+          <AddNode id={id} callback={refresh} />
         </Menu.Item>
         <Menu.Item key="1" icon={<DeleteOutlined />}>
-          <DeL func={delEquipmentById} id={id} callback={id => callback(id)} />
+          <DeL func={delEquipmentById} id={id} callback={refresh} />
         </Menu.Item>
       </Menu>
     );
@@ -132,7 +106,7 @@ export default ({ initTreeData }) => {
       style={{ minHeight: 'calc(100vh - 200px)', maxHeight: 'calc(100vh - 200px)', overflowY: 'scroll' }}
       loadData={onLoadData}
       treeData={convertData(treeData)}
-      titleRender={item => (
+      titleRender={(item: any) => (
         <Dropdown overlay={<TreeMenu {...item} />} trigger={['contextMenu']}>
           <span>{item.name}</span>
         </Dropdown>

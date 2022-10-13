@@ -1,7 +1,6 @@
 import React, { useState, useReducer, useEffect } from 'react';
 import { Layout } from 'antd';
 import loginReducer from '@/reducer/loginReducer';
-// import useAuthInfo from '@/hooks/useAuthInfo'; // 获取用户信息
 import HeaderCustom from '@/components/header';
 import ContentCustom from '@/components/content';
 import SiderCustom from '@/components/sider';
@@ -10,7 +9,6 @@ function App(props) {
   const [collapsed, setCollapsed] = useState(false);
   const [state, dispatch] = useReducer(loginReducer, { user: null, menus: null });
   const { user, menus } = state; // 用戶与权限
-  // const { user: UserInfo, menus: MenusInfo } = useAuthInfo(); // 获取权限信息
 
   useEffect(() => {
     dispatch({ type: 'QUERY_AUTH_MENUS', payload: { user: props.user, menus: props.menus } });

@@ -54,8 +54,15 @@ service.interceptors.response.use(
         delete source[request as string];
       }
     }
+
     // 以下判断的是：接口状态码(data.code)
     const res = response.data;
+    if (res && res.code == ServerCode.NO_LOGIN) {
+      // 未登录则跳转到登录页
+      window.location.replace('/caslogin');
+      return;
+    }
+
     if (res.code == ServerCode.SUCCESS) return response.data;
     return Promise.reject({ data: res, response });
   },

@@ -12,7 +12,7 @@ export const ServerCode = {
   WRONG_REQUEST: 402,
   FORBIDDEN: 403,
   WRONG_URL: 404,
-  NO_LOGIN: 406,
+  NO_LOGIN: 406, // 未登录状态嘛码
   TIME_OUT: 408,
   WRONG_REQUEST_MODAL: 410,
   AUTO_SAVE_ERROR_CODE: 411, // 自动暂存code

@@ -10,3 +10,6 @@
 
 # 关于token 的配置
 config.token = localStorage.getItem("token")
+
+# 未登录状态码
+暂定： NO_LOGIN = 401 可根据业务方实际情况确定 

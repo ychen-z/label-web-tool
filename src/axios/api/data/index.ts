@@ -22,6 +22,7 @@ export const getTripleSearchData = (data: any) => get({ url: '/triple/search', d
 // 设备树
 export const getEquipmentTreeData = (data: any) => get({ url: '/equipment/tree', data }); // 获取设备树结构
 export const getEquipmentSubTreeData = (data: any) => get({ url: '/equipment/subTree', data }); // 获取子树
+export const getEquipmentSubData = (data: any) => get({ url: '/equipment/sub', data }); // 级联使用 pid
 export const getEquipmentAutoComplete = (data: any) => get({ url: '/equipment/autoComplete?keyword=' + data }); // 获取设备搜索自动补齐
 export const postEquipmentAdd = (data: any) => post({ url: '/equipment/tree/add', data }); // 添加树节点
 export const delEquipmentById = (data: any) => del({ url: '/equipment/tree/delete/' + data }); // 删除子树

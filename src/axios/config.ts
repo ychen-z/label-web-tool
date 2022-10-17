@@ -8,11 +8,11 @@ export const rootURL = isLocal ? (isMock ? '/mock' : isTest ? '/mock/test' : isD
 export const ServerCode = {
   SUCCESS: 0,
   CONTINUE: 400,
-  WRONG_PARAM: 401,
+  NO_LOGIN: 406, // 未登录状态嘛码
   WRONG_REQUEST: 402,
   FORBIDDEN: 403,
   WRONG_URL: 404,
-  NO_LOGIN: 406, // 未登录状态嘛码
+  // NO_LOGIN: 401, // 未登录状态嘛码
   TIME_OUT: 408,
   WRONG_REQUEST_MODAL: 410,
   AUTO_SAVE_ERROR_CODE: 411, // 自动暂存code
@@ -33,7 +33,7 @@ export const SubCode = {
 export const ServerCodeMap = {
   [ServerCode.SUCCESS]: '成功',
   [ServerCode.CONTINUE]: '继续', // 传递指定“继续参数”即可成功
-  [ServerCode.WRONG_PARAM]: '参数格式出错',
+  // [ServerCode.WRONG_PARAM]: '参数格式出错',
   [ServerCode.WRONG_REQUEST]: '请求出错',
   [ServerCode.FORBIDDEN]: '拒绝访问',
   [ServerCode.WRONG_URL]: '请求地址出错',

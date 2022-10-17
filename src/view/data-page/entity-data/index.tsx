@@ -18,7 +18,7 @@ export default function ToolData(props) {
     <div className="origin-data-page">
       <section className="m-list">
         <div className="u-operation">
-          <AddModal type="ADD" fileType="ENTITY_CORPUS" refresh={dispatch}>
+          <AddModal type="ADD" accept="xlsx" fileType="ENTITY_CORPUS" refresh={dispatch}>
             <Button type="primary">+ 模板导入</Button>
           </AddModal>
 

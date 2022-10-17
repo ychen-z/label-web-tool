@@ -10,6 +10,7 @@ interface Props {
   fileType?: 'ORIGINAL_CORPUS' | 'TXT_CORPUS' | 'ENTITY_CORPUS' | 'RELATION_CORPUS' | 'EQUIPMENT';
   onCancel: Function;
   refresh: Function;
+  accept?: string;
 }
 
 const URL = {
@@ -20,7 +21,7 @@ const URL = {
 
 const ADDModal = (props: Props) => {
   const [form] = Form.useForm();
-  const { data, onCancel, refresh, type, fileType = 'ORIGINAL_CORPUS' } = props;
+  const { data, onCancel, accept = 'doc,docx,txt,pdf,png,jpg,jpeg', refresh, type, fileType = 'ORIGINAL_CORPUS' } = props;
   // const [content, setContent] = useState('111');
   const { dispatch: updateFunc } = useFetch(updateFileName, null, false); // 更新
   const { dispatch: updateFileContentFunc } = useFetch(updateFileContent, null, false); // 更新
@@ -116,7 +117,7 @@ const ADDModal = (props: Props) => {
 
         {type == 'ADD' && (
           <Form.Item label="文件" name="filePath" valuePropName="fileList">
-            <Upload action="/api/fileInfo/upload" maxCount="1" accept="doc,docx,txt,pdf,png,jpg,jpeg" />
+            <Upload action="/api/fileInfo/upload" maxCount="1" accept={accept} />
           </Form.Item>
         )}
       </Form>

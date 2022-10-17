@@ -23,7 +23,7 @@ export default function TripleData(props) {
     <div className="origin-data-page">
       <section className="m-list">
         <div className="u-operation">
-          <AddModal type="ADD" fileType="EQUIPMENT" refresh={dispatch}>
+          <AddModal accept="xlsx" type="ADD" fileType="EQUIPMENT" refresh={dispatch}>
             <Button>+ 模板导入</Button>
           </AddModal>
           <Divider type="vertical" />

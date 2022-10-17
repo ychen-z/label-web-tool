@@ -6,6 +6,7 @@ import { renderSize } from '@/utils/tools';
 import UpdateModal from '../modal/add';
 import Del from '../modal/del';
 import ViewModal from '../modal/view-modal';
+import Export from './export';
 
 export default function OriginTable(props) {
   const { loading, refresh, dataSource, fileType, type } = props;
@@ -16,11 +17,6 @@ export default function OriginTable(props) {
       dataIndex: 'fileName',
       key: 'fileName'
     },
-    // {
-    //   title: '文件类型',
-    //   dataIndex: 'fileExt',
-    //   key: 'fileExt'
-    // },
     {
       title: '文件大小',
       dataIndex: 'fileSize',
@@ -30,7 +26,7 @@ export default function OriginTable(props) {
     },
     {
       title: '操作',
-      width: 280,
+      width: 340,
       render: (elem: any, row: any, index: number) => {
         return (
           <Space>
@@ -45,6 +41,8 @@ export default function OriginTable(props) {
 
             <Divider type="vertical" />
             <Del id={row.id} func={delFile} refresh={refresh} />
+            <Divider type="vertical" />
+            <Export url={row.filePathURL} />
           </Space>
         );
       }

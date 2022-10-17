@@ -7,6 +7,7 @@ import { renderSize } from '@/utils/tools';
 import UpdateModal from '../modal/add';
 import Del from '../modal/del';
 import RevertDrawer from '../modal/revert-drawer';
+import Export from './export';
 
 const TEXT = {
   NO_CONVERT: { status: 'warning', name: '未转换' },
@@ -61,7 +62,7 @@ export default function OriginTable(props) {
     },
     {
       title: '操作',
-      width: 300,
+      width: 340,
       render: (elem: any, row: any, index: number) => {
         const { status } = elem;
         return (
@@ -80,6 +81,9 @@ export default function OriginTable(props) {
             )}
             <Divider type="vertical" />
             <Del id={row.id} func={delFile} refresh={refresh} />
+
+            <Divider type="vertical" />
+            <Export url={row.filePathURL} />
           </Space>
         );
       }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Button, Form, Input, message, Space } from 'antd';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import Modal from '@/components/common/u-modal';
@@ -49,10 +49,6 @@ export default function RgCheckInModal(props) {
       <Form form={form} {...formItemLayout} scrollToFirstError>
         <Form.Item label="文件名称" name="fileName" rules={[{ required: true, message: '请填写' }]}>
           <Input placeholder="请输入" maxLength={100} />
-        </Form.Item>
-
-        <Form.Item label="文件描述" name="fileDesc" rules={[{ required: true, message: '请填写' }]}>
-          <Input.TextArea placeholder="请输入" maxLength={200} />
         </Form.Item>
 
         <Form.Item label="内容" name="content" rules={[{ required: true, message: '请填写' }]}>

@@ -1,13 +1,23 @@
 import React, { useState } from 'react';
-import { Button } from 'antd';
+import { Button, Input } from 'antd';
 import Modal from '@/components/common/u-modal';
 import IconSet from '@/components/icon';
 import { getFileById, getFileContent } from '@/axios';
+import { debounce } from '@/utils/tools';
+
+const tagStyle = {
+  background: 'rgb(250, 84, 28)',
+  color: 'rgb(255, 255, 255)',
+  padding: '2px 6px',
+  borderRadius: '4px'
+};
 
 export default function ViewModal(props) {
   const { id, type } = props;
   const [content, setContent] = useState('');
+  const [searchValue, setSearchValue] = useState('');
   const [list, setList] = useState([]);
+
   const beforeShow = () => {
     if (type === 'txt') {
       return getFileById(id).then(res => {
@@ -19,6 +29,7 @@ export default function ViewModal(props) {
       setList(res);
     });
   };
+
   return (
     <Modal
       footer={null}
@@ -31,12 +42,27 @@ export default function ViewModal(props) {
             <div style={{ maxHeight: '480px', overflowY: 'scroll', whiteSpace: 'pre-wrap' }}>
               {type === 'txt' && content}
               {type === 'entity' && list.map(item => <p key={item.id} dangerouslySetInnerHTML={{ __html: item.textMark }} />)}
-              {type === 'relation' &&
-                list.map(item => (
-                  <p key={item.id}>
-                    {item.headEntity} -> {item.relation} -> {item.tailEntity}
-                  </p>
-                ))}
+              {type === 'relation' && (
+                <div>
+                  <Input.Search placeholder="查询" onChange={v => debounce(setSearchValue(v.target.value), 300)} style={{ marginBottom: '6px' }} />
+                  {list
+                    .filter(item => item?.textMark?.includes(searchValue))
+                    .map(item => (
+                      <div key={item.id} style={{ background: '#F5f5f5', padding: '12px', marginBottom: '6px' }}>
+                        <p dangerouslySetInnerHTML={{ __html: item.textMark }} />
+                        <code>
+                          {item?.textTags?.map(i => (
+                            <div style={{ height: '22px', lineHeight: '22px' }}>
+                              <span style={tagStyle}>{i.headEntity}</span> -
+                              <span style={{ margin: '12px', textDecoration: 'underline' }}>{i.relation}</span>-{' '}
+                              <span style={tagStyle}>{i.tailEntity}</span>
+                            </div>
+                          ))}
+                        </code>
+                      </div>
+                    ))}
+                </div>
+              )}
               {type === 'equipment' &&
                 list.map(item => (
                   <p key={item.code}>

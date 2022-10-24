@@ -4,7 +4,7 @@ import { getFileData } from '@/axios';
 import Table from './table';
 import './index.less';
 
-export default function TripleData(props) {
+export default function AddTreeData(props) {
   const { data, dispatch, isLoading: loading } = useFetch(getFileData, { page: 0, size: Infinity, fileType: 'RELATION_CORPUS' }, false);
 
   useEffect(() => {

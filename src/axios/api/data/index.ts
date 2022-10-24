@@ -1,8 +1,8 @@
 import { get, put, post, del } from '../../http';
 
 // 后端登录接口
-export const casLogin = (data: any) => post({ url: '/login/', data }); // 登录接口
-export const casLogout = (data?: any) => post({ url: '/logout/', data }); // 退出登录
+export const casLogin = (data: any) => post({ url: '/login', data }); // 登录接口
+export const casLogout = (data?: any) => post({ url: '/logout', data }); // 退出登录
 
 // 数据
 export const getFileData = (data: any) => get({ url: '/fileInfo/', data }); // 获取文件接口

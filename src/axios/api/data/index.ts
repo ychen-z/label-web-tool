@@ -28,3 +28,4 @@ export const postEquipmentAdd = (data: any) => post({ url: '/equipment/tree/add'
 export const delEquipmentById = (data: any) => del({ url: '/equipment/tree/delete/' + data }); // 删除子树
 export const getRegulationById = (id: any) => get({ url: '/regulation/' + id }); // 获取规程详情
 export const postRegulation = (data: any) => post({ url: '/regulation/add', data }); // 专家入库
+export const addToTree = (fileId: any) => post({ url: '/triple/addToTree/' + fileId }); // 添加到图谱

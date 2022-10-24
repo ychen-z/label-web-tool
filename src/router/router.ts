@@ -82,12 +82,19 @@ export const urlObj = {
     needAuth: false
   },
 
-  GraphPage: {
-    name: '图谱可视化',
-    link: '/app/graph',
-    component: load(() => import('@/view/graph-page/index')),
+  GraphRelation: {
+    name: '关系图谱',
+    link: '/app/graph/relation',
+    component: load(() => import('@/view/data-page/add-tree-data')),
     needAuth: false
   },
+
+  // GraphPage: {
+  //   name: '图谱可视化',
+  //   link: '/app/graph',
+  //   component: load(() => import('@/view/graph-page/index')),
+  //   needAuth: false
+  // },
 
   // HighGraphPage: {
   //   name: '图谱高级应用',
@@ -126,12 +133,13 @@ const {
   EntityData,
   TripleData,
   DeviceData,
-  GraphPage,
+  // GraphPage,
   // HighGraphPage,
   HighSearch,
   HighFault,
   HighExpert,
-  DeviceTree
+  DeviceTree,
+  GraphRelation
 } = urlObj;
 
 export const routes = [
@@ -145,10 +153,11 @@ export const routes = [
   EntityData,
   TripleData,
   DeviceData,
-  GraphPage,
+  // GraphPage,
   // HighGraphPage,
   HighSearch,
   HighFault,
   HighExpert,
-  DeviceTree
+  DeviceTree,
+  GraphRelation
 ];

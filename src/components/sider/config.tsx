@@ -1,62 +1,6 @@
 import { MenuItemType } from './interface';
 
 const MENU_MAP: MenuItemType[] = [
-  // {
-  //   id: 1,
-  //   name: '字典管理',
-  //   link: '/app/mng',
-  //   icon: 'icon-shujuzidian',
-  //   children: [
-  //     {
-  //       id: 10,
-  //       name: '实体字典',
-  //       link: '/app/mng/dic'
-  //     },
-  //     {
-  //       id: 11,
-  //       name: '关系字典',
-  //       link: '/app/mng/rel'
-  //     }
-  //   ]
-  // },
-  // {
-  //   id: 3,
-  //   name: '语料管理',
-  //   link: '/app/text',
-  //   icon: 'icon-yuliao',
-  //   children: [
-  //     {
-  //       id: 30,
-  //       name: '实体语料',
-  //       link: '/app/text/dic'
-  //       // icon: 'icon-yuliao'
-  //     },
-  //     {
-  //       id: 31,
-  //       name: '关系语料',
-  //       link: '/app/text/rel'
-  //       // icon: 'icon-yuliao'
-  //     }
-  //   ]
-  // },
-  // {
-  //   id: 4,
-  //   name: '抽取工具',
-  //   link: '/app/tool',
-  //   icon: 'icon-shiti',
-  //   children: [
-  //     {
-  //       id: 41,
-  //       name: '实体抽取',
-  //       link: '/app/tool/dic'
-  //     },
-  //     {
-  //       id: 42,
-  //       name: '关系抽取',
-  //       link: '/app/tool/rel'
-  //     }
-  //   ]
-  // },
   {
     id: 5,
     name: '文件管理',
@@ -105,9 +49,8 @@ const MENU_MAP: MenuItemType[] = [
       {
         id: 60,
         parentId: 6,
-        name: '字典管理',
+        name: '实体',
         link: '/app/graph/mng',
-        //icon: 'icon-shiti',
         children: [
           {
             id: 600,
@@ -117,50 +60,39 @@ const MENU_MAP: MenuItemType[] = [
           },
           {
             id: 601,
-            name: '关系字典',
             parentId: 60,
-            link: '/app/graph/mng/rel'
+            name: '实体语料',
+            link: '/app/graph/text/dic'
+          },
+          {
+            id: 602,
+            parentId: 60,
+            name: '实体抽取',
+            link: '/app/graph/tool/dic'
           }
         ]
       },
       {
         id: 61,
-        name: '语料管理',
+        name: '关系',
         parentId: 6,
         link: '/app/graph/text',
-        // icon: 'icon-yuliao',
         children: [
           {
             id: 610,
+            name: '关系字典',
             parentId: 61,
-            name: '实体语料',
-            link: '/app/graph/text/dic'
-            // icon: 'icon-yuliao'
+            link: '/app/graph/mng/rel'
           },
           {
             id: 611,
             parentId: 61,
             name: '关系语料',
             link: '/app/graph/text/rel'
-            // icon: 'icon-yuliao'
-          }
-        ]
-      },
-      {
-        id: 62,
-        name: '抽取工具',
-        parentId: 6,
-        link: '/app/graph/tool',
-        children: [
-          {
-            id: 620,
-            parentId: 62,
-            name: '实体抽取',
-            link: '/app/graph/tool/dic'
           },
           {
-            id: 621,
-            parentId: 62,
+            id: 612,
+            parentId: 61,
             name: '关系抽取',
             link: '/app/graph/tool/rel'
           }
@@ -169,7 +101,14 @@ const MENU_MAP: MenuItemType[] = [
       {
         id: 63,
         name: '设备树',
+        parentId: 6,
         link: '/app/device/tree'
+      },
+      {
+        id: 64,
+        name: '关系数据',
+        parentId: 6,
+        link: '/app/graph/relation'
       }
     ]
   },

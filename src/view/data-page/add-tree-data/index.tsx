@@ -1,9 +1,7 @@
 import React, { useEffect } from 'react';
-import { Button } from 'antd';
 import useFetch from '@/hooks/common/useFetch';
 import { getFileData } from '@/axios';
-import Table from '../components/common-table';
-import AddModal from '../modal/add';
+import Table from './table';
 import './index.less';
 
 export default function TripleData(props) {
@@ -15,16 +13,8 @@ export default function TripleData(props) {
   }, []);
 
   return (
-    <div className="origin-data-page">
+    <div className="add-tree-page">
       <section className="m-list">
-        <div className="u-operation">
-          <AddModal type="ADD" accept="xlsx" fileType="RELATION_CORPUS" refresh={dispatch}>
-            <Button type="primary">+ 模板导入</Button>
-          </AddModal>
-
-          {/* <RgCheckInModal refresh={dispatch} fileType="RELATION_CORPUS" /> */}
-        </div>
-
         <Table fileType="RELATION_CORPUS" type="relation" loading={loading} dataSource={data?.content} refresh={dispatch} />
       </section>
     </div>

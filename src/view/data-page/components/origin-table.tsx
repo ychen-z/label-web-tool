@@ -1,7 +1,6 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Table, Space, Divider, Badge } from 'antd';
 import IconSet from '@/components/icon';
-import { GlobalContext } from '@/context';
 import { delFile } from '@/axios';
 import { renderSize } from '@/utils/tools';
 import UpdateModal from '../modal/add';
@@ -18,18 +17,6 @@ const TEXT = {
 
 export default function OriginTable(props) {
   const { loading, refresh, dataSource } = props;
-  const { dispatchText } = useContext(GlobalContext);
-
-  const rowSelection = {
-    selectedRowKeys: props.selectedKeys,
-    onChange: (selectedRowKeys, selectedRows) => {
-      dispatchText?.(selectedRowKeys);
-      props.setSelectedKeys(selectedRowKeys);
-    },
-    getCheckboxProps: record => ({
-      id: record.id + ''
-    })
-  };
 
   const columns = [
     {

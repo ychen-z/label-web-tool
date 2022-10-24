@@ -14,7 +14,7 @@ export default function CasLogin() {
    * casServiceId: 项目的域名 https://xxx.com/casLogin
    */
   const redirectToCas = () => {
-    // https://sso-dev.zhenergy.com.cn/cas/login?service=https://app.zhenergy.com.cn/casLogin
+    // https://sso.zhenergy.com.cn/cas/login?service=https://xxx.com/casLogin
     window.open(`${projectConfig.casLoginServer}?service=${projectConfig.casServiceId}`, '_self');
   };
 

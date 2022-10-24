@@ -52,17 +52,31 @@ import { getTripleTreeData, getTripleSearchData } from '@/axios';
 //   backgroundColor: '#f4cccc'
 // });
 
+const config = {
+  CAUSE: '原因',
+  EQUIPMENT: '设备',
+  PHENOMENON: '现象',
+  PROCESSING_METHODS: '处理方法',
+  FAULT: '错误'
+};
+
 export default function Graph(props) {
   const { refresh, keyword, type = 'TREE', callback } = props;
   const [data, setData] = useState(null);
   const echartsRef = useRef(null);
   const getOption = graph => {
+    graph.categories = graph.categories.map(function(a) {
+      a.name = config[a.name];
+      return a;
+    });
+
     const categories = graph.categories.map(function(a) {
       return a.name;
     });
+
     return {
       title: {
-        text: '图谱可视化1'
+        text: '图谱可视化'
         // top: 'bottom',
         // left: 'right'
       },
@@ -85,14 +99,14 @@ export default function Graph(props) {
       animationDuration: 1500,
       series: [
         {
-          name: '图谱',
+          name: '',
           type: 'graph',
           layout: 'force',
           data: graph.nodes.map((item, index) => {
             return {
               ...item,
               id: item.id + '',
-              category: categories.findIndex(_ => _ == item.entityType)
+              category: categories.findIndex(_ => _ == config[item.entityType])
             };
           }),
           links: graph.links.map(item => {

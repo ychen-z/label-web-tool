@@ -19,7 +19,7 @@ export default function TextData(props) {
     <div className="origin-data-page">
       <section className="m-list">
         <div className="u-operation">
-          <AddModal accept="txt" type="ADD" refresh={dispatch}>
+          <AddModal accept="txt" type="ADD" fileType="TXT_CORPUS" refresh={dispatch}>
             <Button type="primary">+ 文本数据导入</Button>
           </AddModal>
 

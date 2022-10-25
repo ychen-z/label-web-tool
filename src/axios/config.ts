@@ -8,7 +8,7 @@ export const rootURL = isLocal ? (isMock ? '/mock' : isTest ? '/mock/test' : isD
 export const ServerCode = {
   SUCCESS: 0,
   CONTINUE: 400,
-  NO_LOGIN: 406, // 未登录状态嘛码
+  NO_LOGIN: 401, // 未登录状态嘛码
   WRONG_REQUEST: 402,
   FORBIDDEN: 403,
   WRONG_URL: 404,

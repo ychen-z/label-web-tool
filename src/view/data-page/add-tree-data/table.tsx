@@ -27,8 +27,10 @@ export default function OriginTable(props) {
       render: (text, record) => {
         if (record.regulationStatus == 'ALREADY_ADD') {
           return <Tag color="#87d068">已构建</Tag>;
-        } else {
+        } else if (record.regulationStatus == 'WAIT_ADD') {
           return <Tag color="#f50">未构建</Tag>;
+        } else {
+          return <span>不可构建</span>;
         }
       }
     },
@@ -36,10 +38,10 @@ export default function OriginTable(props) {
       title: '操作',
       width: 240,
       render: (elem: any, record: any, index: number) => {
-        if (record.regulationStatus == 'ALREADY_ADD') {
-          return null;
-        } else {
+        if (record.regulationStatus == 'WAIT_ADD') {
           return <AddTree {...record} />;
+        } else {
+          return null;
         }
       }
     }

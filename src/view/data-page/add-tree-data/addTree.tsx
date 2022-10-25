@@ -29,7 +29,7 @@ function AddToTree(props: Props) {
             </a>
           ),
           onClick: () => {
-            console.log('Notification Clicked!');
+            console.log(' Clicked!');
           }
         });
       } else {
@@ -43,7 +43,7 @@ function AddToTree(props: Props) {
               </a>
             ),
           onClick: () => {
-            console.log('Notification Clicked!');
+            console.log(' Clicked!');
           }
         });
       }
@@ -51,7 +51,7 @@ function AddToTree(props: Props) {
   };
 
   return (
-    <Popconfirm key="2" title="确定构建图片吗?" okText="确定" cancelText="取消" onConfirm={onAdd}>
+    <Popconfirm key="2" title="确定构建图谱吗?" okText="确定" cancelText="取消" onConfirm={onAdd}>
       <a>构建图谱</a>
     </Popconfirm>
   );

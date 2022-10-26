@@ -11,22 +11,12 @@ export default function TreeGraph(props) {
   const getOption = graph => {
     return {
       title: {
-        text: '设备树'
+        text: ''
       },
       tooltip: {
         trigger: 'item',
         triggerOn: 'mousemove'
       },
-      // tooltip: {
-      //   //内边距
-      //   padding: [5, 10, 5, 10],
-      //   //params 传入进来的每个类目数据及echarts属性，ticket异步的类目名称，callback回调函数
-      //   formatter(params, ticket, callback) {
-      //     //自定义模板
-      //     let html = `<div style="max-width: 600px; word" ><div>${params.seriesName}</div><span style="margin-right:10%; width: 100%; white-space: pre-wrap;">${params.name}</span></div>`;
-      //     return html;
-      //   }
-      // },
       animationDuration: 1500,
       series: [
         {
@@ -58,13 +48,22 @@ export default function TreeGraph(props) {
     };
   };
 
+  const convertData = (data: Array<any>) => {
+    data.forEach(item => {
+      item.title = item.name;
+      item.key = item.id;
+      item.children = item.children || item.subEquipments;
+      if (item.children) {
+        convertData(item.children);
+      }
+    });
+    return data;
+  };
+
   useEffect(() => {
     if (data) {
       var myChart = echarts.init(echartsRef.current);
-      data.children?.forEach(function(datum, index) {
-        index % 2 === 0 && (datum.collapsed = true);
-      });
-      var option = getOption(data);
+      var option = getOption(convertData(data));
       myChart.setOption(option);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

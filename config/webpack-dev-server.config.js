@@ -14,10 +14,10 @@ module.exports = {
     proxy: {
         // 测试
         '/mock/dev': {
-            target: 'http://101.35.15.228:8080',
+            target: 'http://121.41.27.5:80',
             secure: false,
             pathRewrite: {
-                '^/mock/test': ''
+                '^/mock/dev': ''
             },
             changeOrigin: true,
             logLevel: 'debug' // this what you want

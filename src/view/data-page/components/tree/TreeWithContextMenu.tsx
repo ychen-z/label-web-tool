@@ -44,24 +44,6 @@ const updateTreeData = (list: DataNode[], id: React.Key, children: DataNode[]): 
     return node;
   });
 
-/**
- * 删除节点
- * @param arr
- * @param targetId
- * @returns
- */
-function filterDel(arr, targetId) {
-  arr.map((item, index) => {
-    if (item.id == targetId) {
-      arr.splice(index, 1);
-    }
-    if (Array.isArray(item.children) && item.children.length) {
-      filterDel(item.children, targetId);
-    }
-  });
-  return arr;
-}
-
 export default ({ initTreeData, refresh }) => {
   const [treeData, setTreeData] = useState<any>(null);
 

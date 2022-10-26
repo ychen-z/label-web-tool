@@ -6,34 +6,34 @@
         display: flex;
 
         .result {
+            background: #fcfcfc;
             width: 400px;
-            background: #f5f5f5;
-            h2 {
-                padding-left: 12px;
+            padding: 12px 20px;
+            max-height: calc(100vh - 138px);
+            overflow: scroll;
+            
+            .title {
+                border-bottom: 1px solid #f1f1f1;
                 font-size: 16px;
                 height: 50px;
                 line-height: 50px;
-                color: #fff;
-                background: #00446B;
+                color: #333;
             }
+        }
+    }
+}
 
-            .regulation {
-                padding: 24px;
-                line-height: 24px;
+.regulation {
 
-                span {
-                    font-weight: bolder;
-                    color: #00446B;
-                }
+    div {
+        line-height: 24px;
+        margin-bottom: 12px;
 
-                div{
-                    margin-bottom: 12px;
-                }
-            }
-            .title {
-                font-weight: 700;
-                font-size: 18px;
-            }
+        span {
+            background-color: blue;
+            color: #fff;
+            padding: 4px 8px;
+            border-radius: 4px;
         }
     }
 }

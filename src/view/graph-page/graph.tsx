@@ -76,7 +76,7 @@ export default function Graph(props) {
 
     return {
       title: {
-        text: '图谱可视化'
+        text: ''
         // top: 'bottom',
         // left: 'right'
       },

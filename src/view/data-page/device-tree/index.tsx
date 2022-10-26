@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Spin, Input, Cascader } from 'antd';
 import useFetch from '@/hooks/common/useFetch';
 import TreeWithContextMenu from '../components/tree/TreeWithContextMenu';
-// import TreeGarph from '../components/tree/tree-graph';
+import TreeGarph from '../components/tree/tree-graph';
 
 import { getEquipmentTreeData, getEquipmentSubData } from '@/axios';
 import './index.less';
@@ -75,8 +75,13 @@ export default function DeviceTree(props) {
         />
       </div>
 
-      <Spin spinning={loading} className="content">
-        <TreeWithContextMenu initTreeData={data} refresh={() => dispatch(value)} />
+      <Spin spinning={loading}>
+        <div style={{ display: 'flex' }}>
+          <div style={{ flex: 1 }}>
+            <TreeWithContextMenu initTreeData={data} refresh={() => dispatch(value)} />
+          </div>
+          <TreeGarph data={data} />
+        </div>
       </Spin>
     </div>
   );

@@ -9,7 +9,7 @@ export default function Export(props) {
     if (!url) {
       throw new Error('Resource URL not provided! You need to provide one');
     }
-    const name = url.substring(url.lastIndexOf('.') + 1);
+    const name = url.substring(url.lastIndexOf('/') + 1);
     fetch(url)
       .then(response => response.blob())
       .then(blob => {

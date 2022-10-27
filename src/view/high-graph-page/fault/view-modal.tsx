@@ -31,9 +31,6 @@ export default function ViewModal(props) {
               <div>
                 <span>解决方案</span>：{data.processingMethods || '--'}
               </div>
-              <div>
-                <span>pdf 位置</span>：{data.pdfPages || '--'}
-              </div>
             </div>
             <div style={{ textAlign: 'center', marginTop: 12 }}>
               <Button type="primary" onClick={() => onCancel()}>

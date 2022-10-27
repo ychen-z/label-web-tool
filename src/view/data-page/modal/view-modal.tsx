@@ -6,8 +6,8 @@ import { getFileById, getFileContent } from '@/axios';
 import { debounce } from '@/utils/tools';
 
 const tagStyle = {
-  background: 'rgb(250, 84, 28)',
-  color: 'rgb(255, 255, 255)',
+  background: '#F1F1F1',
+  color: '#333',
   padding: '2px 6px',
   borderRadius: '4px'
 };
@@ -52,7 +52,7 @@ export default function ViewModal(props) {
                         <p dangerouslySetInnerHTML={{ __html: item.textMark }} />
                         <code>
                           {item?.textTags?.map(i => (
-                            <div style={{ height: '22px', lineHeight: '22px' }}>
+                            <div style={{ marginBottom: '12px', lineHeight: '24px' }}>
                               <span style={tagStyle}>{i.headEntity}</span> -
                               <span style={{ margin: '12px', textDecoration: 'underline' }}>{i.relation}</span>-{' '}
                               <span style={tagStyle}>{i.tailEntity}</span>
@@ -66,7 +66,7 @@ export default function ViewModal(props) {
               {type === 'equipment' &&
                 list.map(item => (
                   <p key={item.code}>
-                    code: {item.code} - {item.name} ;type: {item.type} - {item.equipmentTypeCode}
+                    滨海电厂- 类型: {item.type} ； 设备编码：{item.equipmentTypeCode}； 资产编码：{item.code}
                   </p>
                 ))}
             </div>

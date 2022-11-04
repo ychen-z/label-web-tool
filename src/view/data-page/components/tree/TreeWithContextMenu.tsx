@@ -74,7 +74,7 @@ export default ({ initTreeData, refresh, getEquipmentSubTreeDataFunc, onSelect }
 
   useEffect(() => {
     if (initTreeData) {
-      setTreeData(initTreeData);
+      setTreeData(convertData(initTreeData));
     }
   }, [initTreeData]);
 

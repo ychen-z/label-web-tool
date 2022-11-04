@@ -4,14 +4,16 @@ import useFetch from '@/hooks/common/useFetch';
 import TreeWithContextMenu from '../components/tree/TreeWithContextMenu';
 import TreeGarph from '../components/tree/tree-graph';
 
-import { getEquipmentTreeData, getEquipmentSubData } from '@/axios';
+import { getEquipmentTreeData, getEquipmentSubData, getEquipmentSubTreeData } from '@/axios';
 import './index.less';
 
 export default function DeviceTree(props) {
-  const { data, dispatch, isLoading: loading } = useFetch(getEquipmentTreeData);
-  const { dispatch: dispathcGetOptions } = useFetch(getEquipmentSubData, null, false);
+  const { data, dispatch, isLoading: loading } = useFetch(getEquipmentTreeData); // 整数
+  const { dispatch: dispathcGetOptions } = useFetch(getEquipmentSubData, null, false); // 获取下级设备
+  const { dispatch: getEquipmentSubTreeDataFunc } = useFetch(getEquipmentSubTreeData, null, false);
   const [value, setValue] = useState<string>('');
   const [options, setOptions] = useState([]);
+  const [treeGraphData, setTreeGraphData] = useState([]);
 
   const onSearch = () => {
     dispatch({ keyword: value });
@@ -36,6 +38,12 @@ export default function DeviceTree(props) {
     });
   };
 
+  const onSelect = (v: any, node: any) => {
+    getEquipmentSubTreeDataFunc({ level: 0, pid: v }).then(res => {
+      setTreeGraphData([{ ...node.node, children: res }]);
+    });
+  };
+
   useEffect(() => {
     dispathcGetOptions({ pid: 0 }).then(res => {
       res.map(item => {
@@ -43,6 +51,10 @@ export default function DeviceTree(props) {
         return item;
       });
       setOptions(res);
+    });
+
+    getEquipmentSubTreeDataFunc({ pid: 0, level: 1 }).then(res => {
+      setTreeGraphData(res);
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -78,9 +90,14 @@ export default function DeviceTree(props) {
       <Spin spinning={loading}>
         <div style={{ display: 'flex' }}>
           <div style={{ flex: 1 }}>
-            <TreeWithContextMenu initTreeData={data} refresh={() => dispatch(value)} />
+            <TreeWithContextMenu
+              onSelect={onSelect}
+              getEquipmentSubTreeDataFunc={getEquipmentSubTreeDataFunc}
+              initTreeData={data}
+              refresh={() => dispatch(value)}
+            />
           </div>
-          <TreeGarph data={data} />
+          <TreeGarph data={treeGraphData} />
         </div>
       </Spin>
     </div>

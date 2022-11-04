@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Tree, Dropdown, Menu } from 'antd';
 import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
 
-import { getEquipmentSubTreeData, delEquipmentById } from '@/axios';
-import useFetch from '@/hooks/common/useFetch';
+import { delEquipmentById } from '@/axios';
 import DeL from './delTreeNode';
 import AddNode from './add-node-modal'; // 新增节点
 
@@ -44,10 +43,8 @@ const updateTreeData = (list: DataNode[], id: React.Key, children: DataNode[]): 
     return node;
   });
 
-export default ({ initTreeData, refresh }) => {
+export default ({ initTreeData, refresh, getEquipmentSubTreeDataFunc, onSelect }) => {
   const [treeData, setTreeData] = useState<any>(null);
-
-  const { dispatch } = useFetch(getEquipmentSubTreeData, null);
 
   const onLoadData = ({ id, children }: any) =>
     new Promise<void>(resolve => {
@@ -56,7 +53,7 @@ export default ({ initTreeData, refresh }) => {
         return;
       }
 
-      dispatch({ pid: id }).then((children: any) => {
+      getEquipmentSubTreeDataFunc({ pid: id }).then((children: any) => {
         setTreeData(pre => updateTreeData(pre, id, children));
         resolve();
       });
@@ -87,6 +84,7 @@ export default ({ initTreeData, refresh }) => {
     <Tree
       style={{ minHeight: 'calc(100vh - 200px)', maxHeight: 'calc(100vh - 200px)', overflowY: 'scroll' }}
       loadData={onLoadData}
+      onSelect={onSelect}
       treeData={convertData(treeData)}
       titleRender={(item: any) => (
         <Dropdown overlay={<TreeMenu {...item} />} trigger={['contextMenu']}>

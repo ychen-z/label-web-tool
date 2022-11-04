@@ -22,13 +22,29 @@ export default function TreeGraph(props) {
         {
           name: '设备树',
           type: 'tree',
-          symbolSize: 7,
+          height: 600,
+          top: 0,
+          right: '20%',
           data: graph,
+          position: 'top',
+          symbolSize: 6,
+          lineStyle: {
+            color: '#00446B'
+          },
+          roam: true,
           label: {
+            height: 24,
+            padding: 4,
+            lineHeight: 24,
+            borderWidth: 0.5, // 边框宽度
+            borderRadius: 20, // 边框圆角
+            borderColor: '#FFF', // 文字块的边框色
+            backgroundColor: '#00446B',
             position: 'left',
             verticalAlign: 'middle',
-            align: 'right',
-            fontSize: 9
+            align: 'left',
+            color: '#fff',
+            fontSize: 12
           },
           leaves: {
             label: {
@@ -73,10 +89,10 @@ export default function TreeGraph(props) {
     <div
       ref={echartsRef}
       style={{
-        flex: 1,
+        flex: 2,
         padding: 12,
         border: '1px solid #f1f1f',
-        height: '400px'
+        minHeight: '600px'
       }}
     />
   );

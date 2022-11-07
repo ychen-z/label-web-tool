@@ -35,7 +35,7 @@ export default function CasLogin() {
         // 建议后端写cookie，如果不写，则需要前端写，然后通过 axios header 的形式传递
         // localStorage.setItem('tokenData', data.data.tokenData); 后端写cookie
         localStorage.setItem('user', data.data); // 然后再
-        history.push('/');
+        history.push('/app/data/origin');
       })
       .catch(e => {});
   };

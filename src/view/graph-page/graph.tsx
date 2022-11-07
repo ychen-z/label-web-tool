@@ -1,56 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
-// then import echarts modules those you have used manually.
 import * as echarts from 'echarts';
-// import 'echarts/lib/chart/bar';
-// import 'echarts/lib/chart/pie';
-// import 'echarts/lib/chart/scatter';
-// import 'echarts/lib/chart/radar';
-
-// import 'echarts/lib/chart/map';
-// import 'echarts/lib/chart/treemap';
-import 'echarts/lib/chart/graph';
-// import 'echarts/lib/chart/gauge';
-// import 'echarts/lib/chart/funnel';
-// import 'echarts/lib/chart/parallel';
-// import 'echarts/lib/chart/sankey';
-// import 'echarts/lib/chart/boxplot';
-// import 'echarts/lib/chart/candlestick';
-// import 'echarts/lib/chart/effectScatter';
-// import 'echarts/lib/chart/lines';
-// import 'echarts/lib/chart/heatmap';
-
-// import 'echarts/lib/component/graphic';
-// import 'echarts/lib/component/grid';
-// import 'echarts/lib/component/legend';
-import 'echarts/lib/component/tooltip';
-// import 'echarts/lib/component/polar';
-// import 'echarts/lib/component/geo';
-// import 'echarts/lib/component/parallel';
-// import 'echarts/lib/component/singleAxis';
-// import 'echarts/lib/component/brush';
-
-import 'echarts/lib/component/title';
-
-// import 'echarts/lib/component/dataZoom';
-// import 'echarts/lib/component/visualMap';
-
-// import 'echarts/lib/component/markPoint';
-// import 'echarts/lib/component/markLine';
-// import 'echarts/lib/component/markArea';
-
-// import 'echarts/lib/component/timeline';
-// import 'echarts/lib/component/toolbox';
-
-// import 'zrender/lib/vml/vml';
 
 import { getTripleTreeData, getTripleSearchData } from '@/axios';
-
-// Register the required components
-// echarts.use([GraphChart]);
-
-// echarts.registerTheme('my_theme', {
-//   backgroundColor: '#f4cccc'
-// });
 
 const config = {
   CAUSE: '原因',
@@ -70,6 +21,7 @@ export default function Graph(props) {
       return a;
     });
 
+    debugger;
     const categories = graph.categories.map(function(a) {
       return a.name;
     });
@@ -97,11 +49,14 @@ export default function Graph(props) {
         }
       ],
       animationDuration: 1500,
+
       series: [
         {
           name: '',
           type: 'graph',
           layout: 'force',
+          legendHoverLink: true, //是否启用图例 hover(悬停) 时的联动高亮。
+          hoverAnimation: true, //是否开启鼠标悬停节点的显示动画
           data: graph.nodes.map((item, index) => {
             return {
               ...item,
@@ -109,12 +64,7 @@ export default function Graph(props) {
               category: categories.findIndex(_ => _ == config[item.entityType])
             };
           }),
-          links: graph.links.map(item => {
-            return {
-              source: item.source + '',
-              target: item.target + ''
-            };
-          }),
+          links: graph.links,
           categories: graph.categories,
           roam: true,
           label: {
@@ -122,15 +72,56 @@ export default function Graph(props) {
             formatter: '{b}'
           },
           lineStyle: {
-            color: 'source',
-            curveness: 0.3
+            //==========关系边的公用线条样式。
+            normal: {
+              color: 'rgba(255,0,255,0.4)',
+              width: '1',
+              type: 'solid', //线的类型 'solid'（实线）'dashed'（虚线）'dotted'（点线）
+              curveness: 0.3, //线条的曲线程度，从0到1
+              opacity: 1
+              // 图形透明度。支持从 0 到 1 的数字，为 0 时不绘制该图形。默认0.5
+            },
+            emphasis: {
+              //高亮状态
+            }
           },
-          emphasis: {
-            focus: 'adjacency',
-            lineStyle: {
-              width: 10
+          // label: {
+          //   //=============图形上的文本标签
+          //   normal: {
+          //     show: true, //是否显示标签。
+          //     position: 'inside', //标签的位置。['50%', '50%'] [x,y]
+          //     textStyle: {
+          //       //标签的字体样式
+          //       color: '#cde6c7', //字体颜色
+          //       fontStyle: 'normal', //文字字体的风格 'normal'标准 'italic'斜体 'oblique' 倾斜
+          //       fontWeight: 'bolder', //'normal'标准'bold'粗的'bolder'更粗的'lighter'更细的或100 | 200 | 300 | 400...
+          //       fontFamily: 'sans-serif', //文字的字体系列
+          //       fontSize: 12 //字体大小
+          //     }
+          //   },
+          //   emphasis: {
+          //     //高亮状态
+          //   }
+          // },
+          edgeLabel: {
+            //==============线条的边缘标签
+            normal: {
+              show: false
+            },
+            emphasis: {
+              //高亮状态
             }
           }
+          // lineStyle: {
+          //   color: 'source',
+          //   curveness: 0.3
+          // },
+          // emphasis: {
+          //   focus: 'adjacency',
+          //   lineStyle: {
+          //     width: 10
+          //   }
+          // }
         }
       ]
     };
@@ -147,7 +138,7 @@ export default function Graph(props) {
   useEffect(() => {
     if (type === 'TREE') {
       getTripleTreeData({ keyword }).then((res: any) => {
-        res.nodes.shift();
+        // res.nodes.shift();
         setData(res);
       });
     } else {

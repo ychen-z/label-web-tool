@@ -8,7 +8,7 @@ function Header(props: any) {
   const userName = localStorage.getItem('user') || '专家';
 
   return (
-    <nav className="g-header-nav" style={{ display: 'none' }}>
+    <nav className="g-header-nav">
       <div className="g-header-nav-logo" />
       <div className="g-header-nav-title">电厂关键设备知识图谱</div>
       <div className="g-header-nav-login">

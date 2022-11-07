@@ -65,15 +65,15 @@ export default function TreeGraph(props) {
   };
 
   const convertData = (data: Array<any>) => {
-    data.forEach(item => {
+    data?.forEach(item => {
       item.title = item.name;
       item.key = item.id;
-      item.children = item.children || item.subEquipments;
-      if (item.children) {
+      item.children = item.children || item.subEquipments || [];
+      if (item.children.length) {
         convertData(item.children);
       }
     });
-    return data;
+    return data || [];
   };
 
   useEffect(() => {

@@ -49,7 +49,7 @@ const MENU_MAP: MenuItemType[] = [
       {
         id: 60,
         parentId: 6,
-        name: '实体',
+        name: '实体抽取',
         link: '/app/graph/mng',
         children: [
           {
@@ -67,14 +67,14 @@ const MENU_MAP: MenuItemType[] = [
           {
             id: 602,
             parentId: 60,
-            name: '实体抽取',
+            name: '实体发现',
             link: '/app/graph/tool/dic'
           }
         ]
       },
       {
         id: 61,
-        name: '关系',
+        name: '关系抽取',
         parentId: 6,
         link: '/app/graph/text',
         children: [
@@ -93,7 +93,7 @@ const MENU_MAP: MenuItemType[] = [
           {
             id: 612,
             parentId: 61,
-            name: '关系抽取',
+            name: '关系发现',
             link: '/app/graph/tool/rel'
           }
         ]
@@ -102,13 +102,21 @@ const MENU_MAP: MenuItemType[] = [
         id: 63,
         name: '设备树',
         parentId: 6,
-        link: '/app/device/tree'
-      },
-      {
-        id: 64,
-        name: '关系数据',
-        parentId: 6,
-        link: '/app/graph/relation'
+        link: '/app/device',
+        children: [
+          {
+            id: 631,
+            name: '设备树构建',
+            parentId: 63,
+            link: '/app/graph/relation'
+          },
+          {
+            id: 630,
+            name: '设备树查看',
+            parentId: 63,
+            link: '/app/device/tree'
+          }
+        ]
       }
     ]
   },

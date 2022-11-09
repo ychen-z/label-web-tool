@@ -14,16 +14,20 @@ interface DataNode {
 }
 
 const convertData = (data: Array<any>) => {
-  data.forEach(item => {
+  data?.forEach(item => {
     item.title = item.name;
     item.key = item.id;
-    item.children = item.children || item.subEquipments;
-    if (item.children) {
+    item.children = item.children || item.subEquipments || [];
+    if (item.children.length) {
+      item.leaf = false;
       convertData(item.children);
+    } else {
+      item.leaf = true;
     }
+    return item;
   });
 
-  return data;
+  return data || [];
 };
 
 const updateTreeData = (list: DataNode[], id: React.Key, children: DataNode[]): DataNode[] =>
@@ -74,6 +78,8 @@ export default ({ initTreeData, refresh, getEquipmentSubTreeDataFunc, onSelect }
 
   useEffect(() => {
     if (initTreeData) {
+      console.log(convertData(initTreeData));
+      debugger;
       setTreeData(convertData(initTreeData));
     }
   }, [initTreeData]);

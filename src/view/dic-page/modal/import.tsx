@@ -36,7 +36,7 @@ const ADDModal = (props: Props) => {
   const { dispatch: addFunc } = useFetch(postDic, null, false); // 新增
   const title = (type === 'EDIT' ? '编辑' : '新增') + subTitle;
   const fileType = { '0': 'TXT_CORPUS', '1': 'RELATION_CORPUS' }[dictType];
-  const { data: fileList } = useFetch(getFileData, { page: 0, size: Infinity, fileType });
+  const { data: fileList } = useFetch(getFileData, { page: 1, size: Infinity, fileType });
 
   const fetch = (values: any) => {
     form.validateFields().then(values => {

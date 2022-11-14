@@ -8,10 +8,10 @@ import RgCheckInModal from '../modal/rg-check-in-modal';
 import './index.less';
 
 export default function TextData(props) {
-  const { data, dispatch, isLoading: loading } = useFetch(getFileData, { page: 0, size: Infinity, fileType: 'TXT_CORPUS' }, false);
+  const { data, dispatch, isLoading: loading } = useFetch(getFileData, { page: 1, size: Infinity, fileType: 'TXT_CORPUS' }, false);
 
   useEffect(() => {
-    dispatch({ page: 0, size: Infinity, fileType: 'TXT_CORPUS' });
+    dispatch({ page: 1, size: Infinity, fileType: 'TXT_CORPUS' });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

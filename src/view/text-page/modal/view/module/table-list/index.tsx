@@ -84,7 +84,7 @@ function TableList(props: TemplateTableProps) {
         dataSource={props.list}
         onChange={handleTableChange}
         tableLayout="fixed"
-        pagination={{ current: props.pagination.page, total: props.pagination.total, showQuickJumper: true, showSizeChanger: true }}
+        pagination={{ current: props.pagination.page + 1, total: props.pagination.total, showQuickJumper: true, showSizeChanger: true }}
       />
     </div>
   );

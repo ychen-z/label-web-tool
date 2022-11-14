@@ -7,10 +7,10 @@ import AddModal from '../modal/add';
 import './index.less';
 
 export default function OriginData(props) {
-  const { data, dispatch, isLoading: loading } = useFetch(getFileData, { page: 0, size: Infinity, fileType: 'ORIGINAL_CORPUS' }, false);
+  const { data, dispatch, isLoading: loading } = useFetch(getFileData, { page: 1, size: Infinity, fileType: 'ORIGINAL_CORPUS' }, false);
 
   useEffect(() => {
-    dispatch({ page: 0, size: Infinity, fileType: 'ORIGINAL_CORPUS' });
+    dispatch({ page: 1, size: Infinity, fileType: 'ORIGINAL_CORPUS' });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

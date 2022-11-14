@@ -13,7 +13,7 @@ const { Option } = Select;
 export default function TrainingModel(props) {
     const { textType } = props;
     const { refreshState } = useContext(GlobalContext);
-    const { dispatch: dispatchPostTrainModel, isLoading } = useFetch(postTrainModel, { page: 0, textType, size: Infinity }, false);
+    const { dispatch: dispatchPostTrainModel, isLoading } = useFetch(postTrainModel, { page: 1, textType, size: Infinity }, false);
     const { data: currentRateData, dispatch: dispatchGetCurrentRate } = useFetch(getCurrentRate, { textType });
     const { data: historyRateData, dispatch: dispatchGetHistoryRates } = useFetch(getHistoryRates, { textType });
 

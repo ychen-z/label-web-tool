@@ -9,13 +9,13 @@ import AddModal from '../modal/add';
 import './index.less';
 
 export default function TripleData(props) {
-  const { data, dispatch, isLoading: loading } = useFetch(getFileData, { page: 0, size: Infinity, fileType: 'EQUIPMENT' }, false);
+  const { data, dispatch, isLoading: loading } = useFetch(getFileData, { page: 1, size: Infinity, fileType: 'EQUIPMENT' }, false);
   // const history = useHistory();
   // const onNavigateTo = () => {
   //   history.push('/app/device/tree');
   // };
   useEffect(() => {
-    dispatch({ page: 0, size: Infinity, fileType: 'EQUIPMENT' });
+    dispatch({ page: 1, size: Infinity, fileType: 'EQUIPMENT' });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -26,7 +26,6 @@ export default function TripleData(props) {
           <AddModal accept="xlsx" type="ADD" fileType="EQUIPMENT" refresh={dispatch}>
             <Button>+ 模板导入</Button>
           </AddModal>
-          <Divider type="vertical" />
           {/* <RgCheckInModal refresh={dispatch} fileType="EQUIPMENT" /> */}
         </div>
 

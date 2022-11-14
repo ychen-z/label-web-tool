@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import * as echarts from 'echarts';
 
-import { getTripleTreeData, getTripleSearchData } from '@/axios';
+import { getTripleTreeData, getTripleSearchData, equipmentAdd } from '@/axios';
 
 const config = {
   CAUSE: '原因',
@@ -14,7 +14,8 @@ const config = {
 export default function Graph(props) {
   const { refresh, keyword, type = 'TREE', callback } = props;
   const [data, setData] = useState(null);
-  const echartsRef = useRef(null);
+  const echartsRef = useRef<HTMLDivElement>(null);
+  const myChartRef = useRef() as any;
   const getOption = graph => {
     graph.categories = graph.categories.map(function(a) {
       a.name = config[a.name];
@@ -29,6 +30,7 @@ export default function Graph(props) {
       title: {
         text: ''
       },
+      focusNodeAdjacency: true,
       tooltip: {
         //内边距
         enterable: true,
@@ -60,11 +62,17 @@ export default function Graph(props) {
             return {
               ...item,
               id: item.id + '',
+
               category: categories.findIndex(_ => _ == config[item.entityType])
             };
           }),
           links: graph.links.map(item => {
             item.value = item.targetName + '>' + item.sourceName;
+            item.lineStyle = {
+              opacity: 0.4,
+              color: 'red',
+              curveness: 0.3
+            };
             return item;
           }),
           categories: graph.categories,
@@ -74,52 +82,9 @@ export default function Graph(props) {
             formatter: '{b}'
           },
           // lineStyle: {
-          //   //==========关系边的公用线条样式。
-          //   normal: {
-          //     color: 'rgba(255,0,255,0.4)',
-          //     width: '1',
-          //     type: 'solid', //线的类型 'solid'（实线）'dashed'（虚线）'dotted'（点线）
-          //     curveness: 0.3 //线条的曲线程度，从0到1
-          //     // 图形透明度。支持从 0 到 1 的数字，为 0 时不绘制该图形。默认0.5
-          //   },
-          //   emphasis: {
-          //     //高亮状态
-          //     color: 'red',
-          //     opacity: 1
-          //   }
+          //   color: '#ccc',
+          //   curveness: 0.3
           // },
-          // label: {
-          //   //=============图形上的文本标签
-          //   normal: {
-          //     show: true, //是否显示标签。
-          //     position: 'inside', //标签的位置。['50%', '50%'] [x,y]
-          //     textStyle: {
-          //       //标签的字体样式
-          //       color: '#cde6c7', //字体颜色
-          //       fontStyle: 'normal', //文字字体的风格 'normal'标准 'italic'斜体 'oblique' 倾斜
-          //       fontWeight: 'bolder', //'normal'标准'bold'粗的'bolder'更粗的'lighter'更细的或100 | 200 | 300 | 400...
-          //       fontFamily: 'sans-serif', //文字的字体系列
-          //       fontSize: 12 //字体大小
-          //     }
-          //   },
-          //   emphasis: {
-          //     //高亮状态
-          //   }
-          // },
-          // edgeLabel: {
-          //   //==============线条的边缘标签
-          //   normal: {
-          //     show: false
-          //   },
-          //   emphasis: {
-          //     //高亮状态
-          //     color: 'red'
-          //   }
-          // }
-          lineStyle: {
-            color: '#ccc',
-            curveness: 0.3
-          },
           emphasis: {
             focus: 'adjacency',
             lineStyle: {
@@ -132,11 +97,55 @@ export default function Graph(props) {
     };
   };
 
+  // const findDataIndex = useCallback(
+  //   (datasource, id) => {
+  //     // 获取当前id
+  //     const { links, data } = datasource;
+  //     const link = links.find(item => item.target == id);
+  //     if (link && id != '9647358616260') {
+  //       console.log('-------');
+  //       console.log(id, link);
+  //       const index = data.findIndex(item => item.id == id);
+  //       console.log(index);
+  //       debugger;
+  //       myChartRef.current.dispatchAction({
+  //         type: 'highlight',
+  //         seriesIndex: [0],
+  //         dataIndex: [index]
+  //       });
+  //       // 继续找到父节点id
+  //       findDataIndex(datasource, link.source);
+  //     }
+  //   },
+  //   [myChartRef]
+  // );
+
+  // 需要高亮的节点数组
+  const findDataIndex = (links, id) => {
+    let dataIndex = [];
+
+    const findIndex = id => {
+      let temp = links.find(item => item.target == id); // 找到当前节点
+      let index = links.findIndex(item => item.target == id); // 当前节点的索引
+
+      if (temp?.source != 9647358616260) {
+        findIndex(temp.source);
+      }
+
+      if (index > -1) {
+        dataIndex.push(index);
+      }
+    };
+    findIndex(id);
+
+    return dataIndex;
+  };
+
   useEffect(() => {
-    if (data) {
-      var myChart = echarts.init(echartsRef.current);
+    if (data && echartsRef.current) {
+      myChartRef.current = echarts.init(echartsRef.current);
       var option = getOption(data);
-      myChart.setOption(option);
+      myChartRef.current.setOption(option);
 
       // myChart.dispatchAction({
       //   type: 'highlight',
@@ -153,44 +162,43 @@ export default function Graph(props) {
       //   myChart.setOption(option);
       // });
 
-      // myChart.on('click', params => {
-      //   let { nodes, links } = data;
-      //   debugger;
-      //   if (params.dataType === 'node') {
-      //     nodes.forEach(node => {
-      //       node.itemStyle.opacity = 0.1;
-      //     });
-      //     if (links.length === 1) {
-      //       nodes.forEach(node => {
-      //         if (node['line'].includes(params.data['line'][0])) {
-      //           node.itemStyle.opacity = 1;
-      //         }
-      //       });
-      //     } else {
-      //       links.forEach(item => {
-      //         nodes.forEach(node => {
-      //           if (node['line'].includes(item)) {
-      //             node.itemStyle.opacity = 1;
-      //           }
-      //         });
-      //       });
-      //     }
-      //   }
-      //   myChart.setOption(option);
-      // });
+      myChartRef.current.on('click', params => {
+        let series = myChartRef.current.getOption().series[0];
 
-      // myChart.on('mouseover', function(params) {
-      //   let series = myChart.getOption().series;
-      //   var clickSeries = series[params.seriesIndex].data;
-      //   var entry = clickSeries[params.dataIndex];
-      //   debugger;
-      //   entry.clicked = !entry.clicked;
-      //   var any = clickSeries.filter(d => d.clicked).length !== 0;
-      //   series.map(d => (d.itemStyle.opcacity = !any || d.clicked ? 1 : 0.3));
-      //   myChart.setOption({ series });
-      // });
+        const dataIndex = findDataIndex(series.links, params.data.id);
+
+        myChartRef.current.dispatchAction({
+          type: 'highlight',
+          seriesIndex: [0],
+          dataIndex: dataIndex
+        });
+
+        // if (params.dataType === 'node') {
+        //   // data.forEach(node => {
+        //   //   debugger;
+        //   //   node.itemStyle.opacity = 0.1;
+        //   // });
+        //   if (links.length === 1) {
+        //     data.forEach(node => {
+        //       if (node['line'].includes(params.data['line'][0])) {
+        //         node.itemStyle.opacity = 1;
+        //       }
+        //     });
+        //   } else {
+        //     links.forEach(item => {
+        //       data.forEach(node => {
+        //         if (node['line'].includes(item)) {
+        //           node.itemStyle.opacity = 1;
+        //         }
+        //       });
+        //     });
+        //   }
+        // }
+        // myChartRef.current.setOption(option);
+      });
     }
-  }, [data]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data, myChartRef]);
 
   useEffect(() => {
     if (type === 'TREE') {

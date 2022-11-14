@@ -18,13 +18,13 @@ export default function Dictionary(props) {
 
   const dictType = TYPES[params.type];
   const subTitle = dictType == 1 ? '关系' : '实体';
-  const { dispatch: getDicTableData, isLoading } = useFetch(getDicAll, { page: 0, size: Infinity, dictType }, false);
-  const { dispatch: getActiveDicTableData } = useFetch(getActiveDic, { page: 0, size: Infinity, dictType }, false);
+  const { dispatch: getDicTableData, isLoading } = useFetch(getDicAll, { page: 1, size: Infinity, dictType }, false);
+  const { dispatch: getActiveDicTableData } = useFetch(getActiveDic, { page: 1, size: Infinity, dictType }, false);
   const [selectedKeys, setSelectedKeys] = useState([]);
   const [dataSource, setDataSource] = useState([]);
 
   const refresh = () => {
-    getDicTableData({ page: 0, size: Infinity, dictType }).then(res => {
+    getDicTableData({ page: 1, size: Infinity, dictType }).then(res => {
       setDataSource(res.content);
     });
   };
@@ -42,7 +42,7 @@ export default function Dictionary(props) {
         setDataSource(res);
       });
     } else {
-      getDicTableData({ page: 0, size: Infinity, dictType }).then(res => {
+      getDicTableData({ page: 1, size: Infinity, dictType }).then(res => {
         let dictIdss = localStorage
           .getItem('dictIds-' + dictType)
           ?.split(',')

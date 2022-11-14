@@ -19,6 +19,9 @@ service.interceptors.request.use(
   (config: any) => {
     // header 中增加 32 位签名
     config.url = `/api${config.url}`;
+    if (config?.params?.page) {
+      config.params.page = config.params.page - 1;
+    }
     if (/get/i.test(config.method) && config.url != SPECIAL) {
       // 检测是否存在该请求
       const requestIndex = requestList.findIndex(el => el === config.url);

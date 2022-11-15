@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Card, Input, Tabs } from 'antd';
-import Graph from '../../graph-page/graph';
+import Graph from '../graph';
 import './index.less';
 
 export default function HighSearch() {

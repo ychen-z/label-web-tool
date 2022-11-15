@@ -23,7 +23,7 @@ export const urlObj = {
   },
 
   label: {
-    name: '实体',
+    name: '标签',
     link: '/app/graph/label',
     component: load(() => import('@/view/label-page')),
     needAuth: false
@@ -89,19 +89,6 @@ export const urlObj = {
     needAuth: false
   },
 
-  // GraphPage: {
-  //   name: '图谱可视化',
-  //   link: '/app/graph',
-  //   component: load(() => import('@/view/graph-page/index')),
-  //   needAuth: false
-  // },
-
-  // HighGraphPage: {
-  //   name: '图谱高级应用',
-  //   link: '/app/high',
-  //   component: load(() => import('@/view/high-graph-page/index')),
-  //   needAuth: false
-  // },
   HighSearch: {
     name: '智能检索',
     link: '/app/high/search',

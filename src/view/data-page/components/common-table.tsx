@@ -47,7 +47,7 @@ export default function OriginTable(props) {
               </>
             )}
 
-            <Export url={row.filePathURL} />
+            <Export url={row.filePathURL} fileName={row.fileName} />
           </Space>
         );
       }

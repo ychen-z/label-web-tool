@@ -70,7 +70,7 @@ export default function OriginTable(props) {
             <Del id={row.id} func={delFile} refresh={refresh} />
 
             <Divider type="vertical" />
-            <Export url={row.filePathURL} />
+            <Export url={row.filePathURL} fileName={row.fileName} />
           </Space>
         );
       }

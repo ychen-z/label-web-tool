@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Card, Button, Divider } from 'antd';
-import Graph from '../../graph-page/graph';
+import Graph from '../graph';
 import AddModal from '@/view/data-page/modal/add';
 import ExpertCheckInModal from './expert-check-in-modal';
 import './index.less';

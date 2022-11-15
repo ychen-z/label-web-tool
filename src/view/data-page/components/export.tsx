@@ -1,15 +1,15 @@
 import React from 'react';
 import IconSet from '@/components/icon';
 
-// 导出
+// 导出 文件名修改
 export default function Export(props) {
-  const { url } = props;
+  const { url, fileName } = props;
 
   const download = url => {
     if (!url) {
       throw new Error('Resource URL not provided! You need to provide one');
     }
-    const name = url.substring(url.lastIndexOf('/') + 1);
+    const ext = url.substring(url.lastIndexOf('.'));
     fetch(url)
       .then(response => response.blob())
       .then(blob => {
@@ -18,7 +18,7 @@ export default function Export(props) {
         a.href = blobURL;
         a.style = 'display: none';
 
-        if (name && name.length) a.download = name;
+        if (ext && ext.length) a.download = fileName + ext;
         document.body.appendChild(a);
         a.click();
       })

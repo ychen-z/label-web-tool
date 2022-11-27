@@ -82,6 +82,13 @@ export const urlObj = {
     needAuth: false
   },
 
+  GraphPage: {
+    name: '图谱',
+    link: '/app/graph/page',
+    component: load(() => import('@/view/high-graph-page/graph-page')),
+    needAuth: false
+  },
+
   GraphRelation: {
     name: '关系图谱',
     link: '/app/graph/relation',
@@ -120,7 +127,7 @@ const {
   EntityData,
   TripleData,
   DeviceData,
-  // GraphPage,
+  GraphPage,
   // HighGraphPage,
   HighSearch,
   HighFault,
@@ -140,7 +147,7 @@ export const routes = [
   EntityData,
   TripleData,
   DeviceData,
-  // GraphPage,
+  GraphPage,
   // HighGraphPage,
   HighSearch,
   HighFault,

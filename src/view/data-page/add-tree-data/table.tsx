@@ -4,7 +4,7 @@ import { renderSize } from '@/utils/tools';
 import AddTree from './addTree';
 
 export default function OriginTable(props) {
-  const { loading, dataSource } = props;
+  const { loading, dataSource, refresh, func } = props;
 
   const columns = [
     {
@@ -39,7 +39,7 @@ export default function OriginTable(props) {
       width: 240,
       render: (elem: any, record: any, index: number) => {
         if (record.regulationStatus == 'WAIT_ADD') {
-          return <AddTree {...record} />;
+          return <AddTree {...record} func={func} refresh={refresh} />;
         } else {
           return null;
         }

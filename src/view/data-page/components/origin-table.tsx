@@ -1,7 +1,7 @@
 import React from 'react';
-import { Table, Space, Divider, Badge } from 'antd';
+import { Table, Space, Divider, Badge, message } from 'antd';
 import IconSet from '@/components/icon';
-import { delFile } from '@/axios';
+import { delFile, addFromFile } from '@/axios';
 import { renderSize } from '@/utils/tools';
 import UpdateModal from '../modal/add';
 import Del from '../modal/del';
@@ -18,6 +18,12 @@ const TEXT = {
 export default function OriginTable(props) {
   const { loading, refresh, dataSource } = props;
 
+  const handleAddFromFile = id => {
+    addFromFile(id).then(res => {
+      message.success('操作成功');
+    });
+  };
+
   const columns = [
     {
       title: '文件名称',
@@ -28,6 +34,7 @@ export default function OriginTable(props) {
     {
       title: '文件类型',
       dataIndex: 'fileExt',
+      width: 40,
       key: 'fileExt'
     },
     {
@@ -49,7 +56,7 @@ export default function OriginTable(props) {
     },
     {
       title: '操作',
-      width: 340,
+      width: 380,
       render: (elem: any, row: any, index: number) => {
         const { status } = elem;
         return (
@@ -64,6 +71,8 @@ export default function OriginTable(props) {
               <>
                 <Divider type="vertical" />
                 <RevertDrawer id={row.id} />
+                <Divider type="vertical" />
+                <a onClick={() => handleAddFromFile(row.id)}>添加至文本数据</a>
               </>
             )}
             <Divider type="vertical" />

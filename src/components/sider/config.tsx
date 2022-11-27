@@ -108,13 +108,33 @@ const MENU_MAP: MenuItemType[] = [
             id: 631,
             name: '设备树构建',
             parentId: 63,
-            link: '/app/graph/relation'
+            link: '/app/graph/relation?type=EQUIPMENT'
           },
           {
             id: 630,
             name: '设备树查看',
             parentId: 63,
             link: '/app/device/tree'
+          }
+        ]
+      },
+      {
+        id: 64,
+        name: '图谱',
+        parentId: 6,
+        link: '/app/graph',
+        children: [
+          {
+            id: 641,
+            name: '图谱构建',
+            parentId: 64,
+            link: '/app/graph/relation?type=RELATION_CORPUS'
+          },
+          {
+            id: 640,
+            name: '图谱查看',
+            parentId: 64,
+            link: '/app/graph/page'
           }
         ]
       }

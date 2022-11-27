@@ -9,6 +9,7 @@ export const getFileData = (data: any) => get({ url: '/fileInfo/', data }); // �
 export const getFileById = (data: any) => get({ url: '/fileInfo/' + data }); // 获取文件详情
 export const getFileContent = (data: any) => get({ url: '/fileInfo/' + data.type + '/' + data.id }); // 获取文件详情
 export const delFile = (data: any) => del({ url: '/fileInfo/' + data }); // 删除文件
+export const addFromFile = (data: any) => post({ url: '/text/addFromFile/' + data }); // 添加文件到文本数据
 export const fileUpload = (data: any) => post({ url: '/fileInfo/add', data }); // 文件上传
 export const tripleAdd = (data: any) => post({ url: '/triple/add', data }); // 导入三元组
 export const equipmentAdd = (data: any) => post({ url: '/equipment/add', data }); // 导入设备树
@@ -29,3 +30,4 @@ export const delEquipmentById = (data: any) => del({ url: '/equipment/tree/delet
 export const getRegulationById = (id: any) => get({ url: '/regulation/' + id }); // 获取规程详情
 export const postRegulation = (data: any) => post({ url: '/regulation/add', data }); // 专家入库
 export const addToTree = (fileId: any) => post({ url: '/triple/addToTree/' + fileId }); // 添加到图谱
+export const markTree = (fileId: any) => post({ url: '/equipment/markTree/' + fileId }); // 添加到设备树

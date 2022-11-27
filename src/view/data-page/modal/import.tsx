@@ -14,9 +14,9 @@ interface Props {
 }
 
 const URL = {
-  ENTITY_CORPUS: '/files/%E4%B8%89%E5%85%83%E7%BB%84%E6%A8%A1%E6%9D%BF.xlsx',
-  RELATION_CORPUS: '/files/%E4%B8%89%E5%85%83%E7%BB%84%E6%A8%A1%E6%9D%BF.xlsx',
-  EQUIPMENT: '/files/%E8%AE%BE%E5%A4%87%E6%A0%91%E6%A8%A1%E6%9D%BF.xlsx'
+  ENTITY_CORPUS: '/api/fileInfo/download/%E4%B8%89%E5%85%83%E7%BB%84%E6%A8%A1%E6%9D%BF.xlsx',
+  RELATION_CORPUS: '/api/fileInfo/download/%E4%B8%89%E5%85%83%E7%BB%84%E6%A8%A1%E6%9D%BF.xlsx',
+  EQUIPMENT: '/api/fileInfo/download/%E8%AE%BE%E5%A4%87%E6%A0%91%E6%A8%A1%E6%9D%BF.xlsx'
 };
 
 const ADDModal = (props: Props) => {

@@ -17,8 +17,10 @@ const convertData = (data: Array<any>) => {
   data?.forEach(item => {
     item.title = item.name;
     item.key = item.id;
-    item.children = item.children || item.subEquipments || [];
-    if (item.children.length) {
+    if (item.children || item.subEquipments) {
+      item.children = item.children || item.subEquipments;
+    }
+    if (item.children?.length) {
       item.leaf = false;
       convertData(item.children);
     } else {
@@ -32,7 +34,7 @@ const convertData = (data: Array<any>) => {
 
 const updateTreeData = (list: DataNode[], id: React.Key, children: DataNode[]): DataNode[] =>
   list.map(node => {
-    if (node.id === id) {
+    if (node.id === id && children) {
       return {
         ...node,
         children
@@ -52,12 +54,13 @@ export default ({ initTreeData, refresh, getEquipmentSubTreeDataFunc, onSelect }
 
   const onLoadData = ({ id, children }: any) =>
     new Promise<void>(resolve => {
-      if (children.length) {
+      if (children?.length) {
         resolve();
         return;
       }
 
       getEquipmentSubTreeDataFunc({ pid: id }).then((children: any) => {
+        // console.log(updateTreeData(treeData, id, children));
         setTreeData(pre => updateTreeData(pre, id, children));
         resolve();
       });

@@ -21,10 +21,7 @@ const convertData = (data: Array<any>) => {
       item.children = item.children || item.subEquipments;
     }
     if (item.children?.length) {
-      item.leaf = false;
       convertData(item.children);
-    } else {
-      item.leaf = true;
     }
     return item;
   });
@@ -59,8 +56,11 @@ export default ({ initTreeData, refresh, getEquipmentSubTreeDataFunc, onSelect }
         return;
       }
 
-      getEquipmentSubTreeDataFunc({ pid: id }).then((children: any) => {
-        // console.log(updateTreeData(treeData, id, children));
+      getEquipmentSubTreeDataFunc({ pid: id, level: 1 }).then((children: any) => {
+        children &&
+          children.map(item => {
+            item.subEquipments = null;
+          });
         setTreeData(pre => updateTreeData(pre, id, children));
         resolve();
       });

@@ -71,8 +71,8 @@ export default function OriginTable(props) {
               <>
                 <Divider type="vertical" />
                 <RevertDrawer id={row.id} />
-                <Divider type="vertical" />
-                <a onClick={() => handleAddFromFile(row.id)}>添加至文本数据</a>
+                {/* <Divider type="vertical" />
+                <a onClick={() => handleAddFromFile(row.id)}>添加至文本数据</a> */}
               </>
             )}
             <Divider type="vertical" />

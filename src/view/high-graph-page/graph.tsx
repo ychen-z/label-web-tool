@@ -125,11 +125,11 @@ export default function Graph(props) {
     let dataIndex = [];
 
     const findIndex = id => {
-      let temp = links.find(item => item.target == id); // 找到当前节点
-      let index = links.findIndex(item => item.target == id); // 当前节点的索引
+      let temp = links.find(item => item.source == id); // 找到当前节点
+      let index = links.findIndex(item => item.source == id); // 当前节点的索引
 
-      if (temp?.source != 9647358616260) {
-        findIndex(temp.source);
+      if (temp?.target != 9647358616260) {
+        temp.target && findIndex(temp.target);
       }
 
       if (index > -1) {
@@ -172,29 +172,6 @@ export default function Graph(props) {
           seriesIndex: [0],
           dataIndex: dataIndex
         });
-
-        // if (params.dataType === 'node') {
-        //   // data.forEach(node => {
-        //   //   debugger;
-        //   //   node.itemStyle.opacity = 0.1;
-        //   // });
-        //   if (links.length === 1) {
-        //     data.forEach(node => {
-        //       if (node['line'].includes(params.data['line'][0])) {
-        //         node.itemStyle.opacity = 1;
-        //       }
-        //     });
-        //   } else {
-        //     links.forEach(item => {
-        //       data.forEach(node => {
-        //         if (node['line'].includes(item)) {
-        //           node.itemStyle.opacity = 1;
-        //         }
-        //       });
-        //     });
-        //   }
-        // }
-        // myChartRef.current.setOption(option);
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

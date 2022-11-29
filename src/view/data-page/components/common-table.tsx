@@ -33,19 +33,17 @@ export default function OriginTable(props) {
             <ViewModal id={row.id} type={type} />
             <Divider type="vertical" />
             {/* 未导入,可进行操作 */}
-            {row.regulationStatus !== 'ALREADY_ADD' && (
-              <>
-                <UpdateModal fileType={fileType} data={row} type="EDIT" refresh={refresh}>
-                  <a>
-                    <IconSet type="icon-bianji" /> 编辑
-                  </a>
-                </UpdateModal>
+            {/* {row.regulationStatus !== 'ALREADY_ADD' && <></>} */}
 
-                <Divider type="vertical" />
-                <Del id={row.id} func={delFile} refresh={refresh} />
-                <Divider type="vertical" />
-              </>
-            )}
+            <UpdateModal fileType={fileType} data={row} type="EDIT" refresh={refresh}>
+              <a>
+                <IconSet type="icon-bianji" /> 编辑
+              </a>
+            </UpdateModal>
+
+            <Divider type="vertical" />
+            <Del id={row.id} func={delFile} refresh={refresh} />
+            <Divider type="vertical" />
 
             <Export url={row.filePathURL} fileName={row.fileName} />
           </Space>

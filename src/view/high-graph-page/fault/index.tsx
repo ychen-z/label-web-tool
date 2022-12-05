@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Card, Input, List } from 'antd';
 import Graph from '../graph';
-import './index.less';
 import ViewModal from './view-modal';
+import './index.less';
 
 export default function HighFault() {
   const [keyword, setKeyword] = useState(null);
@@ -13,7 +13,7 @@ export default function HighFault() {
     <div className="m-high-fault">
       <Card title={<Input.Search placeholder="故障查询，如：温度升高" allowClear onSearch={onSearch} style={{ width: 500 }} />}>
         <div className="content">
-          <Graph type="FAULT" refresh={false} keyword={keyword} callback={v => setList(v)} />
+          <Graph refresh={false} keyword={keyword} callback={v => setList(v)} />
           <div className="result">
             <div className="title">搜索结果</div>
             <div>

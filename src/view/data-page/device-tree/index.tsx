@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Spin, Input } from 'antd';
+import { Spin, Input, Button, Modal, message } from 'antd';
+import { ExclamationCircleFilled } from '@ant-design/icons';
 import useFetch from '@/hooks/common/useFetch';
 import TreeWithContextMenu from '../components/tree/TreeWithContextMenu';
 import TreeGarph from '../components/tree/tree-graph';
 
-import { getEquipmentSubData, getEquipmentSubTreeData } from '@/axios';
+import { getEquipmentSubData, getEquipmentSubTreeData, deleteTree } from '@/axios';
 import './index.less';
 
+const { confirm } = Modal;
 export default function DeviceTree(props) {
   const { data, dispatch, isLoading: loading } = useFetch(getEquipmentSubData, { pid: 0, level: 1 }); // 整数
   // const { dispatch: dispathcGetOptions } = useFetch(getEquipmentSubData, null, false); // 获取下级设备
@@ -17,6 +19,20 @@ export default function DeviceTree(props) {
 
   const onSearch = () => {
     dispatch({ keyword: value });
+  };
+
+  const showConfirm = () => {
+    confirm({
+      title: '确定清空图谱数据吗？',
+      icon: <ExclamationCircleFilled />,
+      onOk: () => {
+        console.log('OK');
+        deleteTree().then(res => message.success('操作成功'));
+      },
+      onCancel() {
+        console.log('Cancel');
+      }
+    });
   };
 
   // const onChange = (value: string[]) => {
@@ -85,6 +101,10 @@ export default function DeviceTree(props) {
           onSearch={onSearch}
           style={{ width: 400 }}
         />
+
+        <Button onClick={showConfirm} style={{ marginLeft: 40 }}>
+          清空设备树
+        </Button>
       </div>
 
       <Spin spinning={loading}>

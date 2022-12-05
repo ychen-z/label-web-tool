@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Card, Button, Divider } from 'antd';
 import Graph from '../graph';
 import AddModal from '@/view/data-page/modal/add';
+import { getTripleTreeData } from '@/axios';
 import ExpertCheckInModal from './expert-check-in-modal';
 import './index.less';
 
@@ -22,7 +23,7 @@ export default function HighSearch() {
         }
       >
         <div className="content">
-          <Graph refresh={refresh} />
+          <Graph refresh={refresh} func={getTripleTreeData} />
         </div>
       </Card>
     </div>

@@ -31,3 +31,4 @@ export const getRegulationById = (id: any) => get({ url: '/regulation/' + id });
 export const postRegulation = (data: any) => post({ url: '/regulation/add', data }); // 专家入库
 export const addToTree = (fileId: any) => post({ url: '/triple/addToTree/' + fileId }); // 添加到图谱
 export const markTree = (fileId: any) => post({ url: '/equipment/markTree/' + fileId }); // 添加到设备树
+export const deleteTree = () => del({ url: '/equipment/deleteTree' }); // 删除构建图谱 + 设备树

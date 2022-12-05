@@ -71,7 +71,7 @@ const CRouter = (props: any) => {
 
   return (
     <Switch>
-      <Route path="/" exact render={() => <Redirect to="/app/data/origin" />} />
+      <Route path="/" exact render={() => <Redirect to="/app/high/search" />} />
       {routes.map((r: any) => {
         return (
           <Route

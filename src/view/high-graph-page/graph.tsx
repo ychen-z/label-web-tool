@@ -1,18 +1,17 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import * as echarts from 'echarts';
-
-import { getTripleTreeData, getTripleSearchData, equipmentAdd } from '@/axios';
+import { getTripleSearchData } from '@/axios';
 
 const config = {
   CAUSE: '原因',
   EQUIPMENT: '设备',
   PHENOMENON: '现象',
   PROCESSING_METHODS: '处理方法',
-  FAULT: '错误'
+  FAULT: '故障'
 };
 
 export default function Graph(props) {
-  const { refresh, keyword, type = 'TREE', callback } = props;
+  const { refresh, keyword, callback, func = getTripleSearchData } = props;
   const [data, setData] = useState(null);
   const echartsRef = useRef<HTMLDivElement>(null);
   const myChartRef = useRef() as any;
@@ -97,29 +96,6 @@ export default function Graph(props) {
     };
   };
 
-  // const findDataIndex = useCallback(
-  //   (datasource, id) => {
-  //     // 获取当前id
-  //     const { links, data } = datasource;
-  //     const link = links.find(item => item.target == id);
-  //     if (link && id != '9647358616260') {
-  //       console.log('-------');
-  //       console.log(id, link);
-  //       const index = data.findIndex(item => item.id == id);
-  //       console.log(index);
-  //       debugger;
-  //       myChartRef.current.dispatchAction({
-  //         type: 'highlight',
-  //         seriesIndex: [0],
-  //         dataIndex: [index]
-  //       });
-  //       // 继续找到父节点id
-  //       findDataIndex(datasource, link.source);
-  //     }
-  //   },
-  //   [myChartRef]
-  // );
-
   // 需要高亮的节点数组
   const findDataIndex = (links, id) => {
     let dataIndex = [];
@@ -146,21 +122,7 @@ export default function Graph(props) {
       myChartRef.current = echarts.init(echartsRef.current);
       var option = getOption(data);
       myChartRef.current.setOption(option);
-
-      // myChart.dispatchAction({
-      //   type: 'highlight',
-      //   seriesIndex: [0],
-      //   dataIndex: [0, 14]
-      // });
-
-      // 划出恢复原本颜色
-      // myChart.on('mouseout', params => {
-      //   let { nodes } = data;
-      //   nodes.forEach(node => {
-      //     node.itemStyle.opacity = 1;
-      //   });
-      //   myChart.setOption(option);
-      // });
+      myChartRef.current?.resize();
 
       myChartRef.current.on('click', params => {
         let series = myChartRef.current.getOption().series[0];
@@ -178,17 +140,10 @@ export default function Graph(props) {
   }, [data, myChartRef]);
 
   useEffect(() => {
-    if (type === 'TREE') {
-      getTripleTreeData({ keyword }).then((res: any) => {
-        // res.nodes.shift();
-        setData(res);
-      });
-    } else {
-      getTripleSearchData({ keyword }).then((res: any) => {
-        setData(res.tree);
-        callback?.(res.searchRes);
-      });
-    }
+    func({ keyword }).then((res: any) => {
+      callback?.(res.searchRes);
+      setData(res.tree || res);
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [refresh, keyword]);
 

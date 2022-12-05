@@ -26,6 +26,29 @@ const cover = {
   left: '0px'
 };
 
+const OptionsList = [
+  {
+    name: '故障',
+    value: 'FAULT'
+  },
+  {
+    name: '现象',
+    value: 'PHENOMENON'
+  },
+  {
+    name: '原因',
+    value: 'CAUSE'
+  },
+  {
+    name: '处理方法',
+    value: 'PROCESSING_METHODS'
+  },
+  {
+    name: '设备',
+    value: 'EQUIPMENT'
+  }
+];
+
 const ADDModal = (props: Props) => {
   const [form] = Form.useForm();
   const { data, onCancel, refresh, type, subTitle, dictType } = props;
@@ -35,8 +58,8 @@ const ADDModal = (props: Props) => {
   const { dispatch: updateFunc } = useFetch(updateDic, null, false); // 更新
   const { dispatch: addFunc } = useFetch(postDic, null, false); // 新增
   const title = (type === 'EDIT' ? '编辑' : '新增') + subTitle;
-  const fileType = { '0': 'TXT_CORPUS', '1': 'RELATION_CORPUS' }[dictType];
-  const { data: fileList } = useFetch(getFileData, { page: 1, size: Infinity, fileType });
+  // const fileType = { '0': 'TXT_CORPUS', '1': 'RELATION_CORPUS' }[dictType];
+  // const { data: fileList } = useFetch(getFileData, { page: 1, size: Infinity, fileType });
 
   const fetch = (values: any) => {
     form.validateFields().then(values => {
@@ -124,6 +147,14 @@ const ADDModal = (props: Props) => {
           <Input.TextArea placeholder="请输入" maxLength={2000} />
         </Form.Item>
 
+        <Form.Item label="类型" name="entityType" rules={[{ required: true, message: '请填写' }]}>
+          <Select>
+            {OptionsList.map(item => (
+              <Select.Option key={item.value}>{item.name}</Select.Option>
+            ))}
+          </Select>
+        </Form.Item>
+
         <Form.Item label="标签颜色">
           <div style={{ border: '1px solid #e8e8e8', height: '32px', width: '100%', background: color }} onClick={triggleChromePicker} />
           {showChromePicker && (
@@ -142,13 +173,13 @@ const ADDModal = (props: Props) => {
           <Input placeholder="请输入" />
         </Form.Item>
 
-        {/* {type !== 'EDIT' && (
-          <Form.Item label="文件111" name="filePath" valuePropName="fileList">
+        {type !== 'EDIT' && (
+          <Form.Item label="文件" name="filePath" valuePropName="fileList">
             <Upload maxCount="1" accept="xls,xlsx,txt" />
           </Form.Item>
-        )} */}
+        )}
 
-        <Form.Item label="文件" name="fileId">
+        {/* <Form.Item label="文件" name="fileId">
           <Select placeholder="请选择">
             {fileList?.content?.map(item => (
               <Select.Option value={item.id} key={item.id}>
@@ -156,7 +187,7 @@ const ADDModal = (props: Props) => {
               </Select.Option>
             ))}
           </Select>
-        </Form.Item>
+        </Form.Item> */}
       </Form>
     </Modal>
   );

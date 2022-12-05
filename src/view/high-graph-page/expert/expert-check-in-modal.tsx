@@ -33,11 +33,11 @@ export default function RgCheckInModal(props) {
   return (
     <Modal
       width={600}
-      title="专家知识入库"
+      title="人工录入"
       triggerDom={
         <Button type="primary">
           <IconSet type="icon-manual" />
-          专家知识入库
+          人工录入
         </Button>
       }
       onOk={fetch}

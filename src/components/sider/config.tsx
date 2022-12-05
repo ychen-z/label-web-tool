@@ -2,44 +2,32 @@ import { MenuItemType } from './interface';
 
 const MENU_MAP: MenuItemType[] = [
   {
-    id: 5,
-    name: '文件管理',
-    link: '/app/data',
-    // icon: 'icon-shiti',
-    icon: 'icon-yuliao',
+    id: 7,
+    name: '高级应用',
+    link: '/app/high',
+    icon: 'icon-shiti',
     children: [
       {
-        id: 50,
-        parentId: 5,
-        name: '原始数据',
-        link: '/app/data/origin'
+        id: 70,
+        parentId: 7,
+        name: '智能检索',
+        link: '/app/high/search'
       },
       {
-        id: 51,
-        parentId: 5,
-        name: '文本数据',
-        link: '/app/data/text'
+        id: 71,
+        parentId: 7,
+        name: '故障查询',
+        link: '/app/high/fault'
       },
       {
-        id: 52,
-        parentId: 5,
-        name: '实体数据',
-        link: '/app/data/entity'
-      },
-      {
-        id: 53,
-        parentId: 5,
-        name: '关系数据',
-        link: '/app/data/triple'
-      },
-      {
-        id: 54,
-        parentId: 5,
-        name: '设备树数据',
-        link: '/app/data/device'
+        id: 72,
+        parentId: 7,
+        name: '人工录入',
+        link: '/app/high/expert'
       }
     ]
   },
+
   {
     id: 6,
     name: '图谱构建',
@@ -141,28 +129,41 @@ const MENU_MAP: MenuItemType[] = [
     ]
   },
   {
-    id: 7,
-    name: '高级应用',
-    link: '/app/high',
-    icon: 'icon-shiti',
+    id: 5,
+    name: '文件管理',
+    link: '/app/data',
+    // icon: 'icon-shiti',
+    icon: 'icon-yuliao',
     children: [
       {
-        id: 70,
-        parentId: 7,
-        name: '智能检索',
-        link: '/app/high/search'
+        id: 50,
+        parentId: 5,
+        name: '原始数据',
+        link: '/app/data/origin'
       },
       {
-        id: 71,
-        parentId: 7,
-        name: '故障查询',
-        link: '/app/high/fault'
+        id: 51,
+        parentId: 5,
+        name: '文本数据',
+        link: '/app/data/text'
       },
       {
-        id: 72,
-        parentId: 7,
-        name: '专家知识入库',
-        link: '/app/high/expert'
+        id: 52,
+        parentId: 5,
+        name: '实体数据',
+        link: '/app/data/entity'
+      },
+      {
+        id: 53,
+        parentId: 5,
+        name: '关系数据',
+        link: '/app/data/triple'
+      },
+      {
+        id: 54,
+        parentId: 5,
+        name: '设备树数据',
+        link: '/app/data/device'
       }
     ]
   }

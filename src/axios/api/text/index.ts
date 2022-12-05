@@ -11,3 +11,5 @@ export const getTextByKey = (data: any) => get({ url: '/textData/text/' + data.t
 export const postTextData = (data: any) => post({ url: '/textData/', data }); // 插入语料数据
 export const putTextData = (data: any) => put({ url: '/textData/', data }); // 插入语料数据
 export const delTextData = (data: any) => del({ url: '/textData/' + data.id + '?textType=' + data.textType }); // 删除语料数据
+
+export const postTextAddToTree = (data: any) => post({ url: '/dictData/addToTree/' + data.equipmentId + '?ids=' + data.ids }); // 插入语料数据

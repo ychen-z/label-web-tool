@@ -18,12 +18,6 @@ const TEXT = {
 export default function OriginTable(props) {
   const { loading, refresh, dataSource } = props;
 
-  const handleAddFromFile = id => {
-    addFromFile(id).then(res => {
-      message.success('操作成功');
-    });
-  };
-
   const columns = [
     {
       title: '文件名称',
@@ -71,8 +65,6 @@ export default function OriginTable(props) {
               <>
                 <Divider type="vertical" />
                 <RevertDrawer id={row.id} />
-                {/* <Divider type="vertical" />
-                <a onClick={() => handleAddFromFile(row.id)}>添加至文本数据</a> */}
               </>
             )}
             <Divider type="vertical" />

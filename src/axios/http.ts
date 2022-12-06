@@ -96,7 +96,6 @@ const errHandle: <R>(err: AxiosError<R> | ResponseError<R>) => Promise<R> = err 
   }
   // RedirectMap.hasOwnProperty(code) && window.location.replace(RedirectMap[code]);
   const ERR_MESSAGE = message || ServerCodeMap[code];
-
   switch (code) {
     case ServerCode.CONTINUE: // code 400 批量操作部分成功
       notification.warning({
@@ -109,9 +108,10 @@ const errHandle: <R>(err: AxiosError<R> | ResponseError<R>) => Promise<R> = err 
       });
       break;
     default:
-      notification.error({
-        message: ERR_MESSAGE
-      });
+      ERR_MESSAGE &&
+        notification.error({
+          message: ERR_MESSAGE
+        });
       console.error(message);
   }
   if (isResponseError(err)) {

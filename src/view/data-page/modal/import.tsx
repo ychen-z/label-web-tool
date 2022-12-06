@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Form, Input, Modal, message } from 'antd';
 import Upload from '@/components/upload/SelfUpload';
 import useFetch from '@/hooks/common/useFetch';
@@ -21,8 +21,7 @@ const URL = {
 
 const ADDModal = (props: Props) => {
   const [form] = Form.useForm();
-  const { data, onCancel, accept = 'doc,docx,txt,pdf,png,jpg,jpeg', refresh, type, fileType = 'ORIGINAL_CORPUS' } = props;
-  // const [content, setContent] = useState('111');
+  const { data, onCancel, accept = 'doc,docx,txt,pdf,png,jpg,jpeg,xlsx,xls', refresh, type, fileType = 'ORIGINAL_CORPUS' } = props;
   const { dispatch: updateFunc } = useFetch(updateFileName, null, false); // 更新
   const { dispatch: updateFileContentFunc } = useFetch(updateFileContent, null, false); // 更新
   const { dispatch: addFunc } = useFetch(fileUpload, null, false); // 新增
@@ -32,46 +31,49 @@ const ADDModal = (props: Props) => {
 
   const fetch = async () => {
     form.validateFields().then(values => {
-      values.filePath = values.filePath?.length ? values.filePath[0]?.response.data.id : undefined;
-      if (type == 'EDIT') {
-        if (fileType === 'TXT_CORPUS') {
-          // 可修改文件内容
-          updateFileContentFunc(values).then(res => {
-            message.success('操作成功');
-            onCancel && onCancel();
-            refresh && refresh();
-          });
-        } else {
-          // 只允许修改名字
-          updateFunc(values).then(res => {
-            message.success('操作成功');
-            onCancel && onCancel();
-            refresh && refresh();
-          });
+      // values.filePath = values.filePath?.length ? values.filePath[0]?.response.data.id : undefined;
+      values.filePath?.map(item => {
+        let filePath = item?.response.data.id;
+        if (type == 'EDIT') {
+          if (fileType === 'TXT_CORPUS') {
+            // 可修改文件内容
+            updateFileContentFunc({ ...values, filePath }).then(res => {
+              message.success('操作成功');
+              onCancel && onCancel();
+              refresh && refresh();
+            });
+          } else {
+            // 只允许修改名字
+            updateFunc({ ...values, filePath }).then(res => {
+              message.success('操作成功');
+              onCancel && onCancel();
+              refresh && refresh();
+            });
+          }
         }
-      }
 
-      if (type === 'ADD') {
-        if (fileType === 'EQUIPMENT') {
-          equipmentAddFunc({ ...values, id: values.filePath }).then(res => {
-            message.success('操作成功');
-            onCancel && onCancel();
-            refresh && refresh();
-          });
-        } else if (fileType === 'RELATION_CORPUS') {
-          tripleAddFunc({ ...values, id: values.filePath }).then(res => {
-            message.success('操作成功');
-            onCancel && onCancel();
-            refresh && refresh();
-          });
-        } else {
-          addFunc({ ...values, id: values.filePath }).then(res => {
-            message.success('操作成功');
-            onCancel && onCancel();
-            refresh && refresh();
-          });
+        if (type === 'ADD') {
+          if (fileType === 'EQUIPMENT') {
+            equipmentAddFunc({ ...values, id: filePath }).then(res => {
+              message.success('操作成功');
+              onCancel && onCancel();
+              refresh && refresh();
+            });
+          } else if (fileType === 'RELATION_CORPUS') {
+            tripleAddFunc({ ...values, filePath: null, id: filePath }).then(res => {
+              message.success('操作成功');
+              onCancel && onCancel();
+              refresh && refresh();
+            });
+          } else {
+            addFunc({ ...values, filePath: null, id: filePath }).then(res => {
+              message.success('操作成功');
+              onCancel && onCancel();
+              refresh && refresh();
+            });
+          }
         }
-      }
+      });
     });
   };
 
@@ -117,7 +119,7 @@ const ADDModal = (props: Props) => {
 
         {type == 'ADD' && (
           <Form.Item label="文件" name="filePath" valuePropName="fileList">
-            <Upload action="/api/fileInfo/upload" maxCount="1" accept={accept} />
+            <Upload multiple action="/api/fileInfo/upload" maxCount="10" accept={accept} />
           </Form.Item>
         )}
       </Form>

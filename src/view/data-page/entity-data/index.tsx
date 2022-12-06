@@ -3,7 +3,7 @@ import { Button } from 'antd';
 import useFetch from '@/hooks/common/useFetch';
 import { getFileData } from '@/axios';
 import Table from '../components/common-table';
-import AddModal from '../modal/add';
+import AddModal from '../components/modal/add';
 import './index.less';
 
 export default function ToolData(props) {

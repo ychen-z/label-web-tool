@@ -3,9 +3,9 @@ import { Table, Space, Divider } from 'antd';
 import IconSet from '@/components/icon';
 import { delFile } from '@/axios';
 import { renderSize } from '@/utils/tools';
-import UpdateModal from '../modal/add';
-import Del from '../modal/del';
-import ViewModal from '../modal/view-modal';
+import UpdateModal from './modal/add';
+import Del from './modal/del';
+import ViewModal from './modal/view-modal';
 import Export from './export';
 
 export default function OriginTable(props) {

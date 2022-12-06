@@ -3,8 +3,8 @@ import { Button } from 'antd';
 import useFetch from '@/hooks/common/useFetch';
 import { getFileData } from '@/axios';
 import Table from '../components/common-table';
-import AddModal from '../modal/add';
-import RgCheckInModal from '../modal/rg-check-in-modal';
+import AddModal from '../components/modal/add';
+import RgCheckInModal from '../components/modal/rg-check-in-modal';
 import './index.less';
 
 export default function TextData(props) {

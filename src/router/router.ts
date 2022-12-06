@@ -85,7 +85,7 @@ export const urlObj = {
   GraphPage: {
     name: '图谱',
     link: '/app/graph/page',
-    component: load(() => import('@/view/high-graph-page/graph-page')),
+    component: load(() => import('@/view/use-page/graph-page')),
     needAuth: false
   },
 
@@ -99,19 +99,19 @@ export const urlObj = {
   HighSearch: {
     name: '智能检索',
     link: '/app/high/search',
-    component: load(() => import('@/view/high-graph-page/search/index')),
+    component: load(() => import('@/view/use-page/search/index')),
     needAuth: false
   },
   HighFault: {
     name: '故障查询',
     link: '/app/high/fault',
-    component: load(() => import('@/view/high-graph-page/fault/index')),
+    component: load(() => import('@/view/use-page/fault/index')),
     needAuth: false
   },
   HighExpert: {
     name: '智能检索',
     link: '/app/high/expert',
-    component: load(() => import('@/view/high-graph-page/expert/index')),
+    component: load(() => import('@/view/use-page/expert/index')),
     needAuth: false
   }
 };

@@ -3,9 +3,9 @@ import { Table, Space, Divider, Badge, message } from 'antd';
 import IconSet from '@/components/icon';
 import { delFile, addFromFile } from '@/axios';
 import { renderSize } from '@/utils/tools';
-import UpdateModal from '../modal/add';
-import Del from '../modal/del';
-import RevertDrawer from '../modal/revert-drawer';
+import UpdateModal from './modal/add';
+import Del from './modal/del';
+import RevertDrawer from './modal/revert-drawer';
 import Export from './export';
 
 const TEXT = {

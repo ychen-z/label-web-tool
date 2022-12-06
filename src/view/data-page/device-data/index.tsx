@@ -4,7 +4,7 @@ import { Button, Divider } from 'antd';
 import useFetch from '@/hooks/common/useFetch';
 import { getFileData } from '@/axios';
 import Table from '../components/common-table';
-import AddModal from '../modal/add';
+import AddModal from '../components/modal/add';
 // import RgCheckInModal from '../modal/rg-check-in-modal';
 import './index.less';
 

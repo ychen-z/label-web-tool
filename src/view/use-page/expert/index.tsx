@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Card, Button, Divider } from 'antd';
-import Graph from '../graph';
-import AddModal from '@/view/data-page/modal/add';
+import Graph from '../componets/graph';
+import AddModal from '@/view/data-page/components/modal/add';
 import { getTripleTreeData } from '@/axios';
 import ExpertCheckInModal from './expert-check-in-modal';
 import './index.less';

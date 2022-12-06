@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Card, Input, List } from 'antd';
-import Graph from '../graph';
+import Graph from '../componets/graph';
 import ViewModal from './view-modal';
 import './index.less';
 

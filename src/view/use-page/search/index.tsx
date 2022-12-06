@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Card, Input, List } from 'antd';
 import { getTripleTreeData } from '@/axios';
-import Graph from '../graph';
+import Graph from '../componets/graph';
 import './index.less';
 
 export default function HighSearch() {

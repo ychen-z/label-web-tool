@@ -36,13 +36,6 @@ export const urlObj = {
     needAuth: false
   },
 
-  relationHandle: {
-    name: '关系抽取',
-    link: '/app/tool/rel-handle',
-    component: load(() => import('@/view/relation')),
-    needAuth: false
-  },
-
   OriginData: {
     name: '原始数据',
     link: '/app/data/origin',
@@ -121,7 +114,6 @@ const {
   Text,
   Tool,
   label,
-  relationHandle,
   OriginData,
   TextData,
   EntityData,
@@ -141,7 +133,6 @@ export const routes = [
   Text,
   Tool,
   label,
-  relationHandle,
   OriginData,
   TextData,
   EntityData,

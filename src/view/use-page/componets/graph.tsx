@@ -97,24 +97,29 @@ export default function Graph(props) {
   };
 
   // 需要高亮的节点数组
-  const findDataIndex = (links, id) => {
-    let dataIndex = [];
+  const findDataIndex = (links, data, id) => {
+    let linkIndexs = [];
+    let dataIndexs = [];
 
-    const findIndex = id => {
-      let temp = links.find(item => item.source == id); // 找到当前节点
-      let index = links.findIndex(item => item.source == id); // 当前节点的索引
+    const findSourceIndex = id => {
+      var temp = links.find(item => item.source == id); // 找到当前节点
+      var linkIndex = links.findIndex(item => item.source == id); // 当前节点的索引
 
-      if (temp?.target != 9647358616260) {
-        temp.target && findIndex(temp.target);
-      }
-
-      if (index > -1) {
-        dataIndex.push(index);
+      // 继续找
+      if (temp) {
+        var dataIndex = data.findIndex(item => item.id == temp.target);
+        dataIndex > -1 && dataIndexs.push(dataIndex);
+        linkIndex > -1 && linkIndexs.push(linkIndex);
+        temp.target != '10112723583684' && findSourceIndex(temp.target);
       }
     };
-    findIndex(id);
 
-    return dataIndex;
+    findSourceIndex(id);
+
+    return {
+      dataIndex: dataIndexs,
+      linkIndex: linkIndexs
+    };
   };
 
   useEffect(() => {
@@ -124,15 +129,28 @@ export default function Graph(props) {
       myChartRef.current.setOption(option);
       myChartRef.current?.resize();
 
-      myChartRef.current.on('click', params => {
+      myChartRef.current.on('mouseover', params => {
+        let obj = {};
         let series = myChartRef.current.getOption().series[0];
 
-        const dataIndex = findDataIndex(series.links, params.data.id);
+        if (params.dataType === 'edge') {
+          obj = findDataIndex(series.links, series.data, params.data.source);
+        } else {
+          obj = findDataIndex(series.links, series.data, params.data.id);
+        }
 
         myChartRef.current.dispatchAction({
           type: 'highlight',
           seriesIndex: [0],
-          dataIndex: dataIndex
+          ...obj
+        });
+      });
+
+      myChartRef.current.on('mouseup', params => {
+        myChartRef.current.dispatchAction({
+          type: 'downplay',
+          seriesIndex: [0],
+          dataIndex: []
         });
       });
     }

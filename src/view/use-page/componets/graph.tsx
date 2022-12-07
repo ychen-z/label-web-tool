@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useImperativeHandle } from 'react';
 import * as echarts from 'echarts';
 import { getTripleSearchData } from '@/axios';
 
@@ -10,11 +10,12 @@ const config = {
   FAULT: '故障'
 };
 
-export default function Graph(props) {
+const Graph = React.forwardRef((props: any, ref) => {
   const { refresh, keyword, callback, func = getTripleSearchData } = props;
   const [data, setData] = useState(null);
   const echartsRef = useRef<HTMLDivElement>(null);
   const myChartRef = useRef() as any;
+
   const getOption = graph => {
     graph.categories = graph.categories.map(function(a) {
       a.name = config[a.name];
@@ -122,6 +123,24 @@ export default function Graph(props) {
     };
   };
 
+  // 暴露给外部使用
+  const onHover = id => {
+    let obj = {};
+    let series = myChartRef.current?.getOption().series[0];
+    if (series) {
+      obj = findDataIndex(series.links, series.data, id);
+      myChartRef.current.dispatchAction({
+        type: 'highlight',
+        seriesIndex: [0],
+        ...obj
+      });
+    }
+  };
+
+  useImperativeHandle(ref, () => ({
+    onHover
+  }));
+
   useEffect(() => {
     if (data && echartsRef.current) {
       myChartRef.current = echarts.init(echartsRef.current);
@@ -176,4 +195,6 @@ export default function Graph(props) {
       }}
     />
   );
-}
+});
+
+export default Graph;

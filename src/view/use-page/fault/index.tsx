@@ -1,42 +1,54 @@
-import React, { useState } from 'react';
-import { Card, Input, List } from 'antd';
+import React, { useState, useRef } from 'react';
+import { Card, Input, Collapse } from 'antd';
 import Graph from '../componets/graph';
-import ViewModal from './view-modal';
+import { getRegulationById } from '@/axios';
 import './index.less';
+
+const { Panel } = Collapse;
 
 export default function HighFault() {
   const [keyword, setKeyword] = useState(null);
+  const [data, setData] = useState({}) as any;
   const [list, setList] = useState([]);
   const onSearch = v => setKeyword(v);
+  const GraphRef = useRef() as any;
+
+  const handleGetRegulationById = id => {
+    if (!id) return;
+    const equipmentId = list?.filter(item => item.regulationId == id)[0]?.equipmentIds?.split(',')[0];
+
+    equipmentId && GraphRef.current?.onHover(equipmentId);
+    getRegulationById(id).then(res => {
+      setData(res);
+    });
+  };
 
   return (
     <div className="m-high-fault">
       <Card title={<Input.Search placeholder="故障查询，如：温度升高" allowClear onSearch={onSearch} style={{ width: 500 }} />}>
         <div className="content">
-          <Graph refresh={false} keyword={keyword} callback={v => setList(v)} />
+          <Graph ref={GraphRef} refresh={false} keyword={keyword} callback={v => setList(v)} />
+
           <div className="result">
             <div className="title">搜索结果</div>
             <div>
-              <List
-                itemLayout="horizontal"
-                dataSource={list.slice(0, 20)}
-                renderItem={(item, index) => (
-                  <List.Item>
-                    <List.Item.Meta
-                      title={
-                        <ViewModal
-                          id={item.regulationId}
-                          triggerDom={
-                            <a>
-                              {index + 1} 、{item.name}
-                            </a>
-                          }
-                        />
-                      }
-                    />
-                  </List.Item>
-                )}
-              />
+              <Collapse accordion onChange={handleGetRegulationById}>
+                {list?.map((item: any, index) => (
+                  <Panel header={index + 1 + ' 、' + item.name} key={item.regulationId}>
+                    <div className="regulation">
+                      <div>
+                        <span>现象</span>：{data.phenomenon || '--'}
+                      </div>
+                      <div>
+                        <span>原因</span>：{data.cause || '--'}
+                      </div>
+                      <div>
+                        <span>解决方案</span>：{data.processingMethods || '--'}
+                      </div>
+                    </div>
+                  </Panel>
+                ))}
+              </Collapse>
             </div>
           </div>
         </div>

@@ -56,7 +56,7 @@ function TableList(props: TemplateTableProps) {
     selectedRowKeys: props.selectedKeys,
     onChange: (selectedRowKeys, selectedRows) => {
       props.setSelectedKeys(selectedRowKeys as number[]);
-      props.setSelectedCodes(selectedRows.map(item => item.code));
+      props?.setSelectedCodes?.(selectedRows.map(item => item.code));
     },
     getCheckboxProps: record => ({
       id: record.id + ''

@@ -11,10 +11,8 @@ import './index.less';
 const { confirm } = Modal;
 export default function DeviceTree(props) {
   const { data, dispatch, isLoading: loading } = useFetch(getEquipmentSubData, { pid: 0, level: 1 }); // 整数
-  // const { dispatch: dispathcGetOptions } = useFetch(getEquipmentSubData, null, false); // 获取下级设备
   const { dispatch: getEquipmentSubTreeDataFunc } = useFetch(getEquipmentSubTreeData, null, false);
   const [value, setValue] = useState<string>('');
-  // const [options, setOptions] = useState([]);
   const [treeGraphData, setTreeGraphData] = useState([]);
 
   const onSearch = () => {

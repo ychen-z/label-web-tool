@@ -14,7 +14,7 @@ function TableList(props) {
       title: '名称',
       dataIndex: 'name',
       key: 'name',
-      width: '80%',
+      width: '60%',
       type: [0]
     },
 
@@ -33,6 +33,15 @@ function TableList(props) {
       ellipsis: true,
       width: '40%',
       type: [1]
+    },
+
+    {
+      title: '设备编码',
+      dataIndex: 'equipmentCode',
+      key: 'equipmentCode',
+      ellipsis: true,
+      type: [0],
+      render: text => text || '--'
     },
 
     {
@@ -60,7 +69,7 @@ function TableList(props) {
     selectedRowKeys: props.selectedKeys,
     onChange: (selectedRowKeys, selectedRows) => {
       props.setSelectedKeys(selectedRowKeys as number[]);
-      props.setSelectedCodes(selectedRows.map(item => item.code));
+      props.setSelectedCodes?.(selectedRows.map(item => item.code));
     },
     getCheckboxProps: record => ({
       id: record.id + ''

@@ -15,7 +15,7 @@ export default function HighSearch() {
         extra={
           <>
             <AddModal type="ADD" fileType="RELATION_CORPUS" refresh={() => setRefresh(Math.random())}>
-              <Button>+ 模板导入</Button>
+              <Button type="primary">+ 模板导入</Button>
             </AddModal>
             <Divider type="vertical" />
             <ExpertCheckInModal refresh={() => setRefresh(Math.random())} />

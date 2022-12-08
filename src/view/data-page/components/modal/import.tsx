@@ -21,7 +21,7 @@ const URL = {
 
 const ADDModal = (props: Props) => {
   const [form] = Form.useForm();
-  const { data, onCancel, accept = 'doc,docx,txt,pdf,png,jpg,jpeg,xlsx,xls', refresh, type, fileType = 'ORIGINAL_CORPUS' } = props;
+  const { data, onCancel, accept = 'doc,docx,txt,pdf,png,jpg,jpeg,xlsx,xls,7z,zip,rar', refresh, type, fileType = 'ORIGINAL_CORPUS' } = props;
   const { dispatch: updateFunc } = useFetch(updateFileName, null, false); // 更新
   const { dispatch: updateFileContentFunc } = useFetch(updateFileContent, null, false); // 更新
   const { dispatch: addFunc } = useFetch(fileUpload, null, false); // 新增

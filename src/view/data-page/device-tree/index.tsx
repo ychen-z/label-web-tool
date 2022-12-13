@@ -5,18 +5,22 @@ import useFetch from '@/hooks/common/useFetch';
 import TreeWithContextMenu from '../components/tree/TreeWithContextMenu';
 import TreeGarph from '../components/tree/tree-graph';
 
-import { getEquipmentSubData, getEquipmentSubTreeData, deleteTree } from '@/axios';
+import { getEquipmentSubData, getEquipmentTreeData, getEquipmentSubTreeData, deleteTree } from '@/axios';
 import './index.less';
 
 const { confirm } = Modal;
 export default function DeviceTree(props) {
-  const { data, dispatch, isLoading: loading } = useFetch(getEquipmentSubData, { pid: 0, level: 1 }); // 整数
+  const { dispatch: dispatchSearch } = useFetch(getEquipmentTreeData);
+  const { dispatch } = useFetch(getEquipmentSubData);
   const { dispatch: getEquipmentSubTreeDataFunc } = useFetch(getEquipmentSubTreeData, null, false);
   const [value, setValue] = useState<string>('');
   const [treeGraphData, setTreeGraphData] = useState([]);
+  const [data, setData] = useState([]);
 
   const onSearch = () => {
-    dispatch({ keyword: value });
+    if (value) {
+      dispatchSearch({ keyword: value }).then(res => setData(res));
+    }
   };
 
   const showConfirm = () => {
@@ -32,25 +36,6 @@ export default function DeviceTree(props) {
       }
     });
   };
-
-  // const onChange = (value: string[]) => {
-  //   dispatch({ code: value[value.length - 1] });
-  // };
-
-  // const loadData = selectedOptions => {
-  //   const targetOption = selectedOptions[selectedOptions.length - 1]; //selectedOptions.length指的是目前有几级
-  //   targetOption.loading = true;
-  //   // load options lazily
-  //   dispathcGetOptions({ pid: targetOption.id }).then(res => {
-  //     targetOption.loading = false;
-  //     // res.map(item => {
-  //     //   item.isLeaf = item.level < 4 ? false : true;
-  //     //   return item;
-  //     // });
-  //     targetOption.children = res; //把请求到的数据放入targetOption
-  //     setOptions([...options]); //目的是更新Cascader组件
-  //   });
-  // };
 
   const onSelect = (v: any, node: any) => {
     getEquipmentSubTreeDataFunc({ level: 0, pid: v }).then(res => {
@@ -70,6 +55,9 @@ export default function DeviceTree(props) {
     getEquipmentSubTreeDataFunc({ pid: 0, level: 1 }).then(res => {
       setTreeGraphData(res);
     });
+
+    dispatch({ pid: 0, level: 1 }).then(res => setData(res));
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -77,20 +65,6 @@ export default function DeviceTree(props) {
     <div className="device-tree-page">
       <div className="title">设备树</div>
       <div className="search">
-        {/* <Cascader
-          fieldNames={{
-            label: 'name',
-            value: 'code'
-          }}
-          showSearch
-          style={{ display: 'none' }}
-          options={options}
-          // defaultValue={}
-          loadData={loadData}
-          onChange={onChange}
-          changeOnSelect
-        /> */}
-
         <Input.Search
           placeholder="设备模糊搜索"
           value={value}
@@ -105,19 +79,17 @@ export default function DeviceTree(props) {
         </Button>
       </div>
 
-      <Spin spinning={loading}>
-        <div style={{ display: 'flex' }}>
-          <div style={{ flex: 1 }}>
-            <TreeWithContextMenu
-              onSelect={onSelect}
-              getEquipmentSubTreeDataFunc={getEquipmentSubTreeDataFunc}
-              initTreeData={data}
-              refresh={() => dispatch(value)}
-            />
-          </div>
-          <TreeGarph data={treeGraphData} />
+      <div style={{ display: 'flex' }}>
+        <div style={{ flex: 1 }}>
+          <TreeWithContextMenu
+            onSelect={onSelect}
+            getEquipmentSubTreeDataFunc={getEquipmentSubTreeDataFunc}
+            initTreeData={data}
+            refresh={() => dispatch(value)}
+          />
         </div>
-      </Spin>
+        <TreeGarph data={treeGraphData} />
+      </div>
     </div>
   );
 }

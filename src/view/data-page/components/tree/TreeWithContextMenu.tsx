@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Tree, Dropdown, Menu } from 'antd';
-import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
-import { delEquipmentById } from '@/axios';
-import DeL from './delTreeNode';
-import AddNode from './add-node-modal'; // 新增节点
+// import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
+// import DeL from './delTreeNode';
+// import AddNode from './add-node-modal'; // 新增节点
+import ExportEq from './exportEq';
 
 interface DataNode {
   name: string;
@@ -68,11 +68,14 @@ export default ({ initTreeData, refresh, getEquipmentSubTreeDataFunc, onSelect }
   const TreeMenu = ({ id }) => {
     return (
       <Menu>
-        <Menu.Item key="2" icon={<PlusOutlined />}>
+        {/* <Menu.Item key="2" icon={<PlusOutlined />}>
           <AddNode id={id} callback={refresh} />
         </Menu.Item>
         <Menu.Item key="1" icon={<DeleteOutlined />}>
           <DeL func={delEquipmentById} id={id} callback={refresh} />
+        </Menu.Item> */}
+        <Menu.Item key="3">
+          <ExportEq id={id} />
         </Menu.Item>
       </Menu>
     );

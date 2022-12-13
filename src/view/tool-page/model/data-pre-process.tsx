@@ -149,9 +149,9 @@ export default function DataPreProcess(props) {
                 </ScatterContext.Provider>
               </div>
             </TabPane>
-            <TabPane tab="匹配情况" key="2">
+            {/* <TabPane tab="匹配情况" key="2">
               <Table textType={textType} />
-            </TabPane>
+            </TabPane> */}
           </Tabs>
         </section>
       </Spin>

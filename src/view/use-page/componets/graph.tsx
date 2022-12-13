@@ -62,7 +62,6 @@ const Graph = React.forwardRef((props: any, ref) => {
             return {
               ...item,
               id: item.id + '',
-
               category: categories.findIndex(_ => _ == config[item.entityType])
             };
           }),
@@ -79,12 +78,17 @@ const Graph = React.forwardRef((props: any, ref) => {
           roam: true,
           label: {
             position: 'right',
-            formatter: '{b}'
+            formatter: params => {
+              if (params.data.entityType == 'EQUIPMENT') {
+                if (params.data.name.length > 5) {
+                  return params.data.name.substring(0, 4) + '..';
+                }
+                return params.data.name;
+              } else {
+                return '';
+              }
+            }
           },
-          // lineStyle: {
-          //   color: '#ccc',
-          //   curveness: 0.3
-          // },
           emphasis: {
             focus: 'adjacency',
             lineStyle: {
@@ -95,6 +99,17 @@ const Graph = React.forwardRef((props: any, ref) => {
         }
       ]
     };
+  };
+
+  // 查找交集
+  const findIntersectionIndex = (a, b) => {
+    let arr = [];
+    a.map((v, index) => {
+      if (b.filter(r => v.equipmentId == r.id || r.id == v.id).length) {
+        arr.push(index);
+      }
+    });
+    return arr;
   };
 
   // 需要高亮的节点数组
@@ -124,15 +139,14 @@ const Graph = React.forwardRef((props: any, ref) => {
   };
 
   // 暴露给外部使用
-  const onHover = id => {
-    let obj = {};
+  const onHover = ids => {
     let series = myChartRef.current?.getOption().series[0];
     if (series) {
-      obj = findDataIndex(series.links, series.data, id);
+      console.log(findIntersectionIndex(series.data, ids));
       myChartRef.current.dispatchAction({
         type: 'highlight',
         seriesIndex: [0],
-        ...obj
+        dataIndex: findIntersectionIndex(series.data, ids)
       });
     }
   };

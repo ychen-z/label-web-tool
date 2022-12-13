@@ -131,7 +131,7 @@ const ADDModal = (props: Props) => {
           <Input disabled />
         </Form.Item>
 
-        <Form.Item label="dictType" name="dictType">
+        <Form.Item hidden label="dictType" name="dictType">
           <Input disabled />
         </Form.Item>
 

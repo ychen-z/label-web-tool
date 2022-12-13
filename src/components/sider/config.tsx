@@ -22,7 +22,7 @@ const MENU_MAP: MenuItemType[] = [
       {
         id: 72,
         parentId: 7,
-        name: '人工录入',
+        name: '专家知识入库',
         link: '/app/high/expert'
       }
     ]

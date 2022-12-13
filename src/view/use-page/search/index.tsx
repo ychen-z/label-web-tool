@@ -26,7 +26,7 @@ export default function HighSearch() {
               <div>
                 <Collapse accordion>
                   {list?.map((item, index) => (
-                    <Panel header={Object.keys(item)[0] + ',' + Object.values(item)[0]} key={Object.keys(item)[0]}>
+                    <Panel header={Object.values(item)[0]} key={Object.keys(item)[0]}>
                       <Row>
                         {config[Object.keys(item)[0]].map(item => (
                           <Col span={6}>{item}</Col>

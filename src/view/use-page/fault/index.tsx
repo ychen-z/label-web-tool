@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { Card, Input, Collapse } from 'antd';
 import Graph from '../componets/graph';
-import { getRegulationById } from '@/axios';
+import { getRegulationById, getRegulationPath } from '@/axios';
 import './index.less';
 
 const { Panel } = Collapse;
@@ -15,11 +15,14 @@ export default function HighFault() {
 
   const handleGetRegulationById = id => {
     if (!id) return;
-    const equipmentId = list?.filter(item => item.regulationId == id)[0]?.equipmentIds?.split(',')[0];
+    // const equipmentId = list?.filter(item => item.regulationId == id)[0]?.equipmentIds?.split(',')[0];
 
-    equipmentId && GraphRef.current?.onHover(equipmentId);
     getRegulationById(id).then(res => {
       setData(res);
+    });
+
+    getRegulationPath(id).then(res => {
+      GraphRef.current?.onHover(res.nodes);
     });
   };
 
@@ -33,21 +36,23 @@ export default function HighFault() {
             <div className="title">搜索结果</div>
             <div>
               <Collapse accordion onChange={handleGetRegulationById}>
-                {list?.map((item: any, index) => (
-                  <Panel header={index + 1 + ' 、' + item.name} key={item.regulationId}>
-                    <div className="regulation">
-                      <div>
-                        <span>现象</span>：{data.phenomenon || '--'}
+                {list
+                  ?.filter(item => item.name)
+                  ?.map((item: any, index) => (
+                    <Panel header={item.name} key={item.regulationId}>
+                      <div className="regulation">
+                        <div>
+                          <span>现象</span>：{data.phenomenon || '--'}
+                        </div>
+                        <div>
+                          <span>原因</span>：{data.cause || '--'}
+                        </div>
+                        <div>
+                          <span>解决方案</span>：{data.processingMethods || '--'}
+                        </div>
                       </div>
-                      <div>
-                        <span>原因</span>：{data.cause || '--'}
-                      </div>
-                      <div>
-                        <span>解决方案</span>：{data.processingMethods || '--'}
-                      </div>
-                    </div>
-                  </Panel>
-                ))}
+                    </Panel>
+                  ))}
               </Collapse>
             </div>
           </div>

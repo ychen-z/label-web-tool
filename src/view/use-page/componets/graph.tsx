@@ -17,6 +17,8 @@ const Graph = React.forwardRef((props: any, ref) => {
   const myChartRef = useRef() as any;
 
   const getOption = graph => {
+    if (!graph.categories) return {};
+
     graph.categories = graph.categories.map(function(a) {
       a.name = config[a.name];
       return a;
@@ -38,8 +40,9 @@ const Graph = React.forwardRef((props: any, ref) => {
         //params 传入进来的每个类目数据及echarts属性，ticket异步的类目名称，callback回调函数
         formatter(params, ticket, callback) {
           //自定义模板
-          let html = `<div style="min-width: 200px; max-width: 500px; max-height: 300px; overflow-y:scroll; " ><span style="margin-right:10%; width: 100%; white-space: pre-wrap; ">${params.value ||
-            params.name}</span></div>`;
+          var arr = params.name.split('。').join('\r\n');
+          let html = `<div style="min-width: 200px; white-space:pre; max-width: 500px; max-height: 300px; overflow-y:scroll; " ><span style="margin-right:10%; width: 100%; white-space: pre-wrap; ">${params.value ||
+            arr}</span></div>`;
           return html;
         }
       },
@@ -65,15 +68,17 @@ const Graph = React.forwardRef((props: any, ref) => {
               category: categories.findIndex(_ => _ == config[item.entityType])
             };
           }),
-          links: graph.links.map(item => {
+
+          links: graph.links.map((item, index) => {
             item.value = item.targetName + '>' + item.sourceName;
             item.lineStyle = {
-              opacity: 0.4,
+              opacity: 0.3,
               color: 'red',
               curveness: 0.3
             };
             return item;
           }),
+
           categories: graph.categories,
           roam: true,
           label: {
@@ -102,14 +107,48 @@ const Graph = React.forwardRef((props: any, ref) => {
   };
 
   // 查找交集
-  const findIntersectionIndex = (a, b) => {
-    let arr = [];
-    a.map((v, index) => {
-      if (b.filter(r => v.equipmentId == r.id || r.id == v.id).length) {
-        arr.push(index);
+  // const findIntersectionIndex = (a, b) => {
+  //   let arr = [];
+  //   a.map((v, index) => {
+  //     if (b.filter(r => v.equipmentId == r.id || r.id == v.id).length) {
+  //       a.itemStyle = {
+  //         opacity: 1,
+  //         borderWidth: 2
+  //       };
+  //       arr.push(index);
+  //     }
+  //   });
+  //   return arr;
+  // };
+
+  const generateNewNodes = (a, b) => {
+    return a.map(v => {
+      if (b.filter(r => r.id == v.id).length) {
+        v.itemStyle = {
+          opacity: 1
+        };
+      } else {
+        v.itemStyle = {
+          opacity: 0.1
+        };
       }
+      return v;
     });
-    return arr;
+  };
+
+  const generateNewLinks = (a, b) => {
+    return a.map(v => {
+      if (b.filter(r => v.source == r.source && v.target == r.target).length) {
+        v.lineStyle = {
+          opacity: 1
+        };
+      } else {
+        v.lineStyle = {
+          opacity: 0.1
+        };
+      }
+      return v;
+    });
   };
 
   // 需要高亮的节点数组
@@ -139,15 +178,21 @@ const Graph = React.forwardRef((props: any, ref) => {
   };
 
   // 暴露给外部使用
-  const onHover = ids => {
-    let series = myChartRef.current?.getOption().series[0];
+  const onHover = (nodes, links) => {
+    const options = myChartRef.current?.getOption();
+    const series = options.series[0];
     if (series) {
-      console.log(findIntersectionIndex(series.data, ids));
-      myChartRef.current.dispatchAction({
-        type: 'highlight',
-        seriesIndex: [0],
-        dataIndex: findIntersectionIndex(series.data, ids)
-      });
+      // console.log(findIntersectionIndex(series.data, nodes));
+      // 查找nodes
+      let newNodes = generateNewNodes(series.data, nodes);
+      let newLinks = generateNewLinks(series.links, links);
+
+      // myChartRef.current.dispatchAction({
+      //   type: 'highlight',
+      //   seriesIndex: [0],
+      //   dataIndex: findIntersectionIndex(series.data, ids)
+      // });
+      myChartRef.current.setOption({ ...options, series: [{ ...series, data: newNodes, links: newLinks }] });
     }
   };
 

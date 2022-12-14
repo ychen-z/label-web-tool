@@ -32,29 +32,29 @@ const ADDModal = (props: Props) => {
   const fetch = async () => {
     form.validateFields().then(values => {
       // values.filePath = values.filePath?.length ? values.filePath[0]?.response.data.id : undefined;
+      if (type == 'EDIT') {
+        if (fileType === 'TXT_CORPUS') {
+          // 可修改文件内容
+          updateFileContentFunc({ ...values }).then(res => {
+            message.success('操作成功');
+            onCancel && onCancel();
+            refresh && refresh();
+          });
+        } else {
+          // 只允许修改名字
+          updateFunc({ ...values }).then(res => {
+            message.success('操作成功');
+            onCancel && onCancel();
+            refresh && refresh();
+          });
+        }
+      }
+
       values.filePath?.map(item => {
         let filePath = item?.response.data.id;
-        if (type == 'EDIT') {
-          if (fileType === 'TXT_CORPUS') {
-            // 可修改文件内容
-            updateFileContentFunc({ ...values, filePath }).then(res => {
-              message.success('操作成功');
-              onCancel && onCancel();
-              refresh && refresh();
-            });
-          } else {
-            // 只允许修改名字
-            updateFunc({ ...values, filePath }).then(res => {
-              message.success('操作成功');
-              onCancel && onCancel();
-              refresh && refresh();
-            });
-          }
-        }
-
         if (type === 'ADD') {
           if (fileType === 'EQUIPMENT') {
-            equipmentAddFunc({ ...values, id: filePath }).then(res => {
+            equipmentAddFunc({ ...values, filePath: null, id: filePath }).then(res => {
               message.success('操作成功');
               onCancel && onCancel();
               refresh && refresh();

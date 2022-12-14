@@ -22,7 +22,7 @@ export default function HighFault() {
     });
 
     getRegulationPath(id).then(res => {
-      GraphRef.current?.onHover(res.nodes);
+      GraphRef.current?.onHover(res.nodes, res.links);
     });
   };
 

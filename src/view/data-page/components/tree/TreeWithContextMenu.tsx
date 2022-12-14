@@ -3,7 +3,7 @@ import { Tree, Dropdown, Menu } from 'antd';
 // import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
 // import DeL from './delTreeNode';
 // import AddNode from './add-node-modal'; // 新增节点
-import ExportEq from './exportEq';
+// import ExportEq from './exportEq';
 
 interface DataNode {
   name: string;
@@ -74,8 +74,8 @@ export default ({ initTreeData, refresh, getEquipmentSubTreeDataFunc, onSelect }
         <Menu.Item key="1" icon={<DeleteOutlined />}>
           <DeL func={delEquipmentById} id={id} callback={refresh} />
         </Menu.Item> */}
-        <Menu.Item key="3">
-          <ExportEq id={id} />
+        <Menu.Item key="3" onClick={() => window.open('/api/equipment/export/' + id)}>
+          导出
         </Menu.Item>
       </Menu>
     );

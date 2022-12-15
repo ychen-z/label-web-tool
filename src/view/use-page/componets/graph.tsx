@@ -1,6 +1,9 @@
 import React, { useState, useEffect, useRef, useImperativeHandle } from 'react';
 import * as echarts from 'echarts';
-import { getTripleSearchData } from '@/axios';
+import { message } from 'antd';
+import useFetch from '@/hooks/common/useFetch';
+import { debounce } from '@/utils/tools';
+import { getTripleSearchData, getEquipmentPath, getRegulationPath } from '@/axios';
 
 const config = {
   CAUSE: '原因',
@@ -13,6 +16,10 @@ const config = {
 const Graph = React.forwardRef((props: any, ref) => {
   const { refresh, keyword, callback, func = getTripleSearchData } = props;
   const [data, setData] = useState(null);
+
+  const { dispatch: dispatchGetRegulationPath } = useFetch(getRegulationPath, null, false);
+  const { dispatch: dispatchGetEquipmentPath } = useFetch(getEquipmentPath, null, false);
+
   const echartsRef = useRef<HTMLDivElement>(null);
   const myChartRef = useRef() as any;
 
@@ -73,108 +80,96 @@ const Graph = React.forwardRef((props: any, ref) => {
             item.value = item.targetName + '>' + item.sourceName;
             item.lineStyle = {
               opacity: 0.3,
-              color: 'red',
+              color: '#333',
               curveness: 0.3
             };
             return item;
           }),
 
           categories: graph.categories,
-          roam: true,
+          // roam: true,
           label: {
+            show: true,
             position: 'right',
+            width: 5,
+            height: 5,
             formatter: params => {
-              if (params.data.entityType == 'EQUIPMENT') {
-                if (params.data.name.length > 5) {
-                  return params.data.name.substring(0, 4) + '..';
+              if (params.data.entityType == 'EQUIPMENT' && params.data.type === 'xxx') {
+                if (params.data.name.length > 4) {
+                  return params.data.name.substring(0, 3) + '..';
                 }
                 return params.data.name;
               } else {
                 return '';
               }
             }
-          },
-          emphasis: {
-            focus: 'adjacency',
-            lineStyle: {
-              color: 'red',
-              width: 10
-            }
           }
+          // emphasis: {
+          //   focus: 'adjacency',
+          //   lineStyle: {
+          //     color: 'red',
+          //     width: 10
+          //   }
+          // }
         }
       ]
     };
   };
 
-  // 查找交集
-  // const findIntersectionIndex = (a, b) => {
-  //   let arr = [];
-  //   a.map((v, index) => {
-  //     if (b.filter(r => v.equipmentId == r.id || r.id == v.id).length) {
-  //       a.itemStyle = {
-  //         opacity: 1,
-  //         borderWidth: 2
-  //       };
-  //       arr.push(index);
-  //     }
-  //   });
-  //   return arr;
-  // };
-
+  // 生成新节点
   const generateNewNodes = (a, b) => {
     return a.map(v => {
       if (b.filter(r => r.id == v.id).length) {
+        v.type = 'xxx';
         v.itemStyle = {
           opacity: 1
         };
       } else {
         v.itemStyle = {
-          opacity: 0.1
+          opacity: 0.3
         };
       }
       return v;
     });
   };
 
+  const refreshNodes = a => {
+    return a.map(v => {
+      v.itemStyle = {
+        opacity: 1
+      };
+      v.type = null;
+      return v;
+    });
+  };
+
+  // 生成新links
   const generateNewLinks = (a, b) => {
     return a.map(v => {
       if (b.filter(r => v.source == r.source && v.target == r.target).length) {
         v.lineStyle = {
-          opacity: 1
+          opacity: 1,
+          width: 1,
+          color: 'red'
         };
       } else {
         v.lineStyle = {
-          opacity: 0.1
+          opacity: 0.3
         };
       }
       return v;
     });
   };
 
-  // 需要高亮的节点数组
-  const findDataIndex = (links, data, id) => {
-    let linkIndexs = [];
-    let dataIndexs = [];
-
-    const findSourceIndex = id => {
-      var temp = links.find(item => item.source == id); // 找到当前节点
-      var linkIndex = links.findIndex(item => item.source == id); // 当前节点的索引
-
-      // 继续找
-      if (temp) {
-        var dataIndex = data.findIndex(item => item.id == temp.target);
-        dataIndex > -1 && dataIndexs.push(dataIndex);
-        linkIndex > -1 && linkIndexs.push(linkIndex);
-        temp.target != '10112723583684' && findSourceIndex(temp.target);
-      }
-    };
-
-    findSourceIndex(id);
-
-    return {
-      dataIndex: dataIndexs,
-      linkIndex: linkIndexs
-    };
+  const refreshLink = a => {
+    return a.map(v => {
+      v.lineStyle = {
+        opacity: 0.3,
+        width: 0.3,
+        color: '#333'
+      };
+      return v;
+    });
   };
 
   // 暴露给外部使用
@@ -192,7 +187,35 @@ const Graph = React.forwardRef((props: any, ref) => {
       //   seriesIndex: [0],
       //   dataIndex: findIntersectionIndex(series.data, ids)
       // });
-      myChartRef.current.setOption({ ...options, series: [{ ...series, data: newNodes, links: newLinks }] });
+      myChartRef.current.setOption({
+        ...options,
+        series: [
+          {
+            ...series,
+            label: {
+              ...series.label,
+              show: true
+            },
+            data: newNodes,
+            links: newLinks
+          }
+        ]
+      });
+    }
+  };
+
+  const getPath = data => {
+    const { regulationId, entityType, equipmentId } = data.data;
+    if (data.dataType === 'node') {
+      if (entityType === 'EQUIPMENT') {
+        dispatchGetEquipmentPath(equipmentId).then(res => {
+          onHover(res.nodes, res.links);
+        });
+      } else {
+        dispatchGetRegulationPath(regulationId).then(res => {
+          onHover(res.nodes, res.links);
+        });
+      }
     }
   };
 
@@ -205,35 +228,32 @@ const Graph = React.forwardRef((props: any, ref) => {
       myChartRef.current = echarts.init(echartsRef.current);
       var option = getOption(data);
       myChartRef.current.setOption(option);
-      myChartRef.current?.resize();
+      // myChartRef.current?.resize();
 
-      myChartRef.current.on('mouseover', params => {
-        let obj = {};
-        let series = myChartRef.current.getOption().series[0];
+      myChartRef.current.on('mouseover', params => getPath(params));
 
-        if (params.dataType === 'edge') {
-          obj = findDataIndex(series.links, series.data, params.data.source);
-        } else {
-          obj = findDataIndex(series.links, series.data, params.data.id);
+      myChartRef.current.on('mouseout', params => {
+        const options = myChartRef.current?.getOption();
+        const series = options.series[0];
+        if (series) {
+          let newNodes = refreshNodes(series.data);
+          let newLinks = refreshLink(series.links);
+          myChartRef.current.setOption({ ...options, series: [{ ...series, data: newNodes, links: newLinks }] });
         }
-
-        myChartRef.current.dispatchAction({
-          type: 'highlight',
-          seriesIndex: [0],
-          ...obj
-        });
-      });
-
-      myChartRef.current.on('mouseup', params => {
-        myChartRef.current.dispatchAction({
-          type: 'downplay',
-          seriesIndex: [0],
-          dataIndex: []
-        });
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, myChartRef]);
+
+  useEffect(() => {
+    if (refresh) {
+      func({ keyword }).then((res: any) => {
+        callback?.(res.searchRes);
+        setData(res.tree || res);
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [refresh]);
 
   useEffect(() => {
     func({ keyword }).then((res: any) => {
@@ -241,7 +261,7 @@ const Graph = React.forwardRef((props: any, ref) => {
       setData(res.tree || res);
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [refresh, keyword]);
+  }, [keyword]);
 
   return (
     <div

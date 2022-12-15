@@ -1,5 +1,7 @@
 import React from 'react';
-import { Table, Tag } from 'antd';
+import { Table, Tag, Divider } from 'antd';
+import Del from '../components/modal/del';
+import { delFile } from '@/axios';
 import { renderSize } from '@/utils/tools';
 import AddTree from './addTree';
 
@@ -38,11 +40,13 @@ export default function OriginTable(props) {
       title: '操作',
       width: 240,
       render: (elem: any, record: any, index: number) => {
-        if (record.regulationStatus == 'WAIT_ADD') {
-          return <AddTree {...record} func={func} refresh={refresh} />;
-        } else {
-          return null;
-        }
+        return (
+          <>
+            <Del id={record.id} func={delFile} refresh={refresh} />
+            <Divider type="vertical" />
+            {record.regulationStatus == 'WAIT_ADD' && <AddTree {...record} func={func} refresh={refresh} />}
+          </>
+        );
       }
     }
   ];

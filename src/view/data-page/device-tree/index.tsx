@@ -28,8 +28,11 @@ export default function DeviceTree(props) {
       title: '确定清空图谱数据吗？',
       icon: <ExclamationCircleFilled />,
       onOk: () => {
-        console.log('OK');
-        deleteTree().then(res => message.success('操作成功'));
+        deleteTree().then(res => {
+          setData([]); // 数据清空
+          setTreeGraphData([]); // 数据清空
+          message.success('操作成功');
+        });
       },
       onCancel() {
         console.log('Cancel');

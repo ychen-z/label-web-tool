@@ -12,7 +12,7 @@ const TEXT = {
   NO_CONVERT: { status: 'warning', name: '未转换' },
   CONVERT_SUCCESS: { status: 'success', name: '转换成功' },
   CONVERTING: { status: 'processing', name: '未转换' },
-  CONVERT_FAIL: { status: 'processing', name: '转换失败' }
+  CONVERT_FAIL: { status: 'error', name: '转换失败' }
 };
 
 export default function OriginTable(props) {
@@ -50,7 +50,7 @@ export default function OriginTable(props) {
     },
     {
       title: '操作',
-      width: 380,
+      width: 140,
       render: (elem: any, row: any, index: number) => {
         const { status } = elem;
         return (

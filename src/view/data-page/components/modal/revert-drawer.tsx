@@ -7,6 +7,7 @@ import './index.less';
 
 const RevertDrawer = props => {
   const { id, title, trigger } = props;
+  const [fileExt, setFileExt] = useState('');
   const [url, setUrl] = useState(null);
   const [visible, setVisible] = useState(false);
   const [content, setContent] = useState('');
@@ -20,6 +21,7 @@ const RevertDrawer = props => {
 
   const beforeShow = () => {
     return getFileById(id).then(res => {
+      setFileExt(res.fileExt);
       setUrl(res.filePathURL);
       setContent(res.content);
       setVisible(true);
@@ -54,7 +56,11 @@ const RevertDrawer = props => {
     >
       <div className="content">
         <div className="item">
-          <iframe title="文件" src={url} width="100%" frameBorder="none" height="100%" />
+          {['jpg', 'png', 'gif'].includes(fileExt) ? (
+            <img src={url} width="100%" height="100%" alt="圖片" />
+          ) : (
+            <iframe title="文件" src={url} width="100%" frameBorder="none" height="100%" />
+          )}
         </div>
         <div className="item">
           <Input.TextArea value={content} onChange={v => setContent(v.target.value)} />

@@ -5,7 +5,7 @@ import { delFile } from '@/axios';
 import { renderSize } from '@/utils/tools';
 import AddTree from './addTree';
 
-export default function OriginTable(props) {
+export default function AddTreeTable(props) {
   const { loading, dataSource, refresh, func } = props;
 
   const columns = [
@@ -31,8 +31,10 @@ export default function OriginTable(props) {
           return <Tag color="#87d068">已构建</Tag>;
         } else if (record.regulationStatus == 'WAIT_ADD') {
           return <Tag color="#f50">未构建</Tag>;
-        } else {
+        } else if (record.regulationStatus == 'BUILD_FAILED') {
           return <span>不可构建</span>;
+        } else {
+          return <span>--</span>;
         }
       }
     },

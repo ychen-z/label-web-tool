@@ -247,7 +247,7 @@ const Graph = React.forwardRef((props: any, ref) => {
 
   useEffect(() => {
     if (refresh) {
-      func({ keyword }).then((res: any) => {
+      func({ keyword, pageSize: keyword ? 5 : 100 }).then((res: any) => {
         callback?.(res.searchRes);
         setData(res.tree || res);
       });
@@ -256,7 +256,7 @@ const Graph = React.forwardRef((props: any, ref) => {
   }, [refresh]);
 
   useEffect(() => {
-    func({ keyword }).then((res: any) => {
+    func({ keyword, pageSize: keyword ? 5 : 100 }).then((res: any) => {
       callback?.(res.searchRes);
       setData(res.tree || res);
     });

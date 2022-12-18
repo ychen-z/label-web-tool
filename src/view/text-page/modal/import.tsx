@@ -19,7 +19,7 @@ const ADDModal = (props: Props) => {
   const { dispatch: updateFunc } = useFetch(updateText, null, false); // 更新
   const { dispatch: addFunc } = useFetch(postText, null, false); // 新增
 
-  const fileType = { '0': 'TXT_CORPUS', '1': 'RELATION_CORPUS' }[textType];
+  const fileType = { '0': 'TXT_CORPUS', '1': 'ENTITY_CORPUS' }[textType];
   const { data: fileList } = useFetch(getFileData, { page: 1, size: Infinity, fileType });
 
   const title = (type === 'EDIT' ? '编辑' : '新增') + subTitle;
@@ -48,7 +48,7 @@ const ADDModal = (props: Props) => {
           <Input disabled />
         </Form.Item>
 
-        <Form.Item label="textType" name="textType">
+        <Form.Item hidden label="textType" name="textType">
           <Input disabled />
         </Form.Item>
 

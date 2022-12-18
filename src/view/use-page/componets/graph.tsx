@@ -87,7 +87,7 @@ const Graph = React.forwardRef((props: any, ref) => {
           }),
 
           categories: graph.categories,
-          // roam: true,
+          roam: true,
           label: {
             show: true,
             position: 'right',

@@ -50,7 +50,7 @@ export default function OriginTable(props) {
     },
     {
       title: '操作',
-      width: 140,
+      width: 160,
       render: (elem: any, row: any, index: number) => {
         const { status } = elem;
         return (

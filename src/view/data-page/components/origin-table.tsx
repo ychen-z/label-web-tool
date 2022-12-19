@@ -22,13 +22,12 @@ export default function OriginTable(props) {
     {
       title: '文件名称',
       dataIndex: 'fileName',
-      key: 'fileName',
-      width: 240
+      key: 'fileName'
     },
     {
       title: '文件类型',
       dataIndex: 'fileExt',
-      width: 40,
+      width: 140,
       key: 'fileExt'
     },
     {
@@ -50,7 +49,7 @@ export default function OriginTable(props) {
     },
     {
       title: '操作',
-      width: 160,
+      width: 360,
       render: (elem: any, row: any, index: number) => {
         const { status } = elem;
         return (

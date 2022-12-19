@@ -8,7 +8,7 @@ import Del from '../../../del';
 import './index.less';
 
 function TableList(props) {
-  const { dictType, subTitle } = props;
+  const { dictType, subTitle, entityType } = props;
   const columns = [
     {
       title: '名称',
@@ -40,7 +40,7 @@ function TableList(props) {
       dataIndex: 'equipmentCode',
       key: 'equipmentCode',
       ellipsis: true,
-      type: [0],
+      type: [entityType === 'EQUIPMENT' ? 0 : -1],
       render: text => text || '--'
     },
 
@@ -48,7 +48,6 @@ function TableList(props) {
       title: '操作',
       dataIndex: 'action',
       key: 'action',
-      width: '20%',
       ellipsis: true,
       type: [0, 1],
       render: (text, record) => (

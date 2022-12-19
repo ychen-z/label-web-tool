@@ -228,7 +228,7 @@ const Graph = React.forwardRef((props: any, ref) => {
       myChartRef.current = echarts.init(echartsRef.current);
       var option = getOption(data);
       myChartRef.current.setOption(option);
-      // myChartRef.current?.resize();
+      myChartRef.current?.resize();
 
       myChartRef.current.on('mouseover', params => getPath(params));
 

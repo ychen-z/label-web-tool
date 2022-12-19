@@ -70,6 +70,7 @@ function Template(props) {
           </div>
 
           <Table
+            entityType={entityType}
             loading={isLoading}
             list={templateList}
             dictType={dictType}

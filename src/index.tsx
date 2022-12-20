@@ -6,13 +6,8 @@ import '@/assets/css/index.less';
 import E405 from './view/exception/E405';
 import casLogin from './view/cas-login';
 
-if (window.__POWERED_BY_QIANKUN__) {
-  // eslint-disable-next-line no-undef
-  __webpack_public_path__ = window.__INJECTED_PUBLIC_PATH_BY_QIANKUN__;
-}
-
 const Page = props => (
-  <Router basename={window.__POWERED_BY_QIANKUN__ ? '/app' : '/'}>
+  <Router basename="/kg">
     <Switch>
       <Route path="/405" component={E405} />
       <Route path="/casLogin" component={casLogin} />

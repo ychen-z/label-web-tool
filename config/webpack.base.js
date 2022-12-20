@@ -5,7 +5,7 @@ const WebpackBar = require('webpackbar');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const packageName = require('../package.json').name;
 
-const publicPath = process.env.NODE_ENV === 'production' ? '/kg/' : '/';
+const publicPath = process.env.NODE_ENV === 'production' ? '/' : '/';
 
 module.exports = {
   entry: paths.appIndex,

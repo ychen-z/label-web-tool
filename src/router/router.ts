@@ -106,6 +106,12 @@ export const urlObj = {
     link: '/app/high/expert',
     component: load(() => import('@/view/use-page/expert/index')),
     needAuth: false
+  },
+  Login: {
+    name: '登录',
+    link: '/caslogin',
+    component: load(() => import('@/view/cas-login')),
+    needAuth: false
   }
 };
 
@@ -114,6 +120,7 @@ const {
   Text,
   Tool,
   label,
+  Login,
   OriginData,
   TextData,
   EntityData,
@@ -144,5 +151,6 @@ export const routes = [
   HighFault,
   HighExpert,
   DeviceTree,
-  GraphRelation
+  GraphRelation,
+  Login
 ];

@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom';
 import './index.less';
 
 function Header(props: any) {
-  const userName = localStorage.getItem('user') || '专家';
+  const userName = localStorage.getItem('user') || '管理员';
 
   return (
     <nav className="g-header-nav">

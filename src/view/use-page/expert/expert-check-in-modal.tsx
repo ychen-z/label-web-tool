@@ -43,8 +43,8 @@ export default function RgCheckInModal(props) {
       onOk={fetch}
     >
       <Form form={form} {...formItemLayout} scrollToFirstError>
-        <Form.Item label="设备编码" name="equipmentCode" rules={[{ required: true, message: '请填写' }]}>
-          <Input.TextArea placeholder="请输入设备编码，如：DA02；若多个设备编码换行输入..." maxLength={1000} />
+        <Form.Item label="资产编码" name="equipmentCode" rules={[{ required: true, message: '请填写' }]}>
+          <Input.TextArea placeholder="请输入资产编码，如：DA02；若多个资产编码换行输入..." maxLength={1000} />
         </Form.Item>
 
         <Form.Item label="故障" name="errorName" rules={[{ required: true, message: '请填写' }]}>

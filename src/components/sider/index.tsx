@@ -14,6 +14,7 @@ const SiderCustom = (props: SiderProps) => {
   const [firstHide, setFirstHide] = useState<boolean>(false);
   const [expandKeys, setExpandKeys] = useState<string[]>([]);
   const { pathname } = useLocation();
+  const roleType = localStorage.getItem('roleType');
 
   const treeToArray = tree => {
     let res = [];
@@ -76,6 +77,7 @@ const SiderCustom = (props: SiderProps) => {
     <Sider collapsible collapsedWidth={60} collapsed={collapsed} onCollapse={handleCollapse} theme="light" width={176} className="g-sider">
       <Menu
         menuList={MENU_MAP}
+        roleType={Number(roleType || 1)}
         defaultOpenKeys={expandKeys}
         openKeys={expandKeys}
         selectedKeys={selectKeys}

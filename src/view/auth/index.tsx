@@ -37,7 +37,7 @@ export default function UserPage(props) {
           <Space>
             <ModifyUserModal
               data={row}
-              type="EIDT"
+              type="EDIT"
               refresh={() => {
                 dispatchGetUserList({ page: 0, size: Infinity });
               }}

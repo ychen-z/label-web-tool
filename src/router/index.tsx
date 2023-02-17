@@ -10,13 +10,12 @@ const CRouter = (props: any) => {
    * @author zhangz
    * @param Com 组件名
    * @param path url 路径
-   * @param needAuth 是否需要鉴权
+   * @param auth 是否需要鉴权
    * @return 开发者，在页面上 通过props.btns 可取到所有的操作按钮的权限code array,形如['create','edit','del','common-btn']。
    */
-  const requireAuth = (Com: ComponentType<any>, path: string, needAuth: boolean, breadcrumbName) => {
-    console.log(needAuth);
-    //TODO: 如果存在，即运行访问，否则调整到 404
-    if (!needAuth) {
+  const requireAuth = (Com: ComponentType<any>, auth: number[], breadcrumbName) => {
+    const roleType = localStorage.getItem('roleType');
+    if (!auth?.includes(Number(roleType || 1))) {
       return <Redirect to="/403" />;
     }
     return <Com {...props} breadcrumbName={breadcrumbName} />;
@@ -30,12 +29,12 @@ const CRouter = (props: any) => {
             const routePath = `${path}${c.link || c.key}`;
             return <Route key={routePath} path={routePath} render={() => child(c, routePath)} />;
           })}
-          <Route key={path} path={path} render={() => requireAuth(r.component, r.link, r.needAuth, r.name)} />
+          <Route key={path} path={path} render={() => requireAuth(r.component, r.auth, r.name)} />
           <Redirect to={path} />
         </Switch>
       );
     } else {
-      return requireAuth(r.component, r.link, r.needAuth, r.name);
+      return requireAuth(r.component, r.auth, r.name);
     }
   };
 

@@ -1,25 +1,21 @@
-import React, { useState, useReducer, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Layout } from 'antd';
-import loginReducer from '@/reducer/loginReducer';
+import useFetch from '@/hooks/common/useFetch';
 import HeaderCustom from '@/components/header';
 import ContentCustom from '@/components/content';
 import SiderCustom from '@/components/sider';
+import { getUserInfo } from '@/axios';
 
 function App(props) {
   const [collapsed, setCollapsed] = useState(false);
-  const [state, dispatch] = useReducer(loginReducer, { user: null, menus: null });
-  const { user, menus } = state; // 用戶与权限
+  const { data: userInfo } = useFetch(getUserInfo, null);
 
-  useEffect(() => {
-    dispatch({ type: 'QUERY_AUTH_MENUS', payload: { user: props.user, menus: props.menus } });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
   return (
     <Layout>
-      <HeaderCustom />
+      <HeaderCustom userInfo={userInfo} />
       <Layout className="g-layout">
         <SiderCustom setCollapsed={(params: boolean) => setCollapsed(params)} />
-        <ContentCustom collapsed={collapsed} auth={{ menus: menus, user: user }} />
+        <ContentCustom collapsed={collapsed} auth={{ user: userInfo }} />
       </Layout>
     </Layout>
   );

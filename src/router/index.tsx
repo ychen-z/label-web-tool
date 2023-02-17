@@ -14,10 +14,13 @@ const CRouter = (props: any) => {
    * @return 开发者，在页面上 通过props.btns 可取到所有的操作按钮的权限code array,形如['create','edit','del','common-btn']。
    */
   const requireAuth = (Com: ComponentType<any>, auth: number[], breadcrumbName) => {
-    const roleType = localStorage.getItem('roleType');
-    if (!auth?.includes(Number(roleType || 1))) {
-      return <Redirect to="/403" />;
-    }
+    // TODO: 优化403 逻辑
+    // const roleType = localStorage.getItem('roleType');
+
+    // if (!auth?.includes(Number(roleType || 1))) {
+    //   return <Redirect to="/403" />;
+    // }
+
     return <Com {...props} breadcrumbName={breadcrumbName} />;
   };
 

@@ -22,7 +22,7 @@ const RevertDrawer = props => {
   const beforeShow = () => {
     return getFileById(id).then(res => {
       setFileExt(res.fileExt);
-      setUrl(res.filePathURL);
+      setUrl(res.pdfPath || res.filePathURL); // 增加pdf 用户处理word情况
       setContent(res.content);
       setVisible(true);
     });

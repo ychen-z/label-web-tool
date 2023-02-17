@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom';
 import './index.less';
 
 function Header(props: any) {
-  const { userInfo } = props;
+  const { userInfo = {} } = props;
   const { trueName, roleType } = userInfo;
 
   const onLogout = () => {

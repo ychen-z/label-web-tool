@@ -59,7 +59,7 @@ export default function Dictionary(props) {
         {!read && (
           <div className="u-operation">
             <AddModal type="ADD" dictType={dictType} subTitle={subTitle} refresh={refresh}>
-              <Button type="primary">+ 新增</Button>
+              <Button type="primary">+ 新增1</Button>
             </AddModal>
           </div>
         )}

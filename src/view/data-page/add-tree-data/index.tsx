@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useInterval } from 'ahooks';
+import { Button } from 'antd';
 import { getParams } from '@/utils/tools';
 import useFetch from '@/hooks/common/useFetch';
 import { getFileData, addToTree, markTree } from '@/axios';
+import AddModal from '../components/add-device-modal';
 import Table from './table';
 import './index.less';
 
@@ -33,6 +35,17 @@ export default function AddTreeData(props) {
   return (
     <div className="add-tree-page">
       <section className="m-list">
+        <div className="u-operation">
+          <AddModal
+            type="ADD"
+            fileType={type}
+            refresh={() => {
+              dispatch({ page: 1, size: Infinity, fileType: type });
+            }}
+          >
+            <Button type="primary">+ 新增</Button>
+          </AddModal>
+        </div>
         <Table func={func} fileType={type} loading={loading} dataSource={data?.content} refresh={dispatch} />
       </section>
     </div>

@@ -3,6 +3,8 @@ import { get, put, post, del } from '../../http';
 // 后端登录接口
 export const casLogin = (data: any) => post({ url: '/login', data }); // 登录接口
 export const casLogout = (data?: any) => post({ url: '/logout', data }); // 退出登录
+export const getUserList = (data?: any) => get({ url: '/user/', data }); // 获取用户列表
+export const putUser = (data?: any) => put({ url: '/user/', data }); // 修改用户角色
 
 // 数据
 export const getFileData = (data: any) => get({ url: '/fileInfo/', data }); // 获取文件接口

@@ -112,6 +112,12 @@ export const urlObj = {
     link: '/caslogin',
     component: load(() => import('@/view/cas-login')),
     needAuth: [1, 2, 3]
+  },
+  Auth: {
+    name: '权限管理',
+    link: '/app/auth',
+    component: load(() => import('@/view/auth')),
+    needAuth: [1]
   }
 };
 
@@ -132,7 +138,8 @@ const {
   HighFault,
   HighExpert,
   DeviceTree,
-  GraphRelation
+  GraphRelation,
+  Auth
 } = urlObj;
 
 export const routes = [
@@ -146,11 +153,11 @@ export const routes = [
   TripleData,
   DeviceData,
   GraphPage,
-  // HighGraphPage,
   HighSearch,
   HighFault,
   HighExpert,
   DeviceTree,
   GraphRelation,
-  Login
+  Login,
+  Auth
 ];

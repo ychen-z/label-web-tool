@@ -166,6 +166,12 @@ const MENU_MAP: MenuItemType[] = [
         link: '/app/data/device'
       }
     ]
+  },
+  {
+    id: 8,
+    name: '权限管理',
+    link: '/app/auth',
+    icon: 'icon-shiti'
   }
 ];
 

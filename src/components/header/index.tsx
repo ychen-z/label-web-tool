@@ -5,7 +5,8 @@ import { withRouter } from 'react-router-dom';
 import './index.less';
 
 function Header(props: any) {
-  const { trueName, roleType } = props;
+  const { userInfo } = props;
+  const { trueName, roleType } = userInfo;
 
   const onLogout = () => {
     localStorage.removeItem('trueName');

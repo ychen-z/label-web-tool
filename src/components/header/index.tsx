@@ -14,11 +14,11 @@ function Header(props: any) {
     location.href = '/api/logout';
   };
 
-  // useEffect(() => {
-  //   localStorage.setItem('trueName', trueName);
-  //   localStorage.setItem('roleType', roleType);
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [props]);
+  useEffect(() => {
+    localStorage.setItem('trueName', trueName);
+    localStorage.setItem('roleType', roleType);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props]);
 
   return (
     <nav className="g-header-nav">

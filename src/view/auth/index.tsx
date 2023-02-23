@@ -7,7 +7,6 @@ import ModifyUserModal from './modify-user-modal';
 
 export const roleList = [
   { roleType: 1, name: '管理员' },
-  { roleType: 2, name: '审核员' },
   { roleType: 3, name: '操作员' }
 ];
 export default function UserPage(props) {

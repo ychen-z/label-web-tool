@@ -22,7 +22,6 @@ const AddTreeModal = (props: Props) => {
 
   const fetch = (values: any) => {
     form.validateFields().then(values => {
-      // values.filePath = values.filePath?.length ? values.filePath[0].response.data : undefined;
       fileType == 'EQUIPMENT'
         ? equipmentAddFunc({ ...values, fileType, buildStatus: 'YES' }).then(res => {
             message.success('操作成功');

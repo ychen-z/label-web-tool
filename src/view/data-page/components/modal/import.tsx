@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Form, Input, Modal, message } from 'antd';
+import { Form, Input, Modal, message, Select } from 'antd';
 import Upload from '@/components/upload/SelfUpload';
 import useFetch from '@/hooks/common/useFetch';
 import { getFileById, fileUpload, updateFileName, updateFileContent, tripleAdd, equipmentAdd } from '@/axios';
@@ -104,6 +104,21 @@ const ADDModal = (props: Props) => {
         <Form.Item hidden label="fileType" name="fileType">
           <Input disabled />
         </Form.Item>
+
+        {'EQUIPMENT' === fileType && (
+          <Form.Item label="类型" name="equipmentType">
+            <Select placeholder="请选择">
+              {[
+                { name: '元数据', value: 'META_DATA' },
+                { name: '设备树数据', value: 'DATA' }
+              ].map(item => (
+                <Select.Option value={item.value} key={item.value}>
+                  {item.name}
+                </Select.Option>
+              ))}
+            </Select>
+          </Form.Item>
+        )}
 
         {type == 'EDIT' && (
           <Form.Item label="文件名称" name="fileName" rules={[{ required: true, message: '请填写' }]}>

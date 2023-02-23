@@ -53,19 +53,19 @@ export default function OriginTable(props) {
   ];
 
   // 实体类型
-  // fileType === 'ENTITY_CORPUS' &&
-  //   columns.splice(1, 0, {
-  //     title: '实体类型',
-  //     dataIndex: 'entity',
-  //     key: 'entity'
-  //   });
+  fileType === 'EQUIPMENT' &&
+    columns.splice(1, 0, {
+      title: '类型',
+      dataIndex: 'equipmentType',
+      key: 'equipmentType',
+      render: (text, record) => {
+        if (text === 'META_DATA') {
+          return '元数据';
+        } else {
+          return '设备树数据';
+        }
+      }
+    });
 
-  // 关系类型
-  // fileType === 'RELATION_CORPUS' &&
-  //   columns.splice(1, 0, {
-  //     title: '关系类型',
-  //     dataIndex: 'relation',
-  //     key: 'relation'
-  //   });
   return <Table loading={loading} rowKey="id" dataSource={dataSource} columns={columns} pagination={false} />;
 }

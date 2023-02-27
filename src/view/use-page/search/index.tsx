@@ -25,15 +25,19 @@ export default function HighSearch() {
               <div className="title">搜索结果</div>
               <div>
                 <Collapse accordion>
-                  {list?.map((item, index) => (
-                    <Panel header={Object.values(item)[0]} key={Object.keys(item)[0]}>
-                      <Row>
-                        {config[Object.keys(item)[0]].map(item => (
-                          <Col span={6}>{item}</Col>
+                  {list?.map((item, index) => {
+                    return (
+                      <Panel header={item.sheetName} key={index}>
+                        {item.data.map(i => (
+                          <Row>
+                            {i.map(j => (
+                              <Col span={6}>{j}</Col>
+                            ))}
+                          </Row>
                         ))}
-                      </Row>
-                    </Panel>
-                  ))}
+                      </Panel>
+                    );
+                  })}
                 </Collapse>
               </div>
             </div>

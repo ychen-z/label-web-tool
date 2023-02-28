@@ -16,19 +16,19 @@ const AddTreeModal = (props: Props) => {
   const { data, fileType, onCancel, refresh, type } = props;
   const { dispatch: equipmentAddFunc } = useFetch(equipmentAdd, null, false); // 设备
   const { dispatch: tripleAddFunc } = useFetch(tripleAdd, null, false); // 三元组
-  const { data: fileList } = useFetch<any>(getFileData, { page: 1, size: Infinity, fileType, buildStatus: 'YES' });
+  const { data: fileList } = useFetch<any>(getFileData, { page: 1, size: Infinity, fileType });
 
   const title = type === 'EDIT' ? '编辑' : '新增';
 
   const fetch = (values: any) => {
     form.validateFields().then(values => {
       fileType == 'EQUIPMENT'
-        ? equipmentAddFunc({ ...values, fileType, buildStatus: 'YES' }).then(res => {
+        ? equipmentAddFunc({ ...values, fileType }).then(res => {
             message.success('操作成功');
             onCancel && onCancel();
             refresh && refresh();
           })
-        : tripleAddFunc({ ...values, fileType, buildStatus: 'YES' }).then(res => {
+        : tripleAddFunc({ ...values, fileType }).then(res => {
             message.success('操作成功');
             onCancel && onCancel();
             refresh && refresh();

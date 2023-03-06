@@ -23,12 +23,12 @@ const AddTreeModal = (props: Props) => {
   const fetch = (values: any) => {
     form.validateFields().then(values => {
       fileType == 'EQUIPMENT'
-        ? equipmentAddFunc({ ...values, fileType }).then(res => {
+        ? equipmentAddFunc({ ...values, fileType, status: 'CONVERT_SUCCESS' }).then(res => {
             message.success('操作成功');
             onCancel && onCancel();
             refresh && refresh();
           })
-        : tripleAddFunc({ ...values, fileType }).then(res => {
+        : tripleAddFunc({ ...values, fileType, status: 'CONVERT_SUCCESS' }).then(res => {
             message.success('操作成功');
             onCancel && onCancel();
             refresh && refresh();

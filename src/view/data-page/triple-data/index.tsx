@@ -10,7 +10,7 @@ export default function TripleData(props) {
   const { data, dispatch, isLoading: loading } = useFetch(getFileData, { page: 1, size: Infinity, fileType: 'RELATION_CORPUS' }, false);
 
   useEffect(() => {
-    dispatch({ page: 1, size: Infinity, fileType: 'RELATION_CORPUS' });
+    dispatch({ page: 1, size: Infinity, fileType: 'RELATION_CORPUS', status: 'NO_CONVERT' });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

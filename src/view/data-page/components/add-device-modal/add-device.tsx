@@ -16,7 +16,7 @@ const AddTreeModal = (props: Props) => {
   const { data, fileType, onCancel, refresh, type } = props;
   const { dispatch: equipmentAddFunc } = useFetch(equipmentAdd, null, false); // 设备
   const { dispatch: tripleAddFunc } = useFetch(tripleAdd, null, false); // 三元组
-  const { data: fileList } = useFetch<any>(getFileData, { page: 1, size: Infinity, fileType });
+  const { data: fileList } = useFetch<any>(getFileData, { page: 1, size: Infinity, fileType, status: 'NO_CONVERT' });
 
   const title = type === 'EDIT' ? '编辑' : '新增';
 

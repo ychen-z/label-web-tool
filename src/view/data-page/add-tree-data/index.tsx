@@ -15,12 +15,12 @@ export default function AddTreeData(props) {
   const [interval, setInterval] = useState<null | number>(null);
 
   useInterval(() => {
-    type == 'RELATION_CORPUS' && dispatch({ page: 1, size: Infinity, fileType: type });
+    type == 'RELATION_CORPUS' && dispatch({ page: 1, size: Infinity, fileType: type, status: 'CONVERT_SUCCESS' });
   }, interval);
 
   //RELATION_CORPUS
   useEffect(() => {
-    dispatch({ page: 1, size: Infinity, fileType: type });
+    dispatch({ page: 1, size: Infinity, fileType: type, status: 'CONVERT_SUCCESS' });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [type]);
 
@@ -40,7 +40,7 @@ export default function AddTreeData(props) {
             type="ADD"
             fileType={type}
             refresh={() => {
-              dispatch({ page: 1, size: Infinity, fileType: type });
+              dispatch({ page: 1, size: Infinity, fileType: type, status: 'CONVERT_SUCCESS' });
             }}
           >
             <Button type="primary">+ 新增</Button>

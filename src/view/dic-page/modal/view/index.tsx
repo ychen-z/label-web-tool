@@ -66,7 +66,7 @@ function Template(props) {
             <ModalAdd refresh={getList} dictType={dictType} subTitle={subTitle} data={{ dictId }}>
               <Button type="primary">+ 增加字典</Button>
             </ModalAdd>
-            {entityType === 'EQUIPMENT' && <AddTreeModal selectedKeys={selectedKeys} />}
+            {entityType === 'EQUIPMENT' && <AddTreeModal selectedKeys={selectedKeys} refresh={getList} />}
           </div>
 
           <Table

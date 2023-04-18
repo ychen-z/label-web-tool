@@ -38,7 +38,7 @@ export default function TrainingModel(props) {
 
     dispatchPostTrainModel({ ...values, textIds, dictIds, textType }).then(res => {
       message.success('训练成功');
-      setInterval(5000);
+      setInterval(3000);
     });
   };
 

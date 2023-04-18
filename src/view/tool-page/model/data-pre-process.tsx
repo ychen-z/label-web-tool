@@ -58,7 +58,7 @@ export default function DataPreProcess(props) {
         description: '开始聚类，成功后可执行采样'
       });
       setTranningLoading(true);
-      setInterval(5000);
+      setInterval(3000);
     });
   };
 

@@ -17,7 +17,7 @@ export default function AddTreeModal(props) {
   const { data } = useFetch(getEquipmentSubData, { pid: 0, level: 1 }); // 整数
   const { dispatch: getEquipmentSubTreeDataFunc } = useFetch(getEquipmentSubTreeData, null, false);
 
-  const fetch = () => {
+  const handleOk = () => {
     return form.validateFields().then(values => {
       postTextAddToTree(values).then(res => {
         message.success('操作成功');
@@ -59,7 +59,7 @@ export default function AddTreeModal(props) {
           + 添加到设备树
         </Button>
       }
-      onOk={fetch}
+      onOk={handleOk}
     >
       <Form form={form} {...formItemLayout} scrollToFirstError initialValues={{ ids: selectedKeys?.join(',') }}>
         <Alert style={{ marginBottom: '20px' }} message={`已选择设备：${nodeName || '--'}`} type="success" />

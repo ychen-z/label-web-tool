@@ -7,7 +7,11 @@ import AddModal from '../components/modal/add';
 import './index.less';
 
 export default function TripleData(props) {
-  const { data, dispatch, isLoading: loading } = useFetch(getFileData, { page: 1, size: Infinity, fileType: 'RELATION_CORPUS' }, false);
+  const { data, dispatch, isLoading: loading } = useFetch(
+    getFileData,
+    { page: 1, size: Infinity, fileType: 'RELATION_CORPUS', status: 'NO_CONVERT' },
+    false
+  );
 
   useEffect(() => {
     dispatch({ page: 1, size: Infinity, fileType: 'RELATION_CORPUS', status: 'NO_CONVERT' });

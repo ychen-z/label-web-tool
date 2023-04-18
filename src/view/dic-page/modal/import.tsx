@@ -147,7 +147,7 @@ const ADDModal = (props: Props) => {
           <Input.TextArea placeholder="请输入" maxLength={2000} />
         </Form.Item>
 
-        <Form.Item label="类型" name="entityType" rules={[{ required: true, message: '请填写' }]}>
+        <Form.Item label="类型" name="entityType">
           <Select>
             {OptionsList.map(item => (
               <Select.Option key={item.value}>{item.name}</Select.Option>

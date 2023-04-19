@@ -11,7 +11,7 @@ import './index.less';
 export default function AddTreeData(props) {
   const { type } = getParams();
   const func = type == 'RELATION_CORPUS' ? addToTree : markTree;
-  const { data, dispatch, isLoading: loading } = useFetch(getFileData, { page: 1, size: Infinity, fileType: type }, false);
+  const { data, dispatch, isLoading: loading } = useFetch(getFileData, { page: 1, size: Infinity, fileType: type, status: 'CONVERT_SUCCESS' }, false);
   const [interval, setInterval] = useState<null | number>(null);
 
   useInterval(() => {

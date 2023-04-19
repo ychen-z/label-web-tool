@@ -33,6 +33,8 @@ export default function AddTreeTable(props) {
           return <Tag color="#f50">未构建</Tag>;
         } else if (record.regulationStatus == 'BUILD_FAILED') {
           return <span>不可构建</span>;
+        } else if (record.regulationStatus == 'BUILDING') {
+          return <span>构建中...</span>;
         } else {
           return <span>--</span>;
         }
